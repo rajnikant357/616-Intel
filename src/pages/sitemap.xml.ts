@@ -18,6 +18,11 @@ export const GET: APIRoute = async () => {
   entries.push({ url: `${baseUrl}/`, changefreq: 'daily', priority: 1.0 });
   entries.push({ url: `${baseUrl}/latest`, changefreq: 'daily', priority: 0.9 });
   entries.push({ url: `${baseUrl}/categories`, changefreq: 'daily', priority: 0.9 });
+  entries.push({ url: `${baseUrl}/categories/superhero-action-concepts`, changefreq: 'daily', priority: 0.8 });
+  entries.push({ url: `${baseUrl}/categories/marvel-characters-teams`, changefreq: 'daily', priority: 0.8 });
+  entries.push({ url: `${baseUrl}/categories/avengers-cinematic-universe`, changefreq: 'daily', priority: 0.8 });
+  entries.push({ url: `${baseUrl}/categories/gaming-digital-web-media`, changefreq: 'daily', priority: 0.8 });
+  entries.push({ url: `${baseUrl}/categories/collectibles-merchandising-industry`, changefreq: 'daily', priority: 0.8 });
   entries.push({ url: `${baseUrl}/write`, changefreq: 'weekly', priority: 0.9 });
   entries.push({ url: `${baseUrl}/search`, changefreq: 'daily', priority: 0.8 });
   entries.push({ url: `${baseUrl}/news`, changefreq: 'daily', priority: 0.8 });

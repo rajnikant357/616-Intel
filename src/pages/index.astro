@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/editorial/Hero.astro';
 import SectionHeader from '../components/editorial/SectionHeader.astro';
 import ArticleCard from '../components/cards/ArticleCard.astro';
+import CommunityBanner from '../components/editorial/CommunityBanner.astro';
 import { getAllArticles } from '../utils/content';
 import { Search, BookOpen, Sparkles, Shield, Swords, Gamepad2, ShoppingBag } from '@lucide/astro';
 
@@ -234,5 +235,10 @@ const categories = [
         <span>View Full Chronological Archive (All {allArticles.length} Dispatches) &rarr;</span>
       </a>
     </div>
+  </section>
+
+  <!-- WRITE A LEAK / GOT INTEL? (High-Impact Banner Above Footer) -->
+  <section class="container-editorial py-10 sm:py-16 border-t border-[var(--intel-border)]" aria-label="Submit Marvel Intel">
+    <CommunityBanner />
   </section>
 </BaseLayout>

@@ -94,7 +94,9 @@ const allSchemas = jsonLd
     <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="keywords" content="superhero action, team action, epic action, epic adventure, epic sci fi, epic drama, marvel, doctor doom, avengers doomsday, fantastic four, spider man, multiverse, marvel comics, marvel cinematic universe, marvel rivals" />
-    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-snippet:-1'} />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'} />
+    <meta name="googlebot" content={noindex ? 'noindex, nofollow' : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'} />
+    <meta name="bingbot" content={noindex ? 'noindex, nofollow' : 'index, follow, max-snippet:-1, max-image-preview:large'} />
 
     <!-- SEO Geo-Targeting Tags (US & Worldwide Distribution) -->
     <meta name="geo.region" content="US" />

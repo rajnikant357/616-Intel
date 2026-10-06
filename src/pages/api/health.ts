@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { config, validateProductionConfig } from '../../lib/config/env';
 
-export const prerender = false;
+export const prerender = true;
 
 export const GET: APIRoute = async ({ request }) => {
   const reqId = request.headers.get('x-request-id') || `req_${Date.now()}`;

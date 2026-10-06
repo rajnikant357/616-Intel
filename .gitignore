@@ -36,3 +36,11 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Markdown files (ignore all except README)
+*.md
+**/*.md
+!README.md
+!readme.md
+!**/README.md
+!**/readme.md

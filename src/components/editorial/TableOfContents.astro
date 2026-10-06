@@ -1,0 +1,47 @@
+---
+import { List } from '@lucide/astro';
+
+export interface HeadingItem {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: HeadingItem[];
+  class?: string;
+}
+
+const { headings, class: className = '' } = Astro.props;
+
+// Filter to h2 and h3
+const filteredHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{filteredHeadings.length > 0 && (
+  <nav
+    class:list={[
+      "p-4 rounded-sm border border-[var(--border-default)] bg-[var(--surface-elevated)] select-none",
+      className
+    ]}
+    aria-label="Table of contents"
+  >
+    <div class="flex items-center gap-2 pb-2.5 mb-2.5 border-b border-[var(--border-subtle)] text-xs font-mono font-bold uppercase tracking-wider text-white">
+      <List class="w-4 h-4 text-[var(--accent-red)]" aria-hidden="true" />
+      <span>ON THIS PAGE</span>
+    </div>
+
+    <ul class="space-y-1.5 text-xs font-mono">
+      {filteredHeadings.map((h) => (
+        <li class:list={[h.depth === 3 ? "pl-3 text-[11px]" : "pl-0"]}>
+          <a
+            href={`#${h.slug}`}
+            class="text-[var(--text-secondary)] hover:text-white transition-colors duration-150 line-clamp-1 block py-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent-red)]"
+          >
+            {h.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}

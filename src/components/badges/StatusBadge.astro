@@ -1,0 +1,128 @@
+---
+import { Check, FileText, Flame, ShieldAlert, X, Zap, Users } from '@lucide/astro';
+
+export type DisplayStatus = 'confirmed' | 'reported' | 'rumored' | 'rumor' | 'leak' | 'unverified' | 'debunked' | 'breaking' | 'community';
+
+interface Props {
+  status: DisplayStatus | string;
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+}
+
+const { status, size = 'sm', class: className = '' } = Astro.props;
+
+const normalizedStatus = (status || 'reported').toLowerCase() as DisplayStatus;
+
+const statusConfig: Record<string, {
+  label: string;
+  icon: any;
+  bgClass: string;
+  borderClass: string;
+  textClass: string;
+  indicatorClass: string;
+  shapeClass: string;
+}> = {
+  confirmed: {
+    label: 'CONFIRMED',
+    icon: Check,
+    bgClass: 'bg-emerald-950/70',
+    borderClass: 'border-emerald-500/50',
+    textClass: 'text-emerald-400',
+    indicatorClass: 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]',
+    shapeClass: 'rounded-xs font-bold',
+  },
+  reported: {
+    label: 'REPORTED',
+    icon: FileText,
+    bgClass: 'bg-sky-950/70',
+    borderClass: 'border-sky-500/50',
+    textClass: 'text-sky-300',
+    indicatorClass: 'bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]',
+    shapeClass: 'rounded-xs font-semibold',
+  },
+  rumored: {
+    label: 'RUMOR',
+    icon: Flame,
+    bgClass: 'bg-amber-950/70',
+    borderClass: 'border-amber-500/50',
+    textClass: 'text-amber-300',
+    indicatorClass: 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]',
+    shapeClass: 'rounded-xs font-semibold border-dashed',
+  },
+  rumor: {
+    label: 'RUMOR',
+    icon: Flame,
+    bgClass: 'bg-amber-950/70',
+    borderClass: 'border-amber-500/50',
+    textClass: 'text-amber-300',
+    indicatorClass: 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]',
+    shapeClass: 'rounded-xs font-semibold border-dashed',
+  },
+  leak: {
+    label: 'LEAK',
+    icon: ShieldAlert,
+    bgClass: 'bg-red-950/90',
+    borderClass: 'border-[var(--intel-red)]',
+    textClass: 'text-white',
+    indicatorClass: 'bg-[var(--intel-red)] animate-pulse shadow-[0_0_10px_var(--intel-red)]',
+    shapeClass: 'rounded-xs font-black shadow-[0_0_15px_rgba(225,6,0,0.3)]',
+  },
+  unverified: {
+    label: 'UNVERIFIED',
+    icon: ShieldAlert,
+    bgClass: 'bg-purple-950/70',
+    borderClass: 'border-purple-500/40',
+    textClass: 'text-purple-300',
+    indicatorClass: 'bg-purple-400',
+    shapeClass: 'rounded-xs font-normal',
+  },
+  debunked: {
+    label: 'DEBUNKED',
+    icon: X,
+    bgClass: 'bg-slate-900',
+    borderClass: 'border-slate-700',
+    textClass: 'text-slate-400 line-through decoration-red-500 decoration-2',
+    indicatorClass: 'bg-red-500',
+    shapeClass: 'rounded-xs',
+  },
+  breaking: {
+    label: 'BREAKING',
+    icon: Zap,
+    bgClass: 'bg-[var(--intel-red)]',
+    borderClass: 'border-white/30',
+    textClass: 'text-white',
+    indicatorClass: 'bg-white animate-ping',
+    shapeClass: 'rounded-xs font-black shadow-[0_0_15px_rgba(225,6,0,0.6)]',
+  },
+  community: {
+    label: 'COMMUNITY',
+    icon: Users,
+    bgClass: 'bg-indigo-950/70',
+    borderClass: 'border-indigo-500/40',
+    textClass: 'text-indigo-300',
+    indicatorClass: 'bg-indigo-400',
+    shapeClass: 'rounded-xs',
+  },
+};
+
+const current = statusConfig[normalizedStatus] || statusConfig.reported;
+const IconComponent = current.icon;
+---
+
+<span
+  class:list={[
+    "inline-flex items-center gap-1.5 font-mono uppercase tracking-wider select-none border backdrop-blur-xs",
+    size === 'sm' && "text-[10px] px-2 py-0.5",
+    size === 'md' && "text-xs px-2.5 py-1",
+    size === 'lg' && "text-sm px-3.5 py-1.5",
+    current.bgClass,
+    current.borderClass,
+    current.textClass,
+    current.shapeClass,
+    className
+  ]}
+>
+  <span class:list={["w-1.5 h-1.5 rounded-full shrink-0", current.indicatorClass]} aria-hidden="true"></span>
+  <IconComponent class:list={[size === 'sm' ? "w-3 h-3" : "w-3.5 h-3.5", "shrink-0"]} aria-hidden="true" />
+  <span>{current.label}</span>
+</span>

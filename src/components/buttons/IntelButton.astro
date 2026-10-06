@@ -1,0 +1,64 @@
+---
+import Button from './Button.astro';
+import { ArrowRight, Play, ExternalLink, SquarePen, Image, Film, Flame } from '@lucide/astro';
+
+interface Props {
+  variant?: 'primary' | 'secondary' | 'ghost' | 'source' | 'watch' | 'community' | 'danger' | 'leak' | 'explore' | 'gallery' | 'outline';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  href?: string;
+  target?: string;
+  rel?: string;
+  class?: string;
+  disabled?: boolean;
+  loading?: boolean;
+  icon?: 'arrow' | 'play' | 'external' | 'edit' | 'image' | 'film' | 'leak' | 'none';
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  target,
+  rel,
+  class: className = '',
+  disabled = false,
+  loading = false,
+  icon = 'arrow',
+  ...rest
+} = Astro.props;
+---
+
+<Button
+  variant={variant}
+  size={size}
+  href={href}
+  target={target}
+  rel={rel}
+  class={className}
+  disabled={disabled}
+  loading={loading}
+  {...rest}
+>
+  <slot />
+  {icon === 'arrow' && (
+    <ArrowRight class="w-4 h-4 ml-1.5 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+  )}
+  {icon === 'play' && (
+    <Play class="w-4 h-4 ml-1.5 fill-current" aria-hidden="true" />
+  )}
+  {icon === 'external' && (
+    <ExternalLink class="w-3.5 h-3.5 ml-1.5 text-current opacity-80" aria-hidden="true" />
+  )}
+  {icon === 'edit' && (
+    <SquarePen class="w-3.5 h-3.5 ml-1.5" aria-hidden="true" />
+  )}
+  {icon === 'image' && (
+    <Image class="w-3.5 h-3.5 ml-1.5" aria-hidden="true" />
+  )}
+  {icon === 'film' && (
+    <Film class="w-3.5 h-3.5 ml-1.5" aria-hidden="true" />
+  )}
+  {icon === 'leak' && (
+    <Flame class="w-3.5 h-3.5 ml-1.5 text-[var(--intel-red)]" aria-hidden="true" />
+  )}
+</Button>

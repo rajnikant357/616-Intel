@@ -1,0 +1,90 @@
+:root {
+  /* 616 Intel Core Palette (Marvel-Inspired Entertainment Intelligence) */
+  --intel-red: #E10600;
+  --intel-red-hover: #FF1A14;
+  --intel-red-muted: #B80500;
+  --intel-red-soft: rgba(225, 6, 0, 0.12);
+  --intel-red-glow: rgba(225, 6, 0, 0.45);
+  
+  --intel-void: #050505;
+  --intel-obsidian: #0B0B0D;
+  --intel-charcoal: #141416;
+  --intel-elevated: #1C1C20;
+  --intel-surface-hover: #24242A;
+  --intel-glass: rgba(11, 11, 13, 0.88);
+
+  --intel-white: #FFFFFF;
+  --intel-muted: #A6A6AA;
+  --intel-dim: #606066;
+  --intel-border: rgba(255, 255, 255, 0.12);
+  --intel-border-subtle: rgba(255, 255, 255, 0.08);
+  --intel-border-strong: rgba(255, 255, 255, 0.24);
+  --intel-border-red: rgba(225, 6, 0, 0.5);
+
+  /* Surface & Background Hierarchy Mappings */
+  --bg-base: var(--intel-void);
+  --bg-subtle: var(--intel-obsidian);
+  --surface: var(--intel-charcoal);
+  --surface-elevated: var(--intel-elevated);
+  --surface-hover: var(--intel-surface-hover);
+  --surface-glass: var(--intel-glass);
+
+  /* Borders */
+  --border-subtle: var(--intel-border-subtle);
+  --border-default: var(--intel-border);
+  --border-strong: var(--intel-border-strong);
+  --border-red: var(--intel-border-red);
+
+  /* Typography Colors */
+  --text-primary: var(--intel-white);
+  --text-secondary: #C8C8CC;
+  --text-muted: var(--intel-muted);
+  --text-dim: var(--intel-dim);
+
+  /* Red Accent Identity */
+  --accent-red: var(--intel-red);
+  --accent-red-hover: var(--intel-red-hover);
+  --accent-red-muted: var(--intel-red-muted);
+  --accent-red-soft: var(--intel-red-soft);
+  --accent-red-glow: var(--intel-red-glow);
+
+  /* Status Colors */
+  --status-confirmed: #10B981;
+  --status-confirmed-soft: rgba(16, 185, 129, 0.14);
+  --status-reported: #38BDF8;
+  --status-reported-soft: rgba(56, 189, 248, 0.14);
+  --status-rumored: #F59E0B;
+  --status-rumored-soft: rgba(245, 158, 11, 0.14);
+  --status-unverified: #A855F7;
+  --status-unverified-soft: rgba(168, 85, 247, 0.14);
+  --status-debunked: #94A3B8;
+  --status-debunked-soft: rgba(148, 163, 184, 0.14);
+  --status-leak: #E10600;
+  --status-leak-soft: rgba(225, 6, 0, 0.16);
+
+  /* Motion Timings */
+  --motion-fast: 150ms;
+  --motion-normal: 250ms;
+  --motion-reveal: 400ms;
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-sharp: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-cinematic: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* Radii (Restrained per Section 81: avoid fully pill-shaped everything) */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-card: 4px;
+  --radius-button: 3px;
+
+  /* Shadows */
+  --shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.7);
+  --shadow-elevated: 0 12px 35px -5px rgba(0, 0, 0, 0.9), 0 0 1px 1px rgba(255, 255, 255, 0.08);
+  --shadow-red-glow: 0 0 30px -4px rgba(225, 6, 0, 0.5);
+  --shadow-card: 0 8px 24px -4px rgba(0, 0, 0, 0.85);
+
+  /* Layout Containers */
+  --container-max: 1360px;
+  --container-wide: 1480px;
+}

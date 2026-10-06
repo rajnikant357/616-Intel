@@ -1,0 +1,79 @@
+---
+import { Clock, Calendar, User } from '@lucide/astro';
+
+interface Props {
+  category?: string;
+  publishedAt: string;
+  isoDate?: string;
+  readingTime?: string;
+  author?: {
+    name: string;
+    role?: string;
+  };
+  class?: string;
+}
+
+const {
+  category,
+  publishedAt,
+  isoDate: propIsoDate,
+  readingTime,
+  author,
+  class: className = '',
+} = Astro.props;
+
+// Calculate valid HTML5 ISO 8601 date string for datetime attribute
+let validIsoDate = propIsoDate;
+if (!validIsoDate) {
+  try {
+    const parsed = new Date(publishedAt);
+    if (!isNaN(parsed.getTime())) {
+      validIsoDate = parsed.toISOString().split('T')[0];
+    }
+  } catch {
+    // fallback
+  }
+}
+if (!validIsoDate) {
+  validIsoDate = publishedAt;
+}
+---
+
+<div
+  class:list={[
+    "flex flex-wrap items-center gap-y-1.5 gap-x-3 text-xs font-mono text-[var(--text-secondary)] select-none",
+    className
+  ]}
+>
+  {category && (
+    <span class="font-bold text-[var(--accent-red)] uppercase tracking-wider">
+      {category}
+    </span>
+  )}
+
+  {category && <span class="text-[var(--text-muted)]" aria-hidden="true">•</span>}
+
+  {author && (
+    <span class="inline-flex items-center gap-1.5 text-slate-300">
+      <User class="w-3.5 h-3.5 text-[var(--text-muted)]" aria-hidden="true" />
+      <span class="font-medium">{author.name}</span>
+    </span>
+  )}
+
+  {author && <span class="text-[var(--text-muted)]" aria-hidden="true">•</span>}
+
+  <time datetime={validIsoDate} class="inline-flex items-center gap-1.5 text-[var(--text-secondary)]">
+    <Calendar class="w-3.5 h-3.5 text-[var(--text-muted)]" aria-hidden="true" />
+    <span>{publishedAt}</span>
+  </time>
+
+  {readingTime && (
+    <>
+      <span class="text-[var(--text-muted)]" aria-hidden="true">•</span>
+      <span class="inline-flex items-center gap-1 text-[var(--text-muted)]">
+        <Clock class="w-3.5 h-3.5" aria-hidden="true" />
+        <span>{readingTime}</span>
+      </span>
+    </>
+  )}
+</div>

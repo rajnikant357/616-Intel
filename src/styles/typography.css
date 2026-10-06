@@ -1,0 +1,98 @@
+/* Typography System for 616 Intel */
+
+:root {
+  --font-serif: 'Lora', 'Linux Libertine', Georgia, 'Times New Roman', serif;
+  --font-display: 'Oswald', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+
+  /* Editorial Scales */
+  --text-display-xl: clamp(2.75rem, 6.5vw, 5.25rem);
+  --text-display-l: clamp(2.15rem, 4.5vw, 3.75rem);
+  --text-display-m: clamp(1.65rem, 3.2vw, 2.5rem);
+
+  --text-h1: clamp(1.75rem, 2.8vw, 2.25rem);
+  --text-h2: clamp(1.35rem, 2.2vw, 1.75rem);
+  --text-h3: 1.25rem;
+  --text-h4: 1.125rem;
+
+  --text-body-lg: 1.125rem;
+  --text-body: 1rem;
+  --text-body-sm: 0.875rem;
+
+  --text-caption: 0.75rem;
+  --text-label: 0.6875rem;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Editorial Headlines */
+.headline-display-xl {
+  font-family: var(--font-display);
+  font-size: var(--text-display-xl);
+  line-height: 0.95;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.headline-display-l {
+  font-family: var(--font-display);
+  font-size: var(--text-display-l);
+  line-height: 1.02;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.headline-display-m {
+  font-family: var(--font-display);
+  font-size: var(--text-display-m);
+  line-height: 1.1;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+/* Article Reading Rhythm (60-75 ch) */
+.article-prose {
+  max-width: 68ch;
+  font-family: var(--font-serif);
+  font-size: var(--text-body-lg);
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+.article-prose p {
+  margin-bottom: 1.5rem;
+}
+
+.article-prose strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Number formatting */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}

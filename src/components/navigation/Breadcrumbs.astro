@@ -1,0 +1,50 @@
+---
+import { ChevronRight, House } from '@lucide/astro';
+
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  class?: string;
+}
+
+const { items, class: className = '' } = Astro.props;
+---
+
+<nav aria-label="Breadcrumb" class:list={["select-none my-4", className]}>
+  <ol class="flex flex-wrap items-center gap-1.5 text-xs font-mono text-[var(--text-muted)]">
+    <li class="inline-flex items-center">
+      <a
+        href="/"
+        class="inline-flex items-center gap-1 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent-red)] rounded-xs"
+      >
+        <House class="w-3.5 h-3.5 text-[var(--accent-red)]" aria-hidden="true" />
+        <span>Home</span>
+      </a>
+    </li>
+
+    {items.map((item, index) => {
+      const isLast = index === items.length - 1;
+      return (
+        <li class="inline-flex items-center gap-1.5">
+          <ChevronRight class="w-3.5 h-3.5 text-[var(--text-dim)] shrink-0" aria-hidden="true" />
+          {isLast || !item.href ? (
+            <span class="text-slate-300 font-semibold truncate max-w-xs sm:max-w-md" aria-current="page">
+              {item.label}
+            </span>
+          ) : (
+            <a
+              href={item.href}
+              class="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent-red)] rounded-xs"
+            >
+              {item.label}
+            </a>
+          )}
+        </li>
+      );
+    })}
+  </ol>
+</nav>

@@ -1,0 +1,70 @@
+---
+import type { TrendingItem } from '../../data/types';
+import StatusBadge from '../badges/StatusBadge.astro';
+import { TrendingUp, ArrowRight } from '@lucide/astro';
+
+interface Props {
+  items: TrendingItem[];
+  title?: string;
+  class?: string;
+}
+
+const {
+  items,
+  title = 'TRENDING NOW',
+  class: className = '',
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    "border border-[var(--intel-border)] bg-[var(--intel-charcoal)] rounded-xs p-5 md:p-6 shadow-xl relative overflow-hidden",
+    className
+  ]}
+  aria-labelledby="trending-heading"
+>
+  <div class="flex items-center justify-between pb-4 border-b border-[var(--intel-border)] mb-2">
+    <div class="flex items-center gap-2">
+      <TrendingUp class="w-4 h-4 text-[var(--intel-red)]" aria-hidden="true" />
+      <h3 id="trending-heading" class="font-display text-lg font-black uppercase tracking-wider text-white">
+        {title}
+      </h3>
+    </div>
+    <span class="text-[10px] font-mono uppercase tracking-widest text-[var(--intel-red)] bg-[var(--intel-red)]/10 px-2 py-0.5 rounded-xs border border-[var(--intel-red)]/30 font-bold">
+      LIVE RANKING
+    </span>
+  </div>
+
+  <ol class="divide-y divide-[var(--intel-border-subtle)]">
+    {items.map((item) => (
+      <li class="group py-4 first:pt-2 last:pb-1 flex items-start gap-4 transition-all">
+        <!-- Oversized Architectural Number (Section 51) -->
+        <span class="font-display text-3xl sm:text-4xl font-black text-[var(--intel-muted)]/40 group-hover:text-[var(--intel-red)] tabular-nums shrink-0 leading-none transition-all duration-300 group-hover:translate-x-1 select-none">
+          {item.rank}
+        </span>
+
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-[var(--intel-muted)]">
+              {item.category}
+            </span>
+            <span class="text-[var(--intel-dim)] text-[10px]">•</span>
+            <span class="text-[10px] font-mono text-[var(--intel-dim)]">
+              {item.readingTime}
+            </span>
+            <div class="ml-auto shrink-0">
+              <StatusBadge status={item.status} size="sm" />
+            </div>
+          </div>
+
+          <h4 class="text-sm sm:text-base font-display font-bold uppercase tracking-tight text-white group-hover:text-slate-100 transition-colors leading-snug line-clamp-2">
+            <a href={item.slug} class="focus-visible:outline-none flex items-center justify-between gap-2">
+              <span>{item.title}</span>
+              <ArrowRight class="w-3.5 h-3.5 text-[var(--intel-red)] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all shrink-0" aria-hidden="true" />
+            </a>
+          </h4>
+        </div>
+      </li>
+    ))}
+  </ol>
+</div>

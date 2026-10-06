@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/navigation/Breadcrumbs.astro';
+import ArticleCard from '../../components/cards/ArticleCard.astro';
+import { getArticlesByCategory } from '../../utils/content';
+import { Film } from '@lucide/astro';
+
+const movieArticles = await getArticlesByCategory('Avengers & Cinematic Universe');
+const siteUrl = 'https://616intel.com';
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Cinematic Universe', item: `${siteUrl}/movies` },
+  ],
+};
+---
+
+<BaseLayout
+  title="Marvel Movies & Cinematic Universe Wire | 616 Intel"
+  description="Comprehensive investigative dispatches covering Marvel Cinematic Universe releases, Avengers: Doomsday rumors, chronological timelines, and theatrical productions."
+  jsonLd={[breadcrumbSchema]}
+>
+  <div class="container-editorial py-6 md:py-10">
+    <Breadcrumbs
+      items={[
+        { label: 'Intel Wire', href: '/latest' },
+        { label: 'Cinematic Universe & Movies' },
+      ]}
+    />
+
+    <header class="pb-6 mb-8 border-b border-[var(--intel-border)]">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-xs bg-[var(--intel-red)]/15 border border-[var(--intel-red)]/40 text-[var(--intel-red)] font-mono text-xs font-bold uppercase tracking-widest mb-3">
+        <Film class="w-3.5 h-3.5" aria-hidden="true" />
+        <span>CINEMATIC UNIVERSE DOSSIERS</span>
+      </div>
+
+      <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-none mb-3">
+        Marvel Movies &amp; Cinematic Universe
+      </h1>
+
+      <p class="font-sans text-sm sm:text-base text-neutral-300 max-w-2xl mt-4">
+        Dispatches documenting theatrical productions, Avengers: Doomsday leaks, Phase 6 roadmaps, release schedules, and multiversal sagas.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {movieArticles.map((article) => (
+        <ArticleCard
+          article={{
+            slug: `/articles/${article.data.slug}`,
+            title: article.data.title,
+            excerpt: article.data.excerpt,
+            category: article.data.category,
+            readingTime: article.data.readingTime,
+            author: article.data.author,
+          }}
+          variant="standard"
+        />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

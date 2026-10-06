@@ -1,0 +1,56 @@
+---
+interface Props {
+  variant?: 'primary' | 'stacked' | 'compact' | 'footer';
+  class?: string;
+}
+
+const { variant = 'primary', class: className = '' } = Astro.props;
+---
+
+<a 
+  href="/" 
+  class:list={[
+    "group inline-flex items-center tracking-tight text-white select-none transition-transform duration-200 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--intel-red)] rounded-xs",
+    className
+  ]}
+  aria-label="616 Intel Homepage — Marvel Rumors, Leaks & Intelligence"
+>
+  {variant === 'compact' && (
+    <span class="font-display text-2xl font-black tracking-tighter text-white flex items-center leading-none">
+      <span class="text-white">616</span>
+      <span class="inline-block w-2 h-2 rounded-xs bg-[var(--intel-red)] ml-1 shadow-[0_0_10px_var(--intel-red)]"></span>
+    </span>
+  )}
+
+  {variant === 'primary' && (
+    <div class="flex items-center font-display tracking-tighter uppercase select-none">
+      <!-- 616 Emblem -->
+      <span class="text-2xl sm:text-3xl font-black text-white group-hover:text-slate-100 transition-colors tracking-tight mr-1.5">
+        616
+      </span>
+      <!-- INTEL Badge -->
+      <span class="relative inline-flex items-center px-2 py-0.5 rounded-xs bg-[var(--intel-red)] text-white text-[11px] sm:text-xs font-black tracking-widest leading-none shadow-[0_0_16px_rgba(225,6,0,0.55)] border border-[var(--intel-red)]">
+        INTEL
+      </span>
+    </div>
+  )}
+
+  {variant === 'stacked' && (
+    <div class="flex flex-col leading-none font-display font-black tracking-tight text-left">
+      <span class="text-2xl text-white">616</span>
+      <span class="text-[10px] text-[var(--intel-red)] tracking-[0.3em] font-black uppercase mt-0.5">INTEL</span>
+    </div>
+  )}
+
+  {variant === 'footer' && (
+    <div class="flex flex-col select-none">
+      <div class="flex items-baseline gap-2 font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter uppercase text-white">
+        <span>616</span>
+        <span class="text-[var(--intel-red)] drop-shadow-[0_0_20px_rgba(225,6,0,0.4)]">INTEL</span>
+      </div>
+      <p class="font-mono text-xs tracking-widest text-[var(--intel-muted)] uppercase mt-2">
+        The Marvel Rumor & Leak Intelligence Network
+      </p>
+    </div>
+  )}
+</a>

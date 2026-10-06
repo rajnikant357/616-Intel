@@ -1,0 +1,117 @@
+---
+import type { BreakingTickerItem } from '../../data/types';
+import { BREAKING_TICKER_DATA } from '../../data/mockContent';
+import StatusBadge from '../badges/StatusBadge.astro';
+import { Zap } from '@lucide/astro';
+
+interface Props {
+  items?: BreakingTickerItem[];
+  class?: string;
+}
+
+const { items = BREAKING_TICKER_DATA, class: className = '' } = Astro.props;
+// Double items array to guarantee sufficient length across all monitor resolutions
+const displayItems = [...items, ...items];
+---
+
+<div
+  class:list={[
+    "ticker-container relative w-full border-b border-[var(--intel-border)] bg-[var(--intel-obsidian)] overflow-hidden select-none z-20 h-10 flex items-center",
+    className
+  ]}
+  role="region"
+  aria-label="Breaking Intelligence Dispatch Ticker"
+>
+  <!-- Static Breaking Indicator Label -->
+  <div class="relative z-30 flex items-center gap-2 px-3 sm:px-4 h-full bg-[var(--intel-red)] text-white font-mono font-black text-xs tracking-wider uppercase shrink-0 shadow-[6px_0_20px_rgba(0,0,0,0.85)] border-r border-red-700/60">
+    <span class="relative flex h-2 w-2" aria-hidden="true">
+      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+      <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+    </span>
+    <Zap class="w-3.5 h-3.5 fill-current" aria-hidden="true" />
+    <span class="font-display font-black tracking-widest text-[11px] sm:text-xs">DISPATCH</span>
+  </div>
+
+  <!-- Marquee Track Wrapper with Edge Gradient Vignettes -->
+  <div class="marquee-track flex-1 overflow-hidden relative h-full flex items-center">
+    <!-- Left Fade Gradient Vignette -->
+    <div class="absolute left-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-r from-[var(--intel-obsidian)] via-[var(--intel-obsidian)]/80 to-transparent pointer-events-none z-10" aria-hidden="true"></div>
+    
+    <!-- Right Fade Gradient Vignette -->
+    <div class="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-[var(--intel-obsidian)] via-[var(--intel-obsidian)]/80 to-transparent pointer-events-none z-10" aria-hidden="true"></div>
+
+    <!-- Group 1 -->
+    <div class="marquee-group">
+      {displayItems.map((item) => (
+        <div class="inline-flex items-center gap-3 shrink-0 whitespace-nowrap">
+          <span class="text-[9px] sm:text-[10px] font-mono font-bold tracking-widest text-red-300 uppercase bg-red-950/80 border border-red-500/40 px-1.5 py-0.5 rounded-xs shadow-[0_0_8px_rgba(225,6,0,0.2)]">
+            {item.label}
+          </span>
+          <a
+            href={item.slug}
+            class="text-xs sm:text-sm font-mono text-slate-200 hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--intel-red)] transition-colors"
+          >
+            {item.headline}
+          </a>
+          <StatusBadge status={item.status} size="sm" />
+          <span class="text-[var(--intel-red)] text-xs font-bold opacity-70 ml-2" aria-hidden="true">◆</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- Group 2 (Duplicate for Seamless Infinite Marquee Loop) -->
+    <div class="marquee-group" aria-hidden="true">
+      {displayItems.map((item) => (
+        <div class="inline-flex items-center gap-3 shrink-0 whitespace-nowrap">
+          <span class="text-[9px] sm:text-[10px] font-mono font-bold tracking-widest text-red-300 uppercase bg-red-950/80 border border-red-500/40 px-1.5 py-0.5 rounded-xs shadow-[0_0_8px_rgba(225,6,0,0.2)]">
+            {item.label}
+          </span>
+          <a
+            href={item.slug}
+            tabindex="-1"
+            class="text-xs sm:text-sm font-mono text-slate-200 hover:text-white hover:underline transition-colors"
+          >
+            {item.headline}
+          </a>
+          <StatusBadge status={item.status} size="sm" />
+          <span class="text-[var(--intel-red)] text-xs font-bold opacity-70 ml-2" aria-hidden="true">◆</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes marquee-scroll-loop {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-100%, 0, 0);
+    }
+  }
+
+  .marquee-track {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    user-select: none;
+  }
+
+  .marquee-group {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    gap: 2.5rem;
+    padding-right: 2.5rem;
+    animation: marquee-scroll-loop 90s linear infinite !important;
+    will-change: transform;
+  }
+
+  .marquee-track:hover .marquee-group {
+    animation-play-state: paused;
+  }
+</style>

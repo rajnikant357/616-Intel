@@ -1,0 +1,58 @@
+---
+import { ArrowRight, SquarePen, Sparkles } from '@lucide/astro';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<section
+  class:list={[
+    "relative overflow-hidden rounded-xs border border-[var(--intel-border-strong)] bg-gradient-to-b from-[var(--intel-charcoal)] via-black to-[var(--intel-obsidian)] p-8 sm:p-12 lg:p-16 text-center select-none shadow-2xl",
+    className
+  ]}
+  aria-label="Community Publishing Call to Action"
+>
+  <!-- Background Ambient Glow & Grid -->
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(225,6,0,0.18)_0%,transparent_70%)] pointer-events-none"></div>
+  <div class="absolute inset-0 intel-grid-bg opacity-30 pointer-events-none"></div>
+
+  <!-- Decorative Top & Bottom Red Accent Lines (Section 85) -->
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-48 sm:w-80 h-[2px] bg-gradient-to-r from-transparent via-[var(--intel-red)] to-transparent shadow-[0_0_15px_var(--intel-red)]"></div>
+  <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 sm:w-80 h-[2px] bg-gradient-to-r from-transparent via-[var(--intel-red)] to-transparent shadow-[0_0_15px_var(--intel-red)]"></div>
+
+  <div class="relative z-10 max-w-2xl mx-auto flex flex-col items-center">
+    <!-- Live Dispatch Pill -->
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-xs bg-[var(--intel-red)]/15 border border-[var(--intel-red)]/40 text-[var(--intel-red)] font-mono text-xs font-bold uppercase tracking-widest mb-6">
+      <Sparkles class="w-3.5 h-3.5" aria-hidden="true" />
+      <span>OPEN INTELLIGENCE SUBMISSION</span>
+    </div>
+
+    <!-- Main Title -->
+    <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase text-white tracking-tight leading-none mb-4">
+      GOT MARVEL INTEL?
+    </h2>
+
+    <!-- Subtitle -->
+    <p class="font-display text-lg sm:text-2xl font-bold uppercase tracking-wide text-slate-200 mb-2">
+      YOUR THEORY. YOUR RUMOR. YOUR STORY.
+    </p>
+
+    <!-- Value Prop Pill -->
+    <p class="font-mono text-xs sm:text-sm text-[var(--intel-muted)] uppercase tracking-wider mb-8">
+      NO LOGIN REQUIRED • 100% ANONYMOUS AUTHOR MODE • FIRST ARTICLE FREE
+    </p>
+
+    <!-- Flashy Publish CTA Button (Section 45) -->
+    <a
+      href="/write"
+      class="inline-flex items-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xs bg-[var(--intel-red)] hover:bg-[var(--intel-red-hover)] text-white font-mono text-sm sm:text-base font-black uppercase tracking-widest transition-all duration-200 hover:scale-[1.03] active:scale-[0.98] shadow-[0_0_35px_rgba(225,6,0,0.6)] btn-shine-sweep border border-[var(--intel-red)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+    >
+      <SquarePen class="w-4 h-4" aria-hidden="true" />
+      <span>WRITE FOR 616 INTEL</span>
+      <ArrowRight class="w-4 h-4 ml-1 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+    </a>
+  </div>
+</section>

@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/navigation/Breadcrumbs.astro';
+import { Mail, Lock, ShieldCheck, CircleAlert } from '@lucide/astro';
+---
+
+<BaseLayout
+  title="Contact & Confidential Tips Bureau — 616 INTEL"
+  description="Submit confidential production leaks, general inquiries, press syndicate requests, or editorial corrections."
+>
+  <div class="container-editorial py-6 md:py-10 max-w-4xl mx-auto">
+    <Breadcrumbs
+      items={[
+        { label: 'Intelligence Desk' },
+        { label: 'Contact Bureau' },
+      ]}
+    />
+
+    <header class="pb-6 mb-8 border-b border-[var(--border-default)]">
+      <div class="flex items-center gap-2 mb-2 text-xs font-mono font-bold text-[var(--accent-red)] uppercase tracking-wider">
+        <Mail class="w-4 h-4" aria-hidden="true" />
+        <span>SECURE COMMUNICATIONS WIRE</span>
+      </div>
+      <h1 class="headline-display-l text-white uppercase tracking-tight">
+        CONTACT &amp; CONFIDENTIAL TIPS
+      </h1>
+      <p class="text-sm sm:text-base text-[var(--text-secondary)] mt-2">
+        Direct lines of communication for sources, agency correspondents, industry press, and readership feedback.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+      <!-- Tip 1: Confidential Leaks -->
+      <div class="p-6 rounded-sm border border-[var(--border-default)] bg-[var(--surface)] select-none">
+        <div class="flex items-center gap-2 text-xs font-mono font-bold text-[var(--accent-red)] uppercase mb-3">
+          <Lock class="w-4 h-4" aria-hidden="true" />
+          <span>CONFIDENTIAL TIPS &amp; LEAKS</span>
+        </div>
+        <h3 class="text-lg font-display font-bold text-white uppercase mb-2">
+          Production Whistleblowers &amp; Stringers
+        </h3>
+        <p class="text-xs text-[var(--text-secondary)] leading-relaxed mb-4">
+          For studio employees, crew members, or agency correspondents possessing call sheets, permit filings, or concept documents. Source confidentiality is strictly protected.
+        </p>
+        <a
+          href="mailto:tips@616intel.com?subject=Confidential%20Intelligence%20Tip"
+          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xs bg-[var(--accent-red)] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[var(--accent-red-hover)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-red)]"
+        >
+          <span>Transmit Tip &rarr; tips@616intel.com</span>
+        </a>
+      </div>
+
+      <!-- Tip 2: Editorial & Corrections -->
+      <div class="p-6 rounded-sm border border-[var(--border-default)] bg-[var(--surface)] select-none">
+        <div class="flex items-center gap-2 text-xs font-mono font-bold text-sky-400 uppercase mb-3">
+          <CircleAlert class="w-4 h-4" aria-hidden="true" />
+          <span>EDITORIAL &amp; CORRECTIONS</span>
+        </div>
+        <h3 class="text-lg font-display font-bold text-white uppercase mb-2">
+          Fact-Check &amp; Record Corrections
+        </h3>
+        <p class="text-xs text-[var(--text-secondary)] leading-relaxed mb-4">
+          If you represent an individual or studio regarding a factual error in our receipts or reporting, submit documentation for expedited editorial review.
+        </p>
+        <a
+          href="mailto:corrections@616intel.com?subject=Editorial%20Correction%20Request"
+          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xs bg-[var(--surface-elevated)] border border-[var(--border-default)] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[var(--surface-hover)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-red)]"
+        >
+          <span>corrections@616intel.com</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- PGP Security Note -->
+    <div class="p-5 rounded-sm border border-[var(--border-subtle)] bg-[var(--surface-elevated)] text-xs font-mono text-[var(--text-secondary)]">
+      <div class="flex items-center gap-2 font-bold text-white uppercase mb-1">
+        <ShieldCheck class="w-4 h-4 text-emerald-400" aria-hidden="true" />
+        <span>PGP Key Fingerprint &amp; Signal</span>
+      </div>
+      <p class="leading-relaxed">
+        For sensitive disclosures requiring cryptographic encryption: <code class="text-slate-300">9A4F 616E 2026 E428 5B9C 81F0 33DA 4192</code>. Contact via Signal messenger by request.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

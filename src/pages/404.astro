@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/buttons/Button.astro';
+import { Compass, ArrowLeft } from '@lucide/astro';
+---
+
+<BaseLayout
+  title="404 — Story Lost to the Multiverse — 616 INTEL"
+  description="The requested intelligence dispatch does not exist or has been pruned from the primary timeline."
+  noindex={true}
+>
+  <div class="container-editorial py-16 sm:py-24 max-w-2xl mx-auto text-center">
+    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[var(--accent-red)]/15 border border-[var(--accent-red)]/30 text-[var(--accent-red)] mb-6">
+      <Compass class="w-8 h-8 animate-spin" style="animation-duration: 12s;" aria-hidden="true" />
+    </div>
+
+    <div class="font-mono text-xs font-bold text-[var(--accent-red)] uppercase tracking-widest mb-2">
+      ERROR 404: TIMELINE ANOMALY DETECTED
+    </div>
+
+    <h1 class="headline-display-l text-white uppercase tracking-tight mb-4">
+      THIS STORY DISAPPEARED INTO THE MULTIVERSE.
+    </h1>
+
+    <p class="text-base text-[var(--text-secondary)] leading-relaxed max-w-lg mx-auto mb-8 font-normal">
+      The dossier coordinates you requested do not exist on Earth-616, have been sealed by studio legal injunction, or were pruned during an incursion event.
+    </p>
+
+    <div class="flex flex-wrap items-center justify-center gap-4">
+      <Button href="/" variant="primary" size="lg">
+        <ArrowLeft class="w-4 h-4 mr-1" aria-hidden="true" />
+        <span>RETURN TO BASE WIRE</span>
+      </Button>
+
+      <Button href="/latest" variant="outline" size="lg">
+        <span>INSPECT LATEST DISPATCHES &rarr;</span>
+      </Button>
+    </div>
+  </div>
+</BaseLayout>

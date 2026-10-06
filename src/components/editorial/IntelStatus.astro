@@ -1,0 +1,76 @@
+---
+import StatusBadge from '../badges/StatusBadge.astro';
+
+interface Props {
+  status: 'confirmed' | 'reported' | 'rumored' | 'rumor' | 'leak' | 'unverified' | 'debunked' | string;
+  sourceConfidence?: string;
+  lastUpdated?: string;
+  class?: string;
+}
+
+const {
+  status,
+  sourceConfidence = 'Multiple corroborating reports',
+  lastUpdated = 'Recently verified',
+  class: className = '',
+} = Astro.props;
+
+const normalized = (status || 'reported').toLowerCase();
+
+const confidenceLevel: Record<string, { percent: number; label: string; barColor: string }> = {
+  confirmed: { percent: 100, label: 'OFFICIALLY VERIFIED', barColor: 'bg-emerald-500' },
+  reported: { percent: 75, label: 'HIGH — MULTIPLE TRADE OUTLETS', barColor: 'bg-sky-400' },
+  leak: { percent: 65, label: 'SUBSTANTIVE PRODUCTION LEAK', barColor: 'bg-[var(--intel-red)]' },
+  rumored: { percent: 50, label: 'SPECULATIVE / DEVELOPING', barColor: 'bg-amber-400' },
+  rumor: { percent: 50, label: 'SPECULATIVE / DEVELOPING', barColor: 'bg-amber-400' },
+  unverified: { percent: 25, label: 'UNVERIFIED COMMUNITY INTEL', barColor: 'bg-purple-400' },
+  debunked: { percent: 0, label: 'REFUTED / FAKE SCOOP', barColor: 'bg-slate-500' },
+};
+
+const meta = confidenceLevel[normalized] || confidenceLevel.reported;
+---
+
+<div
+  class:list={[
+    "border border-[var(--intel-border)] bg-[var(--intel-charcoal)] rounded-xs p-4 sm:p-5 select-none relative overflow-hidden",
+    className
+  ]}
+>
+  <div class="absolute top-0 left-0 w-1 h-full bg-[var(--intel-red)]"></div>
+
+  <div class="flex items-center justify-between gap-3 mb-3">
+    <div class="flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-[var(--intel-red)] animate-pulse"></span>
+      <span class="font-mono text-xs font-black tracking-widest text-[var(--intel-red)] uppercase">
+        INTEL STATUS
+      </span>
+    </div>
+    <StatusBadge status={normalized} size="sm" />
+  </div>
+
+  <!-- Confidence Bar Graphic -->
+  <div class="mb-4">
+    <div class="flex items-center justify-between text-[11px] font-mono text-[var(--intel-muted)] mb-1.5 uppercase">
+      <span>Confidence Assessment</span>
+      <span class="text-white font-bold">{meta.label}</span>
+    </div>
+    <div class="w-full h-2 rounded-xs bg-black/60 overflow-hidden border border-white/10 p-0.5">
+      <div
+        class:list={["h-full rounded-xs transition-all duration-500", meta.barColor]}
+        style={`width: ${meta.percent}%`}
+      ></div>
+    </div>
+  </div>
+
+  <!-- Metadata Details -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-[var(--intel-border-subtle)] text-xs font-mono">
+    <div>
+      <span class="text-[var(--intel-dim)] uppercase block text-[10px]">Source Verification</span>
+      <span class="text-slate-200">{sourceConfidence}</span>
+    </div>
+    <div>
+      <span class="text-[var(--intel-dim)] uppercase block text-[10px]">Timeline Check</span>
+      <span class="text-slate-200">{lastUpdated}</span>
+    </div>
+  </div>
+</div>

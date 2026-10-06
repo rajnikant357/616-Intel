@@ -1,0 +1,37 @@
+---
+interface Props {
+  attribution: string;
+  source?: string;
+  class?: string;
+}
+
+const {
+  attribution,
+  source,
+  class: className = '',
+} = Astro.props;
+---
+
+<figure
+  class:list={[
+    "my-8 p-6 sm:p-8 rounded-sm border-l-4 border-[var(--accent-red)] bg-[var(--surface-elevated)] border-y border-r border-r-[var(--border-subtle)] border-y-[var(--border-subtle)] relative overflow-hidden",
+    className
+  ]}
+>
+  <div class="absolute right-4 top-2 text-7xl font-display font-black text-white/5 select-none pointer-events-none" aria-hidden="true">
+    “
+  </div>
+  <blockquote class="text-base sm:text-lg md:text-xl font-display uppercase tracking-tight text-white leading-snug text-balance relative z-10">
+    <slot />
+  </blockquote>
+  <figcaption class="mt-4 flex flex-wrap items-center gap-2 text-xs font-mono text-[var(--text-secondary)]">
+    <span class="text-[var(--accent-red)] font-bold">&mdash;</span>
+    <span class="text-slate-200 font-semibold">{attribution}</span>
+    {source && (
+      <>
+        <span class="text-[var(--text-muted)]">•</span>
+        <span class="text-[var(--text-muted)] italic">{source}</span>
+      </>
+    )}
+  </figcaption>
+</figure>

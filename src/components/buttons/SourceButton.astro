@@ -1,0 +1,60 @@
+---
+import { ExternalLink, Play, Image, FileText, CircleCheck } from '@lucide/astro';
+
+export type SourceVariant = 
+  | 'Source' 
+  | 'Original Report' 
+  | 'Watch Video' 
+  | 'View Photos' 
+  | 'External Article' 
+  | 'Official Source';
+
+interface Props {
+  href: string;
+  variant?: SourceVariant;
+  outlet?: string;
+  class?: string;
+}
+
+const {
+  href,
+  variant = 'Original Report',
+  outlet,
+  class: className = '',
+} = Astro.props;
+
+const iconMap = {
+  'Source': ExternalLink,
+  'Original Report': FileText,
+  'Watch Video': Play,
+  'View Photos': Image,
+  'External Article': ExternalLink,
+  'Official Source': CircleCheck,
+};
+
+const IconComponent = iconMap[variant] || ExternalLink;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class:list={[
+    "group inline-flex items-center justify-between gap-3 px-3.5 py-2 rounded-xs border border-[var(--border-subtle)] bg-[var(--surface)] hover:bg-[var(--surface-elevated)] hover:border-[var(--border-strong)] text-[var(--text-secondary)] hover:text-white font-mono text-xs uppercase tracking-wider transition-[border-color,background-color,color,transform] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-red)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--bg-base)] active:scale-[0.99]",
+    className
+  ]}
+  aria-label={`${variant}${outlet ? ` from ${outlet}` : ''} (opens in new tab)`}
+>
+  <span class="flex items-center gap-2 truncate">
+    <IconComponent class="w-3.5 h-3.5 text-[var(--accent-red)] shrink-0" aria-hidden="true" />
+    <span class="font-bold text-white group-hover:text-white transition-colors truncate">
+      {variant}
+    </span>
+    {outlet && (
+      <span class="text-[var(--text-muted)] text-[10px] lowercase tracking-normal truncate">
+        ({outlet})
+      </span>
+    )}
+  </span>
+  <ExternalLink class="w-3.5 h-3.5 text-[var(--text-muted)] group-hover:text-white transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" aria-hidden="true" />
+</a>

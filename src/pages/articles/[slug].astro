@@ -1,0 +1,253 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/navigation/Breadcrumbs.astro';
+import { 
+  getAllArticles, 
+  getArticleBySlug,
+  type ArticleEntry 
+} from '../../utils/content';
+import { formatDate } from '../../utils/date';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articles = await getAllArticles();
+  return articles.map((article) => ({
+    params: { slug: article.data.slug },
+    props: { article },
+  }));
+}
+
+interface Props {
+  article: ArticleEntry;
+}
+
+const { article: propArticle } = Astro.props;
+const article = propArticle || (Astro.params.slug ? await getArticleBySlug(Astro.params.slug) : undefined);
+
+if (!article) {
+  return Astro.redirect('/404');
+}
+
+const { Content, headings } = await render(article);
+
+const formattedPublishedDate = formatDate(article.data.publishedAt);
+const formattedUpdatedDate = article.data.updatedAt ? formatDate(article.data.updatedAt) : formattedPublishedDate;
+
+// Calculate approximate word count
+const wordCount = (article.body || '').split(/\s+/).filter(Boolean).length;
+
+const siteUrl = 'https://616intel.com';
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.data.title,
+  description: article.data.description,
+  datePublished: new Date(article.data.publishedAt).toISOString(),
+  dateModified: article.data.updatedAt ? new Date(article.data.updatedAt).toISOString() : new Date(article.data.publishedAt).toISOString(),
+  inLanguage: 'en-US',
+  wordCount: wordCount,
+  genre: 'Superhero Action',
+  about: {
+    '@type': 'Thing',
+    name: article.data.title,
+  },
+  author: {
+    '@type': 'Organization',
+    name: '616 Intel Editorial Bureau',
+    url: siteUrl,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: '616 Intel — Marvel Leaks & Rumors',
+    url: siteUrl,
+    logo: `${siteUrl}/favicon.svg`,
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': `${siteUrl}/articles/${article.data.slug}`,
+  },
+  articleSection: article.data.category,
+  keywords: article.data.tags?.join(', '),
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: siteUrl,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Articles',
+      item: `${siteUrl}/latest`,
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: article.data.category,
+      item: `${siteUrl}/categories`,
+    },
+    {
+      '@type': 'ListItem',
+      position: 4,
+      name: article.data.title,
+      item: `${siteUrl}/articles/${article.data.slug}`,
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={`${article.data.title} — 616 Intel`}
+  description={article.data.description}
+  type="article"
+  jsonLd={[articleSchema, breadcrumbSchema]}
+>
+  <div class="container-editorial py-6 md:py-10">
+    <!-- Breadcrumbs -->
+    <Breadcrumbs
+      items={[
+        { label: 'Marvel Wire', href: '/latest' },
+        { label: article.data.category, href: '/categories' },
+        { label: article.data.title },
+      ]}
+    />
+
+    <!-- Wikipedia Article Layout (No Infobox, No Action Buttons, No Images/Videos) -->
+    <article class="max-w-4xl mx-auto mt-4 pb-16">
+      <!-- Article Title (Wikipedia h1 with horizontal rule) -->
+      <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-white border-b border-neutral-700 pb-2 mb-2 tracking-tight">
+        {article.data.title}
+      </h1>
+
+      <!-- Wikipedia Hatnote -->
+      <p class="italic text-xs text-neutral-400 mb-3 font-serif">
+        From 616 Intel, the independent Marvel leaks, rumors, and multiverse intelligence wire.
+      </p>
+
+      <!-- Plain Text Metadata Line (No Action Buttons) -->
+      <div class="text-xs font-mono text-neutral-400 border-b border-neutral-800 pb-3 mb-6 flex flex-wrap items-center gap-x-3 gap-y-1">
+        <span>Category: <span class="text-blue-400 font-semibold">{article.data.category}</span></span>
+        <span>•</span>
+        <span>Published: <time datetime={new Date(article.data.publishedAt).toISOString()}>{formattedPublishedDate}</time></span>
+        {article.data.updatedAt && (
+          <>
+            <span>•</span>
+            <span>Updated: <time datetime={new Date(article.data.updatedAt).toISOString()}>{formattedUpdatedDate}</time></span>
+          </>
+        )}
+        <span>•</span>
+        <span>Length: ~{wordCount} words ({article.data.readingTime || '2 min read'})</span>
+      </div>
+
+      <!-- Wikipedia Table of Contents ("Contents" Box) -->
+      {headings && headings.length > 0 && (
+        <nav class="my-6 p-4 bg-neutral-900 border border-neutral-700 rounded-xs text-sm w-full sm:w-80 shadow-xs" aria-label="Table of Contents">
+          <div class="font-bold text-center border-b border-neutral-700 pb-1 mb-2 font-serif text-xs uppercase tracking-wider text-neutral-200">
+            Contents
+          </div>
+          <ol class="space-y-1.5 list-decimal list-inside text-xs sm:text-sm text-neutral-300">
+            {headings.map((heading) => (
+              <li class:list={[heading.depth === 3 && "pl-4 text-xs text-neutral-400"]}>
+                <a href={`#${heading.slug}`} class="text-[#6b9dff] hover:underline">
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+
+      <!-- Article Prose Body (Wikipedia Classic Typography) -->
+      <div class="wikipedia-prose font-serif text-[16px] sm:text-[17px] leading-[1.8] text-neutral-200">
+        <Content />
+      </div>
+
+      <!-- Wikipedia Categories Box at Bottom -->
+      <div class="mt-12 p-3 bg-neutral-900 border border-neutral-700 rounded-xs text-xs text-neutral-300 flex flex-wrap items-center gap-2">
+        <span class="font-bold text-neutral-100">Categories:</span>
+        <a href="/categories" class="text-[#6b9dff] hover:underline font-medium">
+          {article.data.category}
+        </a>
+        {article.data.tags.map((tag) => (
+          <>
+            <span class="text-neutral-500">|</span>
+            <span class="text-neutral-300">
+              {tag}
+            </span>
+          </>
+        ))}
+      </div>
+    </article>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  /* Wikipedia Prose Typography Rules */
+  .wikipedia-prose h2 {
+    font-family: 'Lora', Georgia, 'Times New Roman', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #f3f4f6;
+    border-bottom: 1px solid #374151;
+    padding-bottom: 0.35rem;
+    margin-top: 2rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .wikipedia-prose h3 {
+    font-family: 'Lora', Georgia, 'Times New Roman', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #e5e7eb;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .wikipedia-prose p {
+    margin-bottom: 1.15rem;
+    line-height: 1.8;
+  }
+
+  .wikipedia-prose strong {
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .wikipedia-prose a {
+    color: #6b9dff;
+    text-decoration: none;
+  }
+
+  .wikipedia-prose a:hover {
+    text-decoration: underline;
+  }
+
+  .wikipedia-prose ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-top: 0.75rem;
+    margin-bottom: 1.25rem;
+    font-family: var(--font-sans, sans-serif);
+    font-size: 0.95rem;
+  }
+
+  .wikipedia-prose ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin-top: 0.75rem;
+    margin-bottom: 1.25rem;
+    font-family: var(--font-sans, sans-serif);
+    font-size: 0.95rem;
+  }
+
+  .wikipedia-prose li {
+    margin-bottom: 0.35rem;
+    line-height: 1.6;
+  }
+</style>

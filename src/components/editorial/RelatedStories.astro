@@ -1,0 +1,42 @@
+---
+import type { ArticleEntry } from '../../utils/content';
+import ArticleCard from '../cards/ArticleCard.astro';
+import { Newspaper } from '@lucide/astro';
+
+interface Props {
+  articles: ArticleEntry[];
+  title?: string;
+  class?: string;
+}
+
+const {
+  articles,
+  title = 'RELATED INTEL & RUMORS',
+  class: className = '',
+} = Astro.props;
+---
+
+{articles && articles.length > 0 && (
+  <section class:list={["my-10 pt-8 border-t border-[var(--border-default)]", className]} aria-labelledby="related-heading">
+    <div class="flex items-center gap-2 mb-6">
+      <Newspaper class="w-4 h-4 text-[var(--accent-red)]" aria-hidden="true" />
+      <h3 id="related-heading" class="font-mono text-sm font-bold uppercase tracking-wider text-white">
+        {title}
+      </h3>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {articles.map((article) => {
+        const cardData = {
+          slug: `/articles/${article.data.slug}`,
+          title: article.data.title,
+          excerpt: article.data.excerpt,
+          category: article.data.category,
+          readingTime: article.data.readingTime || '2 min read',
+          author: article.data.author,
+        };
+        return <ArticleCard article={cardData} variant="standard" />;
+      })}
+    </div>
+  </section>
+)}

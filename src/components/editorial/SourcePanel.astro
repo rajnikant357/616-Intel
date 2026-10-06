@@ -1,0 +1,86 @@
+---
+import type { SourceItem } from '../../data/types';
+import { ExternalLink, Database, ShieldCheck } from '@lucide/astro';
+
+interface Props {
+  sources: SourceItem[];
+  title?: string;
+  class?: string;
+}
+
+const {
+  sources,
+  title = 'SOURCE INTEL',
+  class: className = '',
+} = Astro.props;
+---
+
+<section
+  class:list={[
+    "my-8 rounded-xs border border-[var(--intel-border)] bg-[var(--intel-charcoal)] p-5 md:p-6 shadow-xl relative overflow-hidden select-none",
+    className
+  ]}
+  aria-labelledby="sources-heading"
+>
+  <div class="absolute top-0 left-0 w-1 h-full bg-[var(--intel-red)]"></div>
+
+  <!-- Panel Header -->
+  <div class="flex items-center justify-between pb-4 border-b border-[var(--intel-border-subtle)]">
+    <div class="flex items-center gap-2.5">
+      <Database class="w-4 h-4 text-[var(--intel-red)]" aria-hidden="true" />
+      <h3 id="sources-heading" class="font-display text-base sm:text-lg font-black uppercase tracking-wider text-white">
+        {title}
+      </h3>
+    </div>
+    <div class="flex items-center gap-1.5 text-[10px] font-mono text-[var(--intel-muted)] uppercase tracking-wider bg-black/60 px-2 py-0.5 rounded-xs border border-white/5">
+      <ShieldCheck class="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" />
+      <span>{sources.length}&nbsp;Documented Receipts</span>
+    </div>
+  </div>
+
+  <p class="font-mono text-xs text-[var(--intel-muted)] my-3">
+    This report is based on publicly available filings, trade reporting, and corroborated leaks.
+  </p>
+
+  <!-- Sources List -->
+  <div class="mt-4 divide-y divide-[var(--intel-border-subtle)]">
+    {sources.map((item, index) => {
+      const formattedIndex = `SOURCE ${String(index + 1).padStart(2, '0')}`;
+      return (
+        <div class="py-3.5 first:pt-1 last:pb-1 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-start gap-3 min-w-0">
+            <span class="font-mono text-xs font-bold text-[var(--intel-red)] tracking-wider shrink-0 pt-0.5">
+              {formattedIndex}
+            </span>
+            <div class="min-w-0">
+              <h4 class="text-sm font-bold text-white hover:text-slate-100 transition-colors">
+                {item.title}
+              </h4>
+              <div class="flex items-center gap-2 mt-0.5 text-[11px] font-mono text-[var(--intel-muted)]">
+                <span>{item.outlet}</span>
+                {item.date && (
+                  <>
+                    <span>•</span>
+                    <span>{item.date}</span>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {item.url && (
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xs bg-[var(--intel-elevated)] hover:bg-[var(--intel-surface-hover)] border border-[var(--intel-border)] hover:border-[var(--intel-red)] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all self-start sm:self-auto shrink-0 group btn-shine-sweep"
+            >
+              <span>VIEW SOURCE</span>
+              <ExternalLink class="w-3.5 h-3.5 text-[var(--intel-red)] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
+            </a>
+          )}
+        </div>
+      );
+    })}
+  </div>
+</section>

@@ -1,0 +1,84 @@
+---
+import { Info, TriangleAlert, CircleCheck, CircleAlert, CircleX } from '@lucide/astro';
+
+interface Props {
+  variant?: 'info' | 'warning' | 'confirmed' | 'unverified' | 'debunked';
+  title?: string;
+  class?: string;
+}
+
+const {
+  variant = 'info',
+  title,
+  class: className = '',
+} = Astro.props;
+
+const config = {
+  info: {
+    icon: Info,
+    title: title || 'INTELLIGENCE BRIEFING',
+    border: 'border-sky-500/30',
+    bg: 'bg-sky-950/20',
+    text: 'text-sky-300',
+    iconColor: 'text-sky-400',
+  },
+  warning: {
+    icon: TriangleAlert,
+    title: title || 'CAUTIONARY ADVISORY',
+    border: 'border-amber-500/30',
+    bg: 'bg-amber-950/20',
+    text: 'text-amber-300',
+    iconColor: 'text-amber-400',
+  },
+  confirmed: {
+    icon: CircleCheck,
+    title: title || 'WHAT WE KNOW (CONFIRMED)',
+    border: 'border-emerald-500/30',
+    bg: 'bg-emerald-950/20',
+    text: 'text-emerald-300',
+    iconColor: 'text-emerald-400',
+  },
+  unverified: {
+    icon: CircleAlert,
+    title: title || 'UNVERIFIED INTEL',
+    border: 'border-purple-500/30',
+    bg: 'bg-purple-950/20',
+    text: 'text-purple-300',
+    iconColor: 'text-purple-400',
+  },
+  debunked: {
+    icon: CircleX,
+    title: title || 'DEBUNKED RECORD',
+    border: 'border-slate-700/60',
+    bg: 'bg-slate-900/60',
+    text: 'text-slate-400',
+    iconColor: 'text-red-400',
+  },
+};
+
+const current = config[variant];
+const IconComponent = current.icon;
+---
+
+<div
+  class:list={[
+    "my-6 p-4 sm:p-5 rounded-sm border select-none transition-colors",
+    current.border,
+    current.bg,
+    className
+  ]}
+  role="region"
+  aria-label={current.title}
+>
+  <div class="flex items-start gap-3">
+    <IconComponent class:list={["w-5 h-5 shrink-0 mt-0.5", current.iconColor]} aria-hidden="true" />
+    <div class="flex-1 min-w-0">
+      <h4 class:list={["font-mono text-xs font-bold uppercase tracking-wider mb-1", current.text]}>
+        {current.title}
+      </h4>
+      <div class="text-sm text-slate-200 leading-relaxed font-body">
+        <slot />
+      </div>
+    </div>
+  </div>
+</div>

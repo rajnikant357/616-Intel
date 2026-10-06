@@ -1,0 +1,332 @@
+@import "tailwindcss";
+@import "./tokens.css";
+@import "./typography.css";
+
+@theme {
+  --color-bg-base: var(--bg-base);
+  --color-bg-subtle: var(--bg-subtle);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-glass: var(--surface-glass);
+
+  --color-intel-red: var(--intel-red);
+  --color-intel-void: var(--intel-void);
+  --color-intel-obsidian: var(--intel-obsidian);
+  --color-intel-charcoal: var(--intel-charcoal);
+  --color-intel-elevated: var(--intel-elevated);
+  --color-intel-muted: var(--intel-muted);
+
+  --color-border-subtle: var(--border-subtle);
+  --color-border-default: var(--border-default);
+  --color-border-strong: var(--border-strong);
+  --color-border-red: var(--border-red);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-dim: var(--text-dim);
+
+  --color-accent-red: var(--accent-red);
+  --color-accent-red-hover: var(--accent-red-hover);
+  --color-accent-red-muted: var(--accent-red-muted);
+  --color-accent-red-soft: var(--accent-red-soft);
+
+  --color-status-confirmed: var(--status-confirmed);
+  --color-status-confirmed-soft: var(--status-confirmed-soft);
+  --color-status-reported: var(--status-reported);
+  --color-status-reported-soft: var(--status-reported-soft);
+  --color-status-rumored: var(--status-rumored);
+  --color-status-rumored-soft: var(--status-rumored-soft);
+  --color-status-unverified: var(--status-unverified);
+  --color-status-unverified-soft: var(--status-unverified-soft);
+  --color-status-debunked: var(--status-debunked);
+  --color-status-debunked-soft: var(--status-debunked-soft);
+  --color-status-leak: var(--status-leak);
+  --color-status-leak-soft: var(--status-leak-soft);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+/* Base Document Reset & Setup */
+html {
+  background-color: var(--intel-void);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--intel-void);
+  background-image: 
+    radial-gradient(ellipse 70% 35% at 50% -10%, rgba(225, 6, 0, 0.09), transparent),
+    radial-gradient(ellipse 50% 30% at 50% 100%, rgba(20, 20, 26, 0.6), transparent);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+/* Custom Selection */
+::selection {
+  background-color: var(--intel-red);
+  color: #ffffff;
+}
+
+/* Anchor Scroll Margin */
+[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+/* Focus Ring Baseline */
+:focus-visible {
+  outline: 2px solid var(--intel-red);
+  outline-offset: 3px;
+}
+
+/* Container Width Utilities */
+.container-editorial {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .container-editorial {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-editorial {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+/* Subtle Film Grain / Grid Atmosphere */
+.intel-grid-bg {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+}
+
+/* Breaking Dispatch Marquee Animation */
+@keyframes marquee-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  user-select: none;
+}
+
+.marquee-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: 100%;
+  justify-content: space-around;
+  gap: 2.5rem;
+  padding-right: 2.5rem;
+  animation: marquee-scroll 36s linear infinite;
+  will-change: transform;
+}
+
+.marquee-track:hover .marquee-group,
+.ticker-container:hover .marquee-group {
+  animation-play-state: paused;
+}
+
+@keyframes ticker-slide {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-ticker {
+  display: flex;
+  width: max-content;
+  animation: ticker-slide 32s linear infinite;
+  will-change: transform;
+}
+
+.animate-ticker:hover,
+.ticker-container:hover .animate-ticker {
+  animation-play-state: paused;
+}
+
+/* Flashy Button Shine Keyframes & System (Sections 15-18) */
+@keyframes light-sweep {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(250%) skewX(-20deg);
+  }
+}
+
+.btn-shine-sweep {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine-sweep::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 100%
+  );
+  transform: translateX(-150%) skewX(-20deg);
+  pointer-events: none;
+}
+
+.btn-shine-sweep:hover::after {
+  animation: light-sweep 650ms ease-out forwards;
+}
+
+/* Recurring Red Line Accent Motif (Sections 56 & 57) */
+.red-accent-line {
+  position: relative;
+}
+
+.red-accent-line::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 48px;
+  height: 3px;
+  background-color: var(--intel-red);
+  box-shadow: 0 0 10px rgba(225, 6, 0, 0.6);
+}
+
+/* Card Hover & Image Zoom Animation (Sections 22 & 23) */
+.intel-card {
+  position: relative;
+  background-color: var(--intel-charcoal);
+  border: 1px solid var(--intel-border);
+  border-radius: var(--radius-card);
+  transition: transform var(--motion-normal) var(--ease-editorial),
+              border-color var(--motion-normal) ease,
+              background-color var(--motion-normal) ease,
+              box-shadow var(--motion-normal) ease;
+  overflow: hidden;
+}
+
+.intel-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--intel-red);
+  opacity: 0;
+  transform: scaleX(0.2);
+  transition: opacity var(--motion-normal) ease, transform var(--motion-normal) var(--ease-editorial);
+  transform-origin: center;
+  z-index: 10;
+}
+
+.intel-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.28);
+  background-color: var(--intel-surface-hover);
+  box-shadow: 0 14px 34px -6px rgba(0, 0, 0, 0.9), 0 0 20px -3px rgba(225, 6, 0, 0.18);
+}
+
+.intel-card:hover::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.card-img-zoom {
+  transition: transform 400ms var(--ease-editorial), filter 400ms ease;
+  will-change: transform;
+}
+
+.group:hover .card-img-zoom {
+  transform: scale(1.04);
+}
+
+/* Horizontal Scroll Rails for Mobile & Desktop (Section 64) */
+.scroll-rail {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--intel-charcoal) transparent;
+}
+
+.scroll-rail::-webkit-scrollbar {
+  height: 4px;
+}
+
+.scroll-rail::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-rail::-webkit-scrollbar-thumb {
+  background: var(--intel-elevated);
+  border-radius: 2px;
+}
+
+.scroll-rail-item {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Reduced Motion Override (Section 77) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Keep marquee news ticker legible and moving smoothly rather than completely frozen */
+  .marquee-group {
+    animation-duration: 60s !important;
+    animation-iteration-count: infinite !important;
+  }
+
+  .btn-shine-sweep::after {
+    display: none !important;
+  }
+}

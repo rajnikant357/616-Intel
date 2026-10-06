@@ -1,0 +1,77 @@
+---
+import type { CardVariant } from '../../data/types';
+import CategoryBadge from '../badges/CategoryBadge.astro';
+import { ArrowRight } from '@lucide/astro';
+
+interface Props {
+  article: {
+    id?: string;
+    slug: string;
+    title: string;
+    excerpt?: string;
+    category: string;
+    status?: string;
+    publishedAt?: string;
+    readingTime?: string;
+    author?: { name: string; role?: string } | string;
+  };
+  variant?: CardVariant;
+  class?: string;
+}
+
+const {
+  article,
+  variant = 'standard',
+  class: className = '',
+} = Astro.props;
+
+const authorName = typeof article.author === 'string' ? article.author : article.author?.name || '616 Intel Editorial';
+---
+
+{/* PURE TEXT ARTICLE CARD - ZERO IMAGES */}
+<article
+  class:list={[
+    "group relative flex flex-col justify-between intel-card p-5 sm:p-6 transition-all duration-200 border border-[var(--intel-border)] hover:border-[var(--intel-red)]/50 bg-[var(--intel-charcoal)] hover:bg-[var(--intel-elevated)] min-w-0 h-full select-none",
+    variant === 'featured' && "sm:p-8 bg-gradient-to-b from-[var(--intel-charcoal)] to-neutral-950",
+    className
+  ]}
+>
+  <div class="flex-1 min-w-0">
+    <!-- Top Metadata Row -->
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <CategoryBadge category={article.category} class="bg-black/40 px-2 py-0.5 rounded-xs border border-white/10" />
+      <span class="text-[11px] font-mono text-[var(--intel-muted)]">
+        {article.readingTime || '2 min read'}
+      </span>
+    </div>
+
+    <!-- Article Title -->
+    <h3 class:list={[
+      "font-serif font-bold text-white group-hover:text-[var(--intel-red)] transition-colors leading-snug mb-3",
+      variant === 'featured' ? "text-xl sm:text-2xl" : "text-base sm:text-lg"
+    ]}>
+      <a href={article.slug.startsWith('/') ? article.slug : `/articles/${article.slug}`} class="focus-visible:outline-none focus-visible:underline">
+        {article.title}
+      </a>
+    </h3>
+
+    <!-- Excerpt / Summary -->
+    {article.excerpt && (
+      <p class="text-xs sm:text-sm text-neutral-300 font-sans leading-relaxed line-clamp-3 mb-4">
+        {article.excerpt}
+      </p>
+    )}
+  </div>
+
+  <!-- Bottom Details Bar -->
+  <div class="pt-4 mt-auto border-t border-[var(--intel-border-subtle)] flex items-center justify-between text-xs font-mono text-[var(--intel-muted)]">
+    <span class="truncate max-w-[150px]">{authorName}</span>
+    <a
+      href={article.slug.startsWith('/') ? article.slug : `/articles/${article.slug}`}
+      class="inline-flex items-center gap-1 text-[var(--intel-red)] hover:underline font-bold"
+    >
+      <span>Read Entry</span>
+      <ArrowRight class="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+    </a>
+  </div>
+</article>

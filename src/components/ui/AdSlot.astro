@@ -1,0 +1,41 @@
+---
+interface Props {
+  variant?: 'banner' | 'inline' | 'sidebar' | 'mobile';
+  class?: string;
+  title?: string;
+}
+
+const {
+  variant = 'banner',
+  class: className = '',
+  title = 'ADVERTISEMENT',
+} = Astro.props;
+
+const dimensions = {
+  banner: 'min-h-[100px] w-full max-w-4xl py-6',
+  inline: 'min-h-[140px] w-full my-6 p-4',
+  sidebar: 'min-h-[250px] w-full p-4',
+  mobile: 'min-h-[80px] w-full p-2.5 sm:hidden',
+};
+---
+
+<aside
+  class:list={[
+    "mx-auto flex flex-col items-center justify-center rounded-xs border border-dashed border-[var(--border-subtle)] bg-[var(--surface)]/40 text-center select-none overflow-hidden",
+    dimensions[variant],
+    className
+  ]}
+  aria-label="Sponsor Advertisement Slot"
+>
+  <span class="font-mono text-[9px] tracking-widest text-[var(--text-muted)] uppercase mb-1">
+    {title}
+  </span>
+  <div class="flex flex-col items-center justify-center p-3 text-slate-400 font-mono text-xs">
+    <span class="text-[var(--text-muted)] text-[11px] font-semibold tracking-wider">
+      [ Reserved Editorial Placement ]
+    </span>
+    <span class="text-[10px] text-[var(--text-dim)] mt-0.5">
+      Direct Sponsor &amp; Partner Inquiries
+    </span>
+  </div>
+</aside>

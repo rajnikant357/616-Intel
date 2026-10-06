@@ -1,0 +1,79 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'button'> {
+  variant?: 'primary' | 'secondary' | 'ghost' | 'source' | 'watch' | 'community' | 'danger' | 'leak' | 'explore' | 'gallery' | 'outline';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  href?: string;
+  target?: string;
+  rel?: string;
+  class?: string;
+  disabled?: boolean;
+  loading?: boolean;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  target,
+  rel,
+  class: className = '',
+  disabled = false,
+  loading = false,
+  ...rest
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+
+// Base structural styles with flashy transitions & accessibility
+const baseStyles = "relative inline-flex items-center justify-center font-mono uppercase tracking-wider font-bold select-none rounded-xs transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--intel-red)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--intel-void)] active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed group btn-shine-sweep cursor-pointer";
+
+const sizeStyles = {
+  sm: "text-xs px-3 py-1.5 gap-1.5",
+  md: "text-xs sm:text-sm px-4 py-2.5 gap-2",
+  lg: "text-sm sm:text-base px-6 py-3.5 gap-2.5",
+  xl: "text-base sm:text-lg px-8 py-4 gap-3",
+};
+
+const variantStyles = {
+  primary: "bg-[var(--intel-red)] text-white hover:bg-[var(--intel-red-hover)] hover:scale-[1.02] shadow-[0_0_20px_rgba(225,6,0,0.45)] hover:shadow-[0_0_30px_rgba(225,6,0,0.7)] border border-[var(--intel-red)]",
+  secondary: "bg-[var(--intel-charcoal)] text-white hover:bg-[var(--intel-elevated)] hover:scale-[1.02] border border-[var(--intel-border)] hover:border-white/40 shadow-sm",
+  ghost: "bg-transparent text-[var(--intel-muted)] hover:text-white hover:bg-white/5 border border-transparent",
+  source: "bg-[var(--intel-charcoal)] text-[var(--intel-muted)] hover:text-white border border-[var(--intel-border-subtle)] hover:border-[var(--intel-border)] hover:bg-[var(--intel-elevated)]",
+  watch: "bg-white text-black hover:bg-slate-100 hover:scale-[1.02] border border-white font-black shadow-[0_0_25px_rgba(255,255,255,0.3)]",
+  community: "bg-gradient-to-r from-purple-900 to-[var(--intel-red)] text-white hover:scale-[1.02] shadow-[0_0_20px_rgba(168,85,247,0.4)] border border-purple-500/40",
+  danger: "bg-red-950 text-red-200 border border-red-800 hover:bg-red-900",
+  leak: "bg-black text-[var(--intel-red)] border border-[var(--intel-red)] hover:bg-[var(--intel-red)] hover:text-white hover:scale-[1.02] shadow-[0_0_15px_rgba(225,6,0,0.3)]",
+  explore: "bg-[var(--intel-elevated)] text-white hover:bg-[var(--intel-surface-hover)] border border-[var(--intel-border)] hover:border-[var(--intel-red)] hover:scale-[1.02]",
+  gallery: "bg-black/70 backdrop-blur-xs text-white border border-white/20 hover:border-white hover:bg-black/90",
+  outline: "bg-transparent text-white border border-[var(--intel-border)] hover:border-white hover:bg-white/5",
+};
+---
+
+<Tag
+  href={href}
+  target={target}
+  rel={target === '_blank' ? (rel || 'noopener noreferrer') : rel}
+  disabled={!href && (disabled || loading)}
+  aria-disabled={(disabled || loading) ? 'true' : undefined}
+  class:list={[
+    baseStyles,
+    sizeStyles[size],
+    variantStyles[variant],
+    className
+  ]}
+  {...rest}
+>
+  {loading ? (
+    <span class="inline-flex items-center gap-2">
+      <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      <span>PROCESSING...</span>
+    </span>
+  ) : (
+    <slot />
+  )}
+</Tag>

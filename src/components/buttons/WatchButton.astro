@@ -1,0 +1,44 @@
+---
+import { Play, ArrowUpRight } from '@lucide/astro';
+
+interface Props {
+  href: string;
+  label?: string;
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+  target?: string;
+}
+
+const {
+  href,
+  label = 'WATCH VIDEO',
+  size = 'md',
+  class: className = '',
+  target = '_self',
+} = Astro.props;
+
+const sizeStyles = {
+  sm: 'text-xs px-3 py-1.5 gap-2',
+  md: 'text-xs sm:text-sm px-4 py-2.5 gap-2.5',
+  lg: 'text-sm sm:text-base px-6 py-3.5 gap-3',
+};
+---
+
+<a
+  href={href}
+  target={target}
+  rel={target === '_blank' ? 'noopener noreferrer' : undefined}
+  class:list={[
+    "group inline-flex items-center justify-between font-mono font-bold uppercase tracking-wider select-none rounded-sm border border-white/20 bg-white/10 hover:bg-white text-white hover:text-black transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] active:scale-[0.98] shadow-[0_4px_20px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(255,255,255,0.35)] backdrop-blur-xs",
+    sizeStyles[size],
+    className
+  ]}
+>
+  <span class="flex items-center gap-2">
+    <span class="flex items-center justify-center w-5 h-5 rounded-full bg-[var(--accent-red)] text-white group-hover:bg-black group-hover:text-white transition-colors duration-200">
+      <Play class="w-2.5 h-2.5 fill-current ml-0.5" aria-hidden="true" />
+    </span>
+    <span>{label}</span>
+  </span>
+  <ArrowUpRight class="w-4 h-4 text-white/70 group-hover:text-black transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
+</a>

@@ -1,0 +1,147 @@
+---
+import Logo from '../ui/Logo.astro';
+import { ShieldAlert } from '@lucide/astro';
+
+const featuredTopicLinks = [
+  { label: 'Superhero Action', href: '/articles/superhero-action' },
+  { label: 'Doctor Doom (Character)', href: '/articles/doctor-doom-character' },
+  { label: 'Avengers: Doomsday', href: '/articles/avengers-doomsday' },
+  { label: 'Marvel Rivals', href: '/articles/marvel-rivals' },
+  { label: 'Fantastic Four', href: '/articles/fantastic-four' },
+  { label: 'Spider-Man: Brand New Day', href: '/articles/spider-man-brand-new-day' },
+];
+
+const categoryLinks = [
+  { label: 'Superhero Action & Concepts', href: '/categories/superhero-action-concepts' },
+  { label: 'Marvel Characters & Teams', href: '/categories/marvel-characters-teams' },
+  { label: 'Avengers & Cinematic Universe', href: '/categories/avengers-cinematic-universe' },
+  { label: 'Gaming, Digital & Web Media', href: '/categories/gaming-digital-web-media' },
+  { label: 'Collectibles & Merchandising', href: '/categories/collectibles-merchandising-industry' },
+];
+
+const researchLinks = [
+  { label: 'All 344 Marvel Leaks & Reports', href: '/latest' },
+  { label: 'Write an Article', href: '/write' },
+  { label: 'Intel Categories & Tags', href: '/categories' },
+  { label: 'Search Marvel Wire', href: '/search' },
+  { label: 'About 616 Intel', href: '/about' },
+  { label: 'XML Sitemap', href: '/sitemap.xml' },
+];
+
+const complianceLinks = [
+  { label: 'Legal Disclaimer', href: '/disclaimer' },
+  { label: 'Privacy Policy', href: '/privacy' },
+  { label: 'Terms of Use', href: '/terms' },
+  { label: 'Copyright & DMCA', href: '/copyright' },
+];
+---
+
+<footer class="w-full border-t border-[var(--intel-border)] bg-[var(--intel-obsidian)] text-white mt-auto pt-16 pb-12 select-none" aria-labelledby="footer-heading">
+  <h2 id="footer-heading" class="sr-only">616 Intel Navigation and Dispatches</h2>
+
+  <div class="container-editorial">
+    <!-- Top Editorial Brand Row -->
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-12 border-b border-[var(--intel-border-subtle)]">
+      <div class="max-w-xl">
+        <Logo variant="footer" />
+        <p class="text-sm text-[var(--intel-muted)] mt-4 leading-relaxed font-body">
+          Independent intelligence hub for Marvel leaks, Avengers: Doomsday production rumors, Doctor Doom casting, character dossiers, and multiversal sagas.
+        </p>
+      </div>
+
+      <!-- Intel Status Dashboard Badge -->
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 bg-[var(--intel-charcoal)] p-4 rounded-xs border border-[var(--intel-border)] font-mono text-xs">
+        <div class="flex items-center gap-2 text-emerald-400">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="font-bold">MARVEL LEAK WIRE ACTIVE</span>
+        </div>
+        <span class="text-[var(--intel-dim)] hidden sm:inline">|</span>
+        <div class="text-[var(--intel-muted)]">
+          Indexed Intel: <span class="text-white font-bold">344 Field Dispatches</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Columns Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 py-12 border-b border-[var(--intel-border-subtle)] text-xs font-mono">
+      <!-- Col 1: Key Topics -->
+      <div>
+        <h3 class="font-display font-black uppercase tracking-wider text-white text-sm mb-4 flex items-center gap-1.5 text-[var(--intel-red)]">
+          <span>// KEY TOPICS</span>
+        </h3>
+        <ul class="space-y-2.5">
+          {featuredTopicLinks.map((link) => (
+            <li>
+              <a href={link.href} class="text-[var(--intel-muted)] hover:text-white transition-colors duration-150 block">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Col 2: Categories -->
+      <div>
+        <h3 class="font-display font-black uppercase tracking-wider text-white text-sm mb-4 flex items-center gap-1.5 text-[var(--intel-red)]">
+          <span>// CATEGORIES</span>
+        </h3>
+        <ul class="space-y-2.5">
+          {categoryLinks.map((link) => (
+            <li>
+              <a href={link.href} class="text-[var(--intel-muted)] hover:text-white transition-colors duration-150 block">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Col 3: Research & Archive -->
+      <div>
+        <h3 class="font-display font-black uppercase tracking-wider text-white text-sm mb-4 flex items-center gap-1.5 text-[var(--intel-red)]">
+          <span>// DIRECTORY</span>
+        </h3>
+        <ul class="space-y-2.5">
+          {researchLinks.map((link) => (
+            <li>
+              <a href={link.href} class="text-[var(--intel-muted)] hover:text-white transition-colors duration-150 block">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Col 4: Legal & Compliance -->
+      <div>
+        <h3 class="font-display font-black uppercase tracking-wider text-white text-sm mb-4 flex items-center gap-1.5 text-[var(--intel-red)]">
+          <span>// LEGAL &amp; POLICY</span>
+        </h3>
+        <ul class="space-y-2.5">
+          {complianceLinks.map((link) => (
+            <li>
+              <a href={link.href} class="text-[var(--intel-muted)] hover:text-white transition-colors duration-150 block">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Independent Brand Disclaimer -->
+    <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-[11px] font-mono text-[var(--intel-muted)]">
+      <div class="flex items-start gap-3 max-w-2xl">
+        <ShieldAlert class="w-4 h-4 text-amber-500 shrink-0 mt-0.5" aria-hidden="true" />
+        <p class="leading-relaxed">
+          <strong class="text-white">Independent Publication Notice:</strong> 616 Intel is an independent Marvel fan news, rumor wire, and leak intelligence publication. Not affiliated with Marvel Entertainment, Marvel Studios, Disney, or their corporate entities.
+        </p>
+      </div>
+
+      <div class="shrink-0 text-center md:text-right">
+        <p>&copy; {new Date().getFullYear()} 616 Intel — Marvel Leaks &amp; Rumors. All rights reserved.</p>
+        <p class="text-[10px] text-[var(--intel-dim)] mt-1">Text-First • Pure Leaks &amp; Rumors Wire • Zero Media Bloat</p>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,113 @@
+---
+import { Share2, Link2, Check } from '@lucide/astro';
+
+interface Props {
+  url?: string;
+  title?: string;
+  class?: string;
+}
+
+const {
+  url = 'https://616intel.com',
+  title = '616 Intel Dossier',
+  class: className = '',
+} = Astro.props;
+
+const shareId = `share-${Math.random().toString(36).substring(2, 9)}`;
+---
+
+<div class:list={["inline-flex flex-wrap items-center gap-2", className]} id={shareId}>
+  <span class="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5 mr-1">
+    <Share2 class="w-3.5 h-3.5 text-[var(--accent-red)]" aria-hidden="true" />
+    <span>SHARE</span>
+  </span>
+
+  <!-- X / Twitter -->
+  <a
+    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="p-2 rounded-xs bg-[var(--surface-elevated)] hover:bg-[var(--surface-hover)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] text-[var(--text-secondary)] hover:text-white transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-red)]"
+    aria-label="Share this report on X"
+  >
+    <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+    </svg>
+  </a>
+
+  <!-- WhatsApp -->
+  <a
+    href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${title} ${url}`)}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="p-2 rounded-xs bg-[var(--surface-elevated)] hover:bg-[var(--surface-hover)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] text-[var(--text-secondary)] hover:text-white transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-red)]"
+    aria-label="Share this report on WhatsApp"
+  >
+    <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.861.173.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.086s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/>
+    </svg>
+  </a>
+
+  <!-- Telegram -->
+  <a
+    href={`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="p-2 rounded-xs bg-[var(--surface-elevated)] hover:bg-[var(--surface-hover)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] text-[var(--text-secondary)] hover:text-white transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-red)]"
+    aria-label="Share this report on Telegram"
+  >
+    <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.52 2.77-1.18 3.35-1.38 3.73-1.39.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+    </svg>
+  </a>
+
+  <!-- Copy Link Button with Live Status Feedback -->
+  <button
+    type="button"
+    class="copy-btn inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xs bg-[var(--surface-elevated)] hover:bg-[var(--surface-hover)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] text-[var(--text-secondary)] hover:text-white font-mono text-xs uppercase tracking-wider transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-red)] cursor-pointer"
+    aria-label="Copy link to clipboard"
+    data-url={url}
+  >
+    <Link2 class="w-3.5 h-3.5 link-icon text-[var(--accent-red)]" aria-hidden="true" />
+    <Check class="w-3.5 h-3.5 check-icon text-emerald-400 hidden" aria-hidden="true" />
+    <span class="btn-text">COPY</span>
+  </button>
+  <span class="sr-only aria-status" aria-live="polite"></span>
+</div>
+
+<script>
+  function setupShareButtons() {
+    document.querySelectorAll('[id^="share-"]').forEach((container) => {
+      const copyBtn = container.querySelector('.copy-btn') as HTMLButtonElement | null;
+      const linkIcon = container.querySelector('.link-icon') as HTMLElement | null;
+      const checkIcon = container.querySelector('.check-icon') as HTMLElement | null;
+      const btnText = container.querySelector('.btn-text') as HTMLElement | null;
+      const ariaStatus = container.querySelector('.aria-status') as HTMLElement | null;
+
+      if (!copyBtn || !linkIcon || !checkIcon || !btnText) return;
+
+      copyBtn.addEventListener('click', async () => {
+        const urlToCopy = copyBtn.getAttribute('data-url') || window.location.href;
+        try {
+          await navigator.clipboard.writeText(urlToCopy);
+          linkIcon.classList.add('hidden');
+          checkIcon.classList.remove('hidden');
+          btnText.textContent = 'COPIED';
+          if (ariaStatus) ariaStatus.textContent = 'Link copied to clipboard';
+
+          setTimeout(() => {
+            linkIcon.classList.remove('hidden');
+            checkIcon.classList.add('hidden');
+            btnText.textContent = 'COPY';
+            if (ariaStatus) ariaStatus.textContent = '';
+          }, 2000);
+        } catch {
+          btnText.textContent = 'ERROR';
+        }
+      });
+    });
+  }
+
+  setupShareButtons();
+  document.addEventListener('astro:page-load', setupShareButtons);
+</script>

@@ -1,0 +1,115 @@
+---
+import Logo from '../ui/Logo.astro';
+import MobileNav from './MobileNav.astro';
+import { Search, Menu, SquarePen } from '@lucide/astro';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+
+const mainNavItems = [
+  { label: 'ALL LEAKS', href: '/latest', match: '/latest' },
+  { label: 'SUPERHERO ACTION', href: '/articles/superhero-action', match: '/articles/superhero-action' },
+  { label: 'DOCTOR DOOM', href: '/articles/doctor-doom-character', match: '/articles/doctor-doom-character' },
+  { label: 'AVENGERS DOOMSDAY', href: '/articles/avengers-doomsday', match: '/articles/avengers-doomsday' },
+  { label: 'MARVEL RIVALS', href: '/articles/marvel-rivals', match: '/articles/marvel-rivals' },
+  { label: 'CATEGORIES', href: '/categories', match: '/categories' },
+];
+---
+
+<header
+  id="main-header"
+  class="sticky top-0 z-40 w-full transition-all duration-200 border-b border-[var(--intel-border)] bg-[var(--intel-void)]/95 backdrop-blur-md py-3.5 sm:py-4 select-none"
+>
+  <div class="container-editorial flex items-center justify-between gap-4">
+    <!-- Left: Mobile Menu Trigger + Brand Logo -->
+    <div class="flex items-center gap-3 lg:gap-8">
+      <!-- Mobile Menu Button (md:hidden) -->
+      <button
+        id="open-mobile-drawer-btn"
+        type="button"
+        class="md:hidden p-2 rounded-xs text-[var(--intel-muted)] hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--intel-red)]"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+      >
+        <Menu class="w-6 h-6" aria-hidden="true" />
+      </button>
+
+      <Logo variant="primary" />
+    </div>
+
+    <!-- Center: Desktop Editorial Navigation Links -->
+    <nav class="hidden md:flex items-center space-x-1 lg:space-x-2" aria-label="Primary Navigation">
+      {mainNavItems.map((item) => {
+        const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+        return (
+          <a
+            href={item.href}
+            class:list={[
+              "relative px-2.5 lg:px-3 py-1.5 font-display text-xs lg:text-sm tracking-wider font-bold uppercase transition-[color,background-color] duration-150 rounded-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--intel-red)] select-none",
+              isActive 
+                ? "text-white bg-white/5" 
+                : "text-[var(--intel-muted)] hover:text-white hover:bg-white/5"
+            ]}
+          >
+            {item.label}
+            {isActive && (
+              <span class="absolute bottom-0 left-2.5 right-2.5 h-[2px] bg-[var(--intel-red)] shadow-[0_0_8px_var(--intel-red)]"></span>
+            )}
+          </a>
+        );
+      })}
+    </nav>
+
+    <!-- Right: Search & Write Action -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <a
+        href="/search"
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xs bg-[var(--intel-charcoal)] hover:bg-[var(--intel-elevated)] border border-[var(--intel-border)] hover:border-[var(--intel-border-strong)] text-[var(--intel-muted)] hover:text-white font-mono text-xs transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--intel-red)]"
+        aria-label="Search Marvel leaks and rumors"
+      >
+        <Search class="w-3.5 h-3.5 text-[var(--intel-red)]" aria-hidden="true" />
+        <span class="hidden sm:inline">Search Leaks</span>
+      </a>
+
+      <a
+        href="/write"
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xs bg-[var(--intel-red)]/15 hover:bg-[var(--intel-red)]/25 border border-[var(--intel-red)]/50 text-white font-mono text-xs font-semibold tracking-wider uppercase transition-colors duration-150"
+        aria-label="Write an article"
+      >
+        <SquarePen class="w-3.5 h-3.5 text-[var(--intel-red)]" aria-hidden="true" />
+        <span>Write</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Navigation Drawer -->
+<MobileNav />
+
+<script>
+  function setupHeaderScroll() {
+    const header = document.getElementById('main-header');
+    if (!header) return;
+
+    let scrolled = false;
+    window.addEventListener('scroll', () => {
+      const isScrolled = window.scrollY > 20;
+      if (isScrolled !== scrolled) {
+        scrolled = isScrolled;
+        if (scrolled) {
+          header.classList.remove('py-3.5', 'sm:py-4');
+          header.classList.add('py-2', 'sm:py-2.5', 'shadow-2xl', 'bg-[var(--intel-void)]/98', 'border-white/15');
+        } else {
+          header.classList.remove('py-2', 'sm:py-2.5', 'shadow-2xl', 'bg-[var(--intel-void)]/98', 'border-white/15');
+          header.classList.add('py-3.5', 'sm:py-4');
+        }
+      }
+    }, { passive: true });
+  }
+
+  setupHeaderScroll();
+  document.addEventListener('astro:page-load', setupHeaderScroll);
+</script>

@@ -1,0 +1,10 @@
+# 616 Intel Robots Exclusion Protocol
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /payment/
+Disallow: /write
+Disallow: /admin/
+
+# Crawlable XML Sitemap
+Sitemap: https://616intel.com/sitemap.xml

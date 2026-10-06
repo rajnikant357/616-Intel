@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/navigation/Breadcrumbs.astro';
+import { Newspaper } from '@lucide/astro';
+---
+
+<BaseLayout
+  title="About 616 INTEL — Marvel Leaks, Rumors & Multiverse Wire"
+  description="Learn about 616 Intel's mission as an independent Marvel news, rumor wire, and leak intelligence hub where fans gather to read and share rumors."
+>
+  <div class="container-editorial py-6 md:py-10 max-w-4xl mx-auto">
+    <Breadcrumbs
+      items={[
+        { label: 'Intel Wire', href: '/latest' },
+        { label: 'About 616 Intel' },
+      ]}
+    />
+
+    <header class="pb-6 mb-8 border-b border-[var(--intel-border)]">
+      <div class="flex items-center gap-2 mb-2 text-xs font-mono font-bold text-[var(--intel-red)] uppercase tracking-wider">
+        <Newspaper class="w-4 h-4" aria-hidden="true" />
+        <span>MARVEL LEAKS &amp; RUMORS WIRE</span>
+      </div>
+      <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
+        ABOUT 616 INTEL
+      </h1>
+      <p class="font-mono text-xs sm:text-sm text-[var(--intel-red)] font-semibold uppercase tracking-widest mt-1">
+        Insider Scoops • Multiverse Leaks • Fan Intelligence Hub
+      </p>
+    </header>
+
+    <div class="space-y-8 text-neutral-300 font-sans leading-relaxed text-sm sm:text-base">
+      <section>
+        <h2 class="text-xl sm:text-2xl font-serif font-bold text-white tracking-tight mb-3">
+          1. Mission: Where Marvel Fans Gather to Share &amp; Read Rumors
+        </h2>
+        <p>
+          616 Intel is an independent Marvel intelligence publication and community hub dedicated to breaking insider leaks, production rumors, casting scoops, and multiverse theories across the Marvel Cinematic Universe (MCU), comic lore, and competitive gaming.
+        </p>
+        <p class="mt-2">
+          Whether you are tracking Robert Downey Jr.'s Doctor Doom costume variants for <em>Avengers: Doomsday</em>, secret cameo soundstage reports from Pinewood Studios, or meta shifts in <em>Marvel Rivals</em>, 616 Intel provides an open platform where passionate fans gather to read comprehensive investigative dossiers or submit their own insider scoops.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl sm:text-2xl font-serif font-bold text-white tracking-tight mb-3">
+          2. Wikipedia-Style Reading Experience (Zero Media Bloat)
+        </h2>
+        <p>
+          We adhere to an uncluttered, text-first design philosophy inspired by the classic Wikipedia reading format. By eliminating heavy video players, bandwidth-choking galleries, distracting banner overlays, and redundant action buttons, 616 Intel delivers rapid load times, uninterrupted reading focus, and clean typographic clarity.
+        </p>
+        <p class="mt-2">
+          Every report features structured lead summaries, detailed analytical headings, inline cross-references, and verified source citations for fast, seamless browsing.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl sm:text-2xl font-serif font-bold text-white tracking-tight mb-3">
+          3. Submitting Rumors &amp; Insider Scoops
+        </h2>
+        <p>
+          Fans and industry insiders can contribute dispatches directly through our text-first submission portal (<a href="/write" class="text-blue-400 hover:underline">Submit a Leak</a>). To prioritize security, source confidentiality, and speed, submissions are text-only—no file or image uploads required.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl sm:text-2xl font-serif font-bold text-white tracking-tight mb-3">
+          4. Independent Legal Notice
+        </h2>
+        <p>
+          616 Intel is an independent fan reporting and editorial initiative. It is not affiliated with, sponsored by, or endorsed by Marvel Entertainment, Marvel Studios, The Walt Disney Company, Sony Pictures, or any of their corporate affiliates. All trademarks, characters, logos, and cinematic names remain the exclusive intellectual property of their respective owners.
+        </p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

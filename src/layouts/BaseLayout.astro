@@ -1,0 +1,152 @@
+---
+import '../styles/global.css';
+import Header from '../components/navigation/Header.astro';
+import BreakingTicker from '../components/editorial/BreakingTicker.astro';
+import Footer from '../components/layout/Footer.astro';
+import { BREAKING_TICKER_DATA } from '../data/mockContent';
+
+interface Props {
+  title?: string;
+  description?: string;
+  type?: 'website' | 'article';
+  canonicalUrl?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, any> | Array<Record<string, any>>;
+}
+
+const {
+  title = '616 Intel — Marvel Rumors, Movie Leaks & Multiverse News',
+  description = 'Independent intelligence hub for Marvel leaks, Avengers: Doomsday rumors, Doctor Doom casting, character dossiers, and multiversal sagas.',
+  type = 'website',
+  canonicalUrl: propCanonicalUrl,
+  noindex = false,
+  jsonLd,
+} = Astro.props;
+
+// Build clean normalized canonical URL
+const siteOrigin = 'https://616intel.com';
+const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const canonicalUrl = propCanonicalUrl || (pathname === '/' ? `${siteOrigin}/` : `${siteOrigin}${pathname}`);
+
+// Base Organization & WebSite Structured Data with Geo Coordinates
+const baseSchemas: Array<Record<string, any>> = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: '616 Intel',
+    url: siteOrigin,
+    logo: `${siteOrigin}/favicon.svg`,
+    description: 'Independent intelligence hub documenting Marvel leaks, rumors, superhero action, and cinematic news.',
+    areaServed: {
+      '@type': 'Country',
+      name: 'United States',
+    },
+    knowsAbout: [
+      'Superhero Action',
+      'Marvel Comics',
+      'Marvel Cinematic Universe',
+      'Avengers: Doomsday',
+      'Doctor Doom',
+      'Fantastic Four',
+      'Spider-Man',
+      'Marvel Rivals',
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: '616 Intel',
+    url: siteOrigin,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${siteOrigin}/search?q={search_term_string}`,
+      'query-input': 'required name=search_term_string',
+    },
+  },
+];
+
+const allSchemas = jsonLd
+  ? Array.isArray(jsonLd)
+    ? [...baseSchemas, ...jsonLd]
+    : [...baseSchemas, jsonLd]
+  : baseSchemas;
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Google Fonts Preconnect & Font Optimization for Wikipedia-Style Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Primary SEO & Google Ranking Meta -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="superhero action, team action, epic action, epic adventure, epic sci fi, epic drama, marvel, doctor doom, avengers doomsday, fantastic four, spider man, multiverse, marvel comics, marvel cinematic universe, marvel rivals" />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-snippet:-1'} />
+
+    <!-- SEO Geo-Targeting Tags (US & Worldwide Distribution) -->
+    <meta name="geo.region" content="US" />
+    <meta name="geo.placename" content="United States" />
+    <meta name="geo.position" content="38.8951;-77.0364" />
+    <meta name="ICBM" content="38.8951, -77.0364" />
+    <meta name="coverage" content="Worldwide" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="General" />
+
+    <!-- Open Graph (No Images/Videos - Pure Article) -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="616 Intel — Marvel Leaks &amp; Rumors" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter / X Cards (Summary without image) -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@616Intel" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Structured Data (JSON-LD) -->
+    {allSchemas.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </head>
+
+  <body class="min-h-screen flex flex-col bg-[var(--intel-void)] text-neutral-100 font-sans antialiased">
+    <!-- Accessible Skip to Main Content Link -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2 bg-[var(--intel-red)] text-white font-mono text-xs font-bold uppercase tracking-wider rounded-xs shadow-xl ring-2 ring-white"
+    >
+      Skip to main content
+    </a>
+
+    <!-- Application Shell Header -->
+    <Header />
+
+    <!-- Breaking News & Rumors Ticker -->
+    <BreakingTicker items={BREAKING_TICKER_DATA} />
+
+    <!-- Main Content Region -->
+    <main id="main-content" class="flex-1 flex flex-col min-w-0" tabindex="-1">
+      <slot />
+    </main>
+
+    <!-- Publication Footer -->
+    <Footer />
+  </body>
+</html>

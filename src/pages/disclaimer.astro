@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/navigation/Breadcrumbs.astro';
+import { ShieldAlert } from '@lucide/astro';
+---
+
+<BaseLayout
+  title="Legal Disclaimer & Verification Standards — 616 INTEL"
+  description="Official legal disclosures regarding non-affiliation, trademark protection, and rumor verification standards."
+>
+  <div class="container-editorial py-6 md:py-10 max-w-4xl mx-auto">
+    <Breadcrumbs
+      items={[
+        { label: 'Compliance' },
+        { label: 'Legal Disclaimer' },
+      ]}
+    />
+
+    <header class="pb-6 mb-8 border-b border-[var(--border-default)]">
+      <div class="flex items-center gap-2 mb-2 text-xs font-mono font-bold text-amber-400 uppercase tracking-wider">
+        <ShieldAlert class="w-4 h-4 text-amber-400" aria-hidden="true" />
+        <span>LEGAL &amp; COMPLIANCE DISCLOSURE</span>
+      </div>
+      <h1 class="headline-display-l text-white uppercase tracking-tight">
+        DISCLAIMER &amp; NOTICE
+      </h1>
+      <p class="text-sm sm:text-base text-[var(--text-secondary)] mt-2">
+        Essential legal terms and operational policies governing 616 Intel.
+      </p>
+    </header>
+
+    <div class="article-prose space-y-8 text-slate-300 leading-relaxed font-body">
+      <section class="p-5 rounded-sm border border-amber-500/30 bg-amber-950/20">
+        <h2 class="text-lg font-display font-bold uppercase text-amber-300 tracking-tight mb-2">
+          Notice of Non-Affiliation
+        </h2>
+        <p class="text-sm text-slate-200 leading-relaxed">
+          <strong>616 INTEL</strong> is an independent digital news and cultural commentary publication. 616 Intel is <strong>NOT sponsored, endorsed, affiliated, associated, or in any way officially connected</strong> with Marvel Studios, Marvel Entertainment, LLC, Marvel Characters, Inc., The Walt Disney Company, Sony Pictures Entertainment, or any of their respective subsidiaries or affiliates.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-display font-bold uppercase text-white tracking-tight mb-3">
+          1. Intellectual Property &amp; Fair Use
+        </h2>
+        <p>
+          All Marvel logos, character names, imagery, and movie titles (including but not limited to <em>Avengers</em>, <em>Spider-Man</em>, <em>Doctor Doom</em>, <em>Fantastic Four</em>, and <em>X-Men</em>) are registered trademarks of Marvel Characters, Inc. and/or their respective copyright holders.
+        </p>
+        <p>
+          Any references, screenshots, teaser stills, or promotional photography displayed on this site are utilized strictly under the Fair Use provisions of Title 17, U.S. Code § 107 for the purposes of news reporting, criticism, review, and commentary.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-display font-bold uppercase text-white tracking-tight mb-3">
+          2. Nature of Rumor &amp; Leak Reporting
+        </h2>
+        <p>
+          Reports designated under the <strong>RUMORED</strong> or <strong>UNVERIFIED</strong> tags represent journalistic reporting on leaks, production permits, agency breakdowns, and insider chatter. 616 Intel provides no warranty regarding the final accuracy or implementation of early script pitches, concept artwork, or tentative casting attachments.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-display font-bold uppercase text-white tracking-tight mb-3">
+          3. Takedown &amp; DMCA Protocol
+        </h2>
+        <p>
+          616 Intel respects intellectual property rights. If you are a copyright owner or authorized representative who believes content hosted on this site infringes upon your copyright, contact our compliance desk at <code class="text-[var(--accent-red)]">legal@616intel.com</code> with specific URL references for expedited review.
+        </p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

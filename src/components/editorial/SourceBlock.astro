@@ -1,0 +1,93 @@
+---
+import SourceButton from '../buttons/SourceButton.astro';
+import { Database, ShieldCheck } from '@lucide/astro';
+
+export interface SourceItemData {
+  label?: string;
+  name: string;
+  url: string;
+  type: 'REPORT' | 'VIDEO' | 'SOCIAL' | 'OFFICIAL' | 'PHOTO' | 'INTERVIEW' | 'TRADE' | 'NEWS' | 'RUMOR' | 'LEAKER' | string;
+  publishedAt?: string;
+  description?: string;
+  sourceType?: string;
+  accessedAt?: string;
+}
+
+interface Props {
+  sources?: SourceItemData[];
+  title?: string;
+  class?: string;
+}
+
+const {
+  sources = [],
+  title = 'SOURCES & VERIFIED REPORTS',
+  class: className = '',
+} = Astro.props;
+---
+
+<section
+  class:list={[
+    "my-8 rounded-sm border border-[var(--border-default)] bg-[var(--surface-elevated)] p-5 md:p-6",
+    className
+  ]}
+  aria-labelledby="sourceblock-heading"
+>
+  <div class="flex items-center justify-between pb-3.5 border-b border-[var(--border-subtle)]">
+    <div class="flex items-center gap-2">
+      <Database class="w-4 h-4 text-[var(--accent-red)]" aria-hidden="true" />
+      <h3 id="sourceblock-heading" class="font-mono text-xs md:text-sm font-bold uppercase tracking-wider text-white">
+        {title}
+      </h3>
+    </div>
+    <div class="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
+      <ShieldCheck class="w-3.5 h-3.5" aria-hidden="true" />
+      <span>{sources.length}&nbsp;Documented Sources</span>
+    </div>
+  </div>
+
+  <p class="text-xs text-[var(--text-muted)] font-mono mt-3 mb-4 leading-relaxed">
+    The claims discussed in this briefing originate from the following publicly verifiable reports, production notices, or trade statements:
+  </p>
+
+  <div class="space-y-3">
+    {sources.map((source) => (
+      <div class="p-3.5 rounded-xs border border-[var(--border-subtle)] bg-[var(--surface)] hover:bg-[var(--surface-hover)] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="min-w-0">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-[10px] font-mono font-bold uppercase text-[var(--accent-red)] tracking-wider">
+              {source.type}
+            </span>
+            {source.publishedAt && (
+              <>
+                <span class="text-[var(--text-muted)] text-[10px]">•</span>
+                <span class="text-[10px] font-mono text-[var(--text-muted)]">{source.publishedAt}</span>
+              </>
+            )}
+          </div>
+          <h4 class="text-sm font-bold text-white tracking-tight truncate">
+            {source.label || source.name}
+          </h4>
+          <p class="text-xs font-mono text-[var(--text-secondary)]">
+            Outlet: <span class="text-slate-300 font-medium">{source.name}</span>
+          </p>
+        </div>
+
+        <div class="shrink-0">
+          <SourceButton
+            href={source.url}
+            variant={
+              source.type === 'VIDEO'
+                ? 'Watch Video'
+                : source.type === 'OFFICIAL'
+                ? 'Official Source'
+                : 'Original Report'
+            }
+            outlet={source.name}
+          />
+        </div>
+      </div>
+    ))}
+    <slot />
+  </div>
+</section>

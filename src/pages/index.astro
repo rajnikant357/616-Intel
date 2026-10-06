@@ -1,0 +1,238 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/editorial/Hero.astro';
+import SectionHeader from '../components/editorial/SectionHeader.astro';
+import ArticleCard from '../components/cards/ArticleCard.astro';
+import { getAllArticles } from '../utils/content';
+import { Search, BookOpen, Sparkles, Shield, Swords, Gamepad2, ShoppingBag } from '@lucide/astro';
+
+const allArticles = await getAllArticles();
+
+// Featured lead entry (Avengers: Doomsday as requested)
+const featuredArticle = allArticles.find((a) => a.data.slug === 'avengers-doomsday') || allArticles[0];
+
+// Curated Avengers: Doomsday Related Articles for the Hero section
+const doomsdayRelatedSlugs = [
+  'dr-doom-doomsday',
+  'avengers-doomsday-poster',
+  'avengers-doomsday-release-date',
+  'avengers-doomsday-budget',
+  'is-tom-holland-in-avengers-doomsday',
+  'marvel-movies-in-order-to-watch-before-doomsday',
+];
+
+const doomsdayRelatedArticles = doomsdayRelatedSlugs
+  .map((slug) => allArticles.find((a) => a.data.slug === slug))
+  .filter((a): a is NonNullable<typeof a> => Boolean(a))
+  .map((a) => ({
+    slug: a.data.slug,
+    title: a.data.title,
+    category: a.data.category,
+    excerpt: a.data.excerpt,
+    readingTime: a.data.readingTime,
+    status: a.data.status,
+  }));
+
+// High-priority pillar entries
+const prioritySlugs = [
+  'superhero-action',
+  'doctor-doom-character',
+  'marvel-rivals',
+  'spider-man-brand-new-day',
+  'fantastic-four',
+  'multiverse',
+  'thunderbolts-the-marvel-comics-team',
+  'sentry-the-marvel-comics-character',
+];
+
+const priorityArticles = allArticles.filter((a) => prioritySlugs.includes(a.data.slug));
+
+// Category groupings
+const categoryCounts = allArticles.reduce((acc, a) => {
+  acc[a.data.category] = (acc[a.data.category] || 0) + 1;
+  return acc;
+}, {} as Record<string, number>);
+
+const categories = [
+  {
+    name: 'Superhero Action & Concepts',
+    slug: 'superhero-action-concepts',
+    icon: Swords,
+    desc: 'Core combat theory, team choreography, weaponry, superpowers, and multiversal dynamics.',
+    count: categoryCounts['Superhero Action & Concepts'] || 0,
+  },
+  {
+    name: 'Marvel Characters & Teams',
+    slug: 'marvel-characters-teams',
+    icon: Shield,
+    desc: 'Comprehensive character dossiers for heroes, villains, mutants, and superhero alliances.',
+    count: categoryCounts['Marvel Characters & Teams'] || 0,
+  },
+  {
+    name: 'Avengers & Cinematic Universe',
+    slug: 'avengers-cinematic-universe',
+    icon: Sparkles,
+    desc: 'Theatrical productions, Phase 6 roadmaps, Avengers: Doomsday, and chronological viewing orders.',
+    count: categoryCounts['Avengers & Cinematic Universe'] || 0,
+  },
+  {
+    name: 'Gaming, Digital & Web Media',
+    slug: 'gaming-digital-web-media',
+    icon: Gamepad2,
+    desc: 'Competitive gaming, Marvel Rivals patch notes, season updates, webtoons, and digital media.',
+    count: categoryCounts['Gaming, Digital & Web Media'] || 0,
+  },
+  {
+    name: 'Collectibles, Merchandising & Industry',
+    slug: 'collectibles-merchandising-industry',
+    icon: ShoppingBag,
+    desc: 'LEGO building systems, Funko collectibles, corporate equity history, and box office presales.',
+    count: categoryCounts['Collectibles, Merchandising & Industry'] || 0,
+  },
+];
+---
+
+<BaseLayout
+  title="616 Intel — Marvel Rumors, Movie Leaks & Multiverse News"
+  description="The independent intelligence hub for Marvel leaks, Avengers: Doomsday rumors, Doctor Doom casting, Marvel Rivals intel, and MCU news."
+>
+  <!-- LEAD HERO: AVENGERS: DOOMSDAY POSTER & INTEL SHOWCASE -->
+  <Hero
+    article={{
+      slug: `/articles/${featuredArticle.data.slug}`,
+      title: featuredArticle.data.title,
+      excerpt: featuredArticle.data.excerpt,
+      category: featuredArticle.data.category,
+      publishedAt: featuredArticle.data.publishedAt,
+      readingTime: featuredArticle.data.readingTime,
+      author: featuredArticle.data.author,
+    }}
+    posterImage="/Avengers Doomsday Poster.jpg"
+    relatedArticles={doomsdayRelatedArticles}
+  />
+
+  <!-- QUICK MARVEL LEAKS SEARCH BAR -->
+  <section class="container-editorial py-8 border-b border-[var(--intel-border)]" aria-label="Search Leaks">
+    <div class="max-w-3xl mx-auto">
+      <form action="/search" method="get" class="relative flex items-center">
+        <Search class="w-5 h-5 text-[var(--intel-red)] absolute left-4 pointer-events-none" aria-hidden="true" />
+        <input
+          type="search"
+          name="q"
+          placeholder={`Search ${allArticles.length} Marvel leaks & rumors (e.g. Doctor Doom, Avengers Doomsday, Marvel Rivals)...`}
+          class="w-full pl-12 pr-4 py-3.5 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)] hover:border-neutral-500 text-white placeholder:text-[var(--intel-muted)] font-mono text-sm focus-visible:outline-none focus-visible:border-[var(--intel-red)]"
+        />
+      </form>
+    </div>
+  </section>
+
+  <!-- CATEGORIES GRID -->
+  <section class="container-editorial py-12 sm:py-16 border-b border-[var(--intel-border)]" aria-labelledby="categories-heading">
+    <SectionHeader
+      title="INTEL CATEGORIES"
+      tagline="CURATED TOPIC DOMAINS"
+      actionText="BROWSE ALL"
+      actionHref="/categories"
+    />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {categories.map((cat) => {
+        const Icon = cat.icon;
+        return (
+          <a
+            href={`/categories`}
+            class="group p-6 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)] hover:border-[var(--intel-red)]/50 transition-all flex flex-col justify-between"
+          >
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <div class="p-2.5 rounded-xs bg-[var(--intel-red)]/15 border border-[var(--intel-red)]/30 text-[var(--intel-red)]">
+                  <Icon class="w-5 h-5" aria-hidden="true" />
+                </div>
+                <span class="text-xs font-mono text-[var(--intel-muted)] font-bold">
+                  {cat.count} ENTRIES
+                </span>
+              </div>
+              <h3 class="font-serif text-lg font-bold text-white group-hover:text-[var(--intel-red)] transition-colors mb-2">
+                {cat.name}
+              </h3>
+              <p class="text-xs text-neutral-300 font-sans leading-relaxed">
+                {cat.desc}
+              </p>
+            </div>
+            <div class="pt-4 mt-4 border-t border-[var(--intel-border-subtle)] text-xs font-mono text-[var(--intel-red)] font-bold flex items-center justify-between">
+              <span>Explore Topic</span>
+              <span>&rarr;</span>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- KEY PRIORITY DOSSIERS (Dense Text-First Grid) -->
+  <section class="container-editorial py-12 sm:py-16 border-b border-[var(--intel-border)]" aria-labelledby="key-articles-heading">
+    <SectionHeader
+      title="BREAKING DOSSIERS"
+      tagline="HIGH-RELEVANCE MARVEL INTEL"
+      actionText={`VIEW ALL ${allArticles.length} DISPATCHES`}
+      actionHref="/latest"
+    />
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      {priorityArticles.map((article) => (
+        <ArticleCard
+          article={{
+            slug: `/articles/${article.data.slug}`,
+            title: article.data.title,
+            excerpt: article.data.excerpt,
+            category: article.data.category,
+            readingTime: article.data.readingTime,
+            author: article.data.author,
+          }}
+          variant="standard"
+        />
+      ))}
+    </div>
+  </section>
+
+  <!-- RECENT ARTICLES DIRECTORY (Text List) -->
+  <section class="container-editorial py-12 sm:py-16" aria-labelledby="directory-heading">
+    <SectionHeader
+      title="LATEST MARVEL LEAKS & DISPATCHES"
+      tagline={`${allArticles.length} INDEXED REPORTS`}
+      actionText="CHRONOLOGICAL ARCHIVE"
+      actionHref="/latest"
+    />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {allArticles.slice(0, 30).map((art) => (
+        <a
+          href={`/articles/${art.data.slug}`}
+          class="p-4 rounded-xs bg-[var(--intel-charcoal)]/60 hover:bg-[var(--intel-charcoal)] border border-[var(--intel-border)] hover:border-neutral-500 transition-colors flex flex-col justify-between"
+        >
+          <div class="flex items-center justify-between gap-2 mb-1.5">
+            <span class="text-[10px] font-mono uppercase text-blue-400 font-bold">
+              {art.data.category}
+            </span>
+            <span class="text-[10px] font-mono text-[var(--intel-muted)]">
+              {art.data.readingTime || '2 min'}
+            </span>
+          </div>
+          <h4 class="font-serif text-sm font-semibold text-white hover:text-[var(--intel-red)] transition-colors leading-snug line-clamp-2">
+            {art.data.title}
+          </h4>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-8 text-center">
+      <a
+        href="/latest"
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-xs bg-[var(--intel-charcoal)] hover:bg-[var(--intel-elevated)] border border-[var(--intel-border)] text-white font-mono text-xs font-bold uppercase tracking-wider transition-colors"
+      >
+        <BookOpen class="w-4 h-4 text-[var(--intel-red)]" aria-hidden="true" />
+        <span>View Full Chronological Archive (All {allArticles.length} Dispatches) &rarr;</span>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

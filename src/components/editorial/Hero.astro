@@ -1,0 +1,221 @@
+---
+import CategoryBadge from '../badges/CategoryBadge.astro';
+import { ArrowRight, BookOpen, Sparkles, ShieldAlert, Film, Clapperboard, Flame } from '@lucide/astro';
+
+interface Props {
+  article: {
+    slug: string;
+    title: string;
+    excerpt?: string;
+    category: string;
+    status?: string;
+    publishedAt?: string;
+    readingTime?: string;
+    author?: { name: string; role?: string } | string;
+  };
+  posterImage?: string;
+  relatedArticles?: Array<{
+    slug: string;
+    title: string;
+    category?: string;
+    excerpt?: string;
+    readingTime?: string;
+    status?: string;
+  }>;
+  variant?: string;
+  class?: string;
+}
+
+const {
+  article,
+  posterImage = '/Avengers Doomsday Poster.jpg',
+  relatedArticles = [],
+  class: className = '',
+} = Astro.props;
+
+const authorName = typeof article.author === 'string' ? article.author : article.author?.name || '616 Intel Editorial';
+---
+
+{/* AVENGERS DOOMSDAY HERO WITH POSTER & RELATED ARTICLES */}
+<section
+  class:list={[
+    "relative w-full border-b border-[var(--intel-border)] bg-gradient-to-b from-[var(--intel-obsidian)] via-[var(--intel-void)] to-[var(--intel-charcoal)] py-8 sm:py-12 lg:py-16 text-white select-none overflow-hidden",
+    className
+  ]}
+  aria-label="Featured Avengers: Doomsday Intelligence & Poster Showcase"
+>
+  <!-- Ambient background glow -->
+  <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-red-950/20 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+  <div class="container-editorial relative z-10">
+    <!-- Top Hero Row: Main Lead + Theatrical Poster -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+      
+      <!-- Left Column (Desktop 7 cols): Main Lead Story -->
+      <div class="lg:col-span-7 flex flex-col justify-between">
+        <div>
+          <!-- Tag / Status Badges -->
+          <div class="flex flex-wrap items-center gap-2.5 mb-4">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xs bg-[var(--intel-red)]/20 border border-[var(--intel-red)]/40 text-[var(--intel-red)] text-xs font-mono font-bold uppercase tracking-wider">
+              <Sparkles class="w-3.5 h-3.5" aria-hidden="true" />
+              <span>BREAKING MCU DOSSIER</span>
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xs bg-emerald-950/40 border border-emerald-500/40 text-emerald-400 text-xs font-mono font-bold uppercase tracking-wider">
+              <span>STATUS: CONFIRMED PRODUCTION</span>
+            </span>
+            <CategoryBadge category={article.category} />
+          </div>
+
+          <!-- Main Headline -->
+          <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-4 leading-[1.1]">
+            <a href={article.slug.startsWith('/') ? article.slug : `/articles/${article.slug}`} class="hover:text-red-400 transition-colors">
+              {article.title}
+            </a>
+          </h1>
+
+          <!-- Lead Subtitle / Excerpt -->
+          <p class="text-base sm:text-lg text-neutral-300 font-sans leading-relaxed mb-6 font-normal">
+            {article.excerpt || "Production briefings, clandestine soundstage leaks, and multiversal collision blueprints for Anthony & Joe Russo's Phase 6 cinematic milestone."}
+          </p>
+
+          <!-- Key Intelligence Badges Matrix -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 mb-6 rounded-xs bg-[var(--intel-charcoal)]/60 border border-[var(--intel-border)] font-mono text-xs">
+            <div>
+              <span class="text-[var(--intel-muted)] block text-[10px] uppercase tracking-wider">DIRECTORS</span>
+              <span class="text-white font-bold flex items-center gap-1.5 mt-0.5">
+                <Clapperboard class="w-3.5 h-3.5 text-[var(--intel-red)]" aria-hidden="true" />
+                Russo Brothers
+              </span>
+            </div>
+            <div>
+              <span class="text-[var(--intel-muted)] block text-[10px] uppercase tracking-wider">PRIMARY VILLAIN</span>
+              <span class="text-white font-bold flex items-center gap-1.5 mt-0.5">
+                <Flame class="w-3.5 h-3.5 text-[var(--intel-red)]" aria-hidden="true" />
+                Doctor Doom (RDJ)
+              </span>
+            </div>
+            <div class="col-span-2 sm:col-span-1">
+              <span class="text-[var(--intel-muted)] block text-[10px] uppercase tracking-wider">NARRATIVE EVENT</span>
+              <span class="text-emerald-400 font-bold flex items-center gap-1.5 mt-0.5">
+                <Film class="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" />
+                Multiverse Incursion
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Read Button & Metadata -->
+        <div class="pt-4 border-t border-[var(--intel-border-subtle)] flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[var(--intel-muted)]">
+          <div class="flex items-center gap-3">
+            <span>By {authorName}</span>
+            <span>•</span>
+            <span>{article.readingTime || '3 min read'}</span>
+          </div>
+
+          <a
+            href={article.slug.startsWith('/') ? article.slug : `/articles/${article.slug}`}
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xs bg-[var(--intel-red)] hover:bg-red-700 text-white font-bold uppercase tracking-wider text-xs transition-colors shadow-lg cursor-pointer"
+          >
+            <BookOpen class="w-4 h-4" aria-hidden="true" />
+            <span>Read Full Dossier</span>
+            <ArrowRight class="w-3.5 h-3.5" aria-hidden="true" />
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Column (Desktop 5 cols): Theatrical Poster Card -->
+      <div class="lg:col-span-5 flex flex-col items-center">
+        <div class="w-full max-w-sm mx-auto group">
+          <div class="relative rounded-xs border border-[var(--intel-border-strong)] bg-[var(--intel-charcoal)] p-2.5 shadow-2xl transition-all duration-300 hover:border-[var(--intel-red)]/60 hover:shadow-[0_0_30px_rgba(225,6,0,0.25)]">
+            <!-- Header Tape -->
+            <div class="flex items-center justify-between pb-2 mb-2 px-1 border-b border-white/10 text-[11px] font-mono text-neutral-300">
+              <span class="flex items-center gap-1 text-[var(--intel-red)] font-bold uppercase tracking-wider">
+                <ShieldAlert class="w-3.5 h-3.5" aria-hidden="true" />
+                <span>OFFICIAL POSTER LEAK</span>
+              </span>
+              <span class="text-[10px] text-neutral-400 font-mono">PHASE 6 • MARVEL</span>
+            </div>
+
+            <!-- The Poster Image from public -->
+            <a href="/articles/avengers-doomsday-poster" class="block overflow-hidden rounded-xs bg-black/80 aspect-[735/967]">
+              <img
+                src={posterImage}
+                alt="Avengers: Doomsday Official Theatrical Poster Leak featuring Doctor Doom"
+                width="735"
+                height="967"
+                loading="eager"
+                class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+              />
+            </a>
+
+            <!-- Poster Caption & Link -->
+            <div class="mt-2.5 px-1 flex items-center justify-between text-xs font-mono">
+              <span class="text-neutral-400 text-[11px]">Theatrical Teaser Visual</span>
+              <a
+                href="/articles/avengers-doomsday-poster"
+                class="text-[var(--intel-red)] hover:text-red-400 font-bold transition-colors inline-flex items-center gap-1"
+              >
+                <span>Poster Breakdown</span>
+                <ArrowRight class="w-3 h-3" aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Hero Row: Avengers Doomsday Related Articles Stream -->
+    {relatedArticles && relatedArticles.length > 0 && (
+      <div class="mt-10 pt-8 border-t border-[var(--intel-border)]">
+        <div class="flex items-center justify-between mb-5">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 bg-[var(--intel-red)] animate-pulse rounded-full"></span>
+            <h2 class="font-mono text-xs font-bold text-white uppercase tracking-widest">
+              AVENGERS: DOOMSDAY INTEL WIRE • RELATED DOSSIERS
+            </h2>
+          </div>
+          <a
+            href="/categories/avengers-cinematic-universe"
+            class="text-xs font-mono text-[var(--intel-muted)] hover:text-white transition-colors"
+          >
+            All Multiverse Reports &rarr;
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {relatedArticles.map((rel) => (
+            <a
+              href={`/articles/${rel.slug}`}
+              class="group p-4 rounded-xs bg-[var(--intel-charcoal)]/80 hover:bg-[var(--intel-elevated)] border border-[var(--intel-border)] hover:border-[var(--intel-red)]/50 transition-all flex flex-col justify-between"
+            >
+              <div>
+                <div class="flex items-center justify-between text-[10px] font-mono mb-2">
+                  <span class="text-[var(--intel-red)] font-bold uppercase tracking-wider">
+                    {rel.category || 'DOOMSDAY LEAK'}
+                  </span>
+                  <span class="text-neutral-400">
+                    {rel.readingTime || '2 min read'}
+                  </span>
+                </div>
+                <h3 class="font-serif text-sm sm:text-base font-bold text-white group-hover:text-red-300 transition-colors line-clamp-2">
+                  {rel.title}
+                </h3>
+                {rel.excerpt && (
+                  <p class="text-xs text-neutral-300 font-sans mt-1.5 line-clamp-2">
+                    {rel.excerpt}
+                  </p>
+                )}
+              </div>
+              <div class="pt-3 mt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-neutral-400 group-hover:text-[var(--intel-red)] transition-colors">
+                <span>Read Dispatch</span>
+                <span>&rarr;</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+
+  </div>
+</section>

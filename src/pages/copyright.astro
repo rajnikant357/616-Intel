@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/navigation/Breadcrumbs.astro';
+import { Copyright, Mail, TriangleAlert } from '@lucide/astro';
+---
+
+<BaseLayout
+  title="Copyright, DMCA & Content Complaints — 616 INTEL"
+  description="Official process for intellectual property complaints, DMCA takedown requests, and fair use disclosures for rights holders."
+>
+  <div class="container-editorial py-6 md:py-10 max-w-4xl mx-auto">
+    <Breadcrumbs
+      items={[
+        { label: 'Compliance' },
+        { label: 'Copyright & DMCA' },
+      ]}
+    />
+
+    <header class="pb-6 mb-8 border-b border-[var(--border-default)]">
+      <div class="flex items-center gap-2 mb-2 text-xs font-mono font-bold text-amber-400 uppercase tracking-wider">
+        <Copyright class="w-4 h-4 text-amber-400" aria-hidden="true" />
+        <span>INTELLECTUAL PROPERTY &amp; DMCA</span>
+      </div>
+      <h1 class="headline-display-l text-white uppercase tracking-tight">
+        COPYRIGHT &amp; CONTENT COMPLAINTS
+      </h1>
+      <p class="text-sm sm:text-base text-[var(--text-secondary)] mt-2 font-body">
+        Formal takedown protocols and intellectual property protection procedures.
+      </p>
+    </header>
+
+    <!-- Independent Brand Disclaimer Callout (Section 40) -->
+    <div class="mb-8 p-5 rounded-sm border border-amber-500/40 bg-amber-950/20 text-xs font-mono text-amber-200">
+      <div class="flex items-center gap-2 font-bold uppercase text-amber-400 mb-2">
+        <TriangleAlert class="w-4 h-4 shrink-0" />
+        <span>Independent Marvel Publication Disclaimer</span>
+      </div>
+      <p class="leading-relaxed">
+        <strong>616 Intel</strong> is an independent Marvel-focused publication and is not affiliated with Marvel Entertainment, Marvel Studios, Disney, or their subsidiaries. All character names, logos, stills, and promotional graphics remain the intellectual property of Marvel Characters, Inc. and The Walt Disney Company.
+      </p>
+    </div>
+
+    <div class="article-prose space-y-8 text-slate-300 leading-relaxed font-body text-base">
+      <section>
+        <h2 class="text-xl font-display font-bold uppercase text-white tracking-tight mb-3">
+          1. Fair Use &amp; Editorial Commentary
+        </h2>
+        <p>
+          616 Intel operates as an entertainment news, journalism, and cultural commentary wire. Visual references, trailer frame breakdowns, and production still references are utilized under the Fair Use provisions of Title 17, United States Code § 107 for purposes of reporting, criticism, review, and archival research.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-display font-bold uppercase text-white tracking-tight mb-3">
+          2. DMCA Takedown Procedure (Section 39)
+        </h2>
+        <p>
+          616 Intel respects the intellectual property rights of creators and studios. If you believe your copyrighted work has been reproduced or shared through an editorial dossier or community dispatch in a manner constituting copyright infringement, you or your authorized legal agent may submit a formal notification.
+        </p>
+
+        <div class="p-5 rounded-sm border border-[var(--border-default)] bg-[var(--surface)] text-sm space-y-3 mt-4">
+          <h3 class="font-bold text-white uppercase">Required Notice Information:</h3>
+          <ol class="list-decimal pl-5 space-y-2 text-slate-300">
+            <li>Identification of the copyrighted work claimed to have been infringed;</li>
+            <li>Specific URL(s) on 616 Intel hosting the allegedly infringing material;</li>
+            <li>Your contact information including full legal name, company or represented entity, mailing address, telephone number, and email address;</li>
+            <li>A statement that you have a good-faith belief that use of the material in the manner complained of is not authorized by the copyright owner, its agent, or the law;</li>
+            <li>A statement under penalty of perjury that the information in your notification is accurate and that you are authorized to act on behalf of the owner;</li>
+            <li>A physical or verifiable electronic signature of the copyright owner or authorized representative.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-display font-bold uppercase text-white tracking-tight mb-3">
+          3. Designated Copyright Agent Contact
+        </h2>
+        <div class="p-5 rounded-sm border border-sky-500/30 bg-sky-950/20 font-mono text-xs text-sky-200 flex items-start gap-3">
+          <Mail class="w-5 h-5 text-sky-400 shrink-0 mt-0.5" />
+          <div class="space-y-1">
+            <div class="font-bold text-white">DMCA Compliance Desk &bull; 616 Intel</div>
+            <div>Email: <a href="mailto:dmca@616intel.com" class="text-[var(--accent-red)] hover:underline font-bold">dmca@616intel.com</a></div>
+            <div>Address: Compliance Bureau, 616 Intel Digital Media</div>
+            <div class="text-[11px] text-slate-400">Response turnaround: Within 24–48 business hours.</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-display font-bold uppercase text-white tracking-tight mb-3">
+          4. Counter-Notification Procedure
+        </h2>
+        <p class="text-sm">
+          If a community contributor believes their article was removed or disabled as a result of a mistake or misidentification, they may file a written counter-notification with our designated agent containing proof of original authorship or fair use authorization.
+        </p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

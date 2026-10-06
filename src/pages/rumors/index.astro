@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/navigation/Breadcrumbs.astro';
+import ArticleCard from '../../components/cards/ArticleCard.astro';
+import { getAllArticles } from '../../utils/content';
+import { Flame } from '@lucide/astro';
+
+const allArticles = await getAllArticles();
+const rumorArticles = allArticles.slice(0, 18);
+
+const siteUrl = 'https://616intel.com';
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Rumors & Intel', item: `${siteUrl}/rumors` },
+  ],
+};
+---
+
+<BaseLayout
+  title="Marvel Rumors & Multiverse Speculation | 616 Intel"
+  description="Exhaustive intelligence reports covering upcoming Marvel productions, casting rumors, and storyline theories."
+  jsonLd={[breadcrumbSchema]}
+>
+  <div class="container-editorial py-6 md:py-10">
+    <Breadcrumbs
+      items={[
+        { label: 'Intel Wire', href: '/latest' },
+        { label: 'Rumors & Speculation' },
+      ]}
+    />
+
+    <header class="pb-6 mb-8 border-b border-[var(--intel-border)]">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-xs bg-amber-950/40 border border-amber-500/40 text-amber-400 font-mono text-xs font-bold uppercase tracking-widest mb-3">
+        <Flame class="w-3.5 h-3.5" aria-hidden="true" />
+        <span>RUMORS &amp; MULTIVERSE INTEL</span>
+      </div>
+
+      <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-none mb-3">
+        Marvel Rumors &amp; Speculation
+      </h1>
+
+      <p class="font-sans text-sm sm:text-base text-neutral-300 max-w-2xl mt-4">
+        Production analyses, casting reports, and multiverse theories evaluated against canonical comic and cinematic history.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {rumorArticles.map((article) => (
+        <ArticleCard
+          article={{
+            slug: `/articles/${article.data.slug}`,
+            title: article.data.title,
+            excerpt: article.data.excerpt,
+            category: article.data.category,
+            readingTime: article.data.readingTime,
+            author: article.data.author,
+          }}
+          variant="standard"
+        />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

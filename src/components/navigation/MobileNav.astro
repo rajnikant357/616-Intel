@@ -1,0 +1,156 @@
+---
+import Logo from '../ui/Logo.astro';
+import { X, Search, BookOpen, Sparkles, Shield, Swords, Gamepad2, Layers, SquarePen } from '@lucide/astro';
+
+const navItems = [
+  { label: 'ALL LEAKS', href: '/latest', icon: BookOpen, count: '344' },
+  { label: 'SUPERHERO ACTION', href: '/articles/superhero-action', icon: Swords, count: 'CORE' },
+  { label: 'DOCTOR DOOM', href: '/articles/doctor-doom-character', icon: Shield, count: 'DOOM' },
+  { label: 'AVENGERS DOOMSDAY', href: '/articles/avengers-doomsday', icon: Sparkles, count: '2026' },
+  { label: 'MARVEL RIVALS', href: '/articles/marvel-rivals', icon: Gamepad2, count: 'META' },
+  { label: 'CATEGORIES', href: '/categories', icon: Layers, count: 'TOPICS' },
+];
+---
+
+<div
+  id="mobile-menu-drawer"
+  class="fixed inset-0 z-50 invisible pointer-events-none transition-[visibility] duration-300"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Mobile Navigation"
+>
+  <!-- Dark Backdrop Overlay -->
+  <div
+    id="mobile-drawer-backdrop"
+    class="fixed inset-0 bg-black/85 backdrop-blur-md opacity-0 transition-opacity duration-300"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Drawer Slide-out Panel -->
+  <div
+    id="mobile-drawer-panel"
+    class="fixed inset-y-0 right-0 w-full max-w-sm bg-[var(--intel-obsidian)] border-l border-[var(--intel-border)] shadow-2xl flex flex-col justify-between translate-x-full transition-transform duration-300 ease-out p-6 overflow-y-auto"
+  >
+    <!-- Drawer Header -->
+    <div class="flex items-center justify-between pb-5 border-b border-[var(--intel-border-subtle)]">
+      <Logo variant="primary" />
+      <button
+        id="close-mobile-drawer-btn"
+        type="button"
+        class="p-2 rounded-xs text-[var(--intel-muted)] hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--intel-red)]"
+        aria-label="Close navigation menu"
+      >
+        <X class="w-6 h-6" aria-hidden="true" />
+      </button>
+    </div>
+
+    <!-- Quick Search Input inside drawer -->
+    <form action="/search" method="get" class="my-4">
+      <div class="relative">
+        <input
+          type="search"
+          name="q"
+          placeholder="Search Marvel leaks & rumors..."
+          class="w-full pl-10 pr-4 py-2.5 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)] text-sm text-white placeholder:text-[var(--intel-muted)] focus-visible:outline-none focus-visible:border-[var(--intel-red)] font-mono"
+        />
+        <Search class="w-4 h-4 text-[var(--intel-muted)] absolute left-3 top-3.5" aria-hidden="true" />
+      </div>
+    </form>
+
+    <!-- Primary Nav Links -->
+    <nav class="flex-1 py-1" aria-label="Mobile Primary">
+      <ul class="space-y-1 font-display uppercase tracking-wider text-lg font-bold">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          return (
+            <li>
+              <a
+                href={item.href}
+                class="mobile-nav-link flex items-center justify-between px-3 py-2.5 rounded-xs text-slate-200 hover:text-white hover:bg-white/5 transition-all group"
+              >
+                <span class="flex items-center gap-3">
+                  <Icon class="w-4 h-4 text-[var(--intel-red)] group-hover:scale-110 transition-transform" aria-hidden="true" />
+                  <span>{item.label}</span>
+                </span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded-xs bg-white/5 text-[var(--intel-muted)] font-normal border border-white/5">
+                  {item.count}
+                </span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+
+    <!-- Footer of Drawer -->
+    <div class="pt-5 border-t border-[var(--intel-border-subtle)] flex flex-col gap-2 font-mono text-xs text-[var(--intel-muted)]">
+      <div class="flex items-center justify-between">
+        <a href="/about" class="hover:text-white transition-colors">About 616 Intel</a>
+        <a href="/write" class="hover:text-white text-[var(--intel-red)] transition-colors font-bold inline-flex items-center gap-1.5">
+          <SquarePen class="w-3.5 h-3.5" aria-hidden="true" />
+          <span>Write</span>
+        </a>
+      </div>
+      <p class="text-[10px] text-[var(--intel-dim)] text-center mt-2">
+        616 Intel • Marvel Rumors, Movie Leaks & Multiverse Wire
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function setupMobileDrawer() {
+    const drawer = document.getElementById('mobile-menu-drawer');
+    const backdrop = document.getElementById('mobile-drawer-backdrop');
+    const panel = document.getElementById('mobile-drawer-panel');
+    const openBtn = document.getElementById('open-mobile-drawer-btn');
+    const closeBtn = document.getElementById('close-mobile-drawer-btn');
+    const navLinks = document.querySelectorAll('.mobile-nav-link');
+
+    const drawerEl = drawer;
+    const backdropEl = backdrop;
+    const panelEl = panel;
+
+    if (!drawerEl || !backdropEl || !panelEl) return;
+
+    function openDrawer() {
+      if (!drawerEl || !backdropEl || !panelEl) return;
+      drawerEl.classList.remove('invisible', 'pointer-events-none');
+      document.body.classList.add('overflow-hidden');
+      requestAnimationFrame(() => {
+        backdropEl.classList.remove('opacity-0');
+        backdropEl.classList.add('opacity-100');
+        panelEl.classList.remove('translate-x-full');
+        panelEl.classList.add('translate-x-0');
+      });
+      openBtn?.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeDrawer() {
+      if (!drawerEl || !backdropEl || !panelEl) return;
+      backdropEl.classList.remove('opacity-100');
+      backdropEl.classList.add('opacity-0');
+      panelEl.classList.remove('translate-x-0');
+      panelEl.classList.add('translate-x-full');
+      openBtn?.setAttribute('aria-expanded', 'false');
+      setTimeout(() => {
+        drawerEl.classList.add('invisible', 'pointer-events-none');
+        document.body.classList.remove('overflow-hidden');
+      }, 300);
+    }
+
+    openBtn?.addEventListener('click', openDrawer);
+    closeBtn?.addEventListener('click', closeDrawer);
+    backdropEl.addEventListener('click', closeDrawer);
+    navLinks.forEach((link) => link.addEventListener('click', closeDrawer));
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawerEl && !drawerEl.classList.contains('invisible')) {
+        closeDrawer();
+      }
+    });
+  }
+
+  setupMobileDrawer();
+  document.addEventListener('astro:page-load', setupMobileDrawer);
+</script>

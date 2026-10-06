@@ -1,0 +1,91 @@
+---
+import { Mail, ArrowRight, ShieldCheck } from '@lucide/astro';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<section
+  class:list={[
+    "relative overflow-hidden rounded-sm border border-[var(--border-default)] bg-[var(--surface-elevated)] p-6 sm:p-8 lg:p-10 intel-grid-bg",
+    className
+  ]}
+  aria-labelledby="newsletter-heading"
+>
+  <!-- Ambient background glow -->
+  <div class="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-[var(--accent-red)]/10 blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+  <div class="relative z-10 max-w-2xl mx-auto text-center">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-xs bg-[var(--accent-red-soft)] border border-[var(--accent-red)]/30 text-[var(--accent-red)] font-mono text-xs font-bold uppercase tracking-widest mb-3">
+      <Mail class="w-3.5 h-3.5" aria-hidden="true" />
+      <span>DISPATCH SUBSCRIPTION</span>
+    </div>
+
+    <h2 id="newsletter-heading" class="headline-display-l text-white tracking-tight uppercase text-balance">
+      GET THE LATEST MARVEL INTEL
+    </h2>
+
+    <p class="font-mono text-xs sm:text-sm text-[var(--accent-red)] font-semibold tracking-widest uppercase mt-1 mb-3">
+      Rumors. Reports. Receipts.
+    </p>
+
+    <p class="text-xs sm:text-sm text-[var(--text-secondary)] max-w-lg mx-auto leading-relaxed mb-6">
+      Direct confidential dossiers on MCU slate shifts, casting confirmations, and production leaks delivered to your inbox every Friday morning.
+    </p>
+
+    <!-- Visual Form with Web Interface Guidelines compliance -->
+    <form
+      id="newsletter-form"
+      class="flex flex-col sm:flex-row items-stretch gap-2.5 max-w-md mx-auto"
+      action="#"
+      method="POST"
+    >
+      <div class="relative flex-1 min-w-0">
+        <label for="newsletter-email" class="sr-only">
+          Email Address
+        </label>
+        <input
+          id="newsletter-email"
+          name="email"
+          type="email"
+          required
+          autocomplete="email"
+          spellcheck="false"
+          placeholder="agent@domain.com…"
+          class="w-full px-4 py-3 rounded-xs bg-black/60 border border-[var(--border-default)] text-white text-sm placeholder:text-[var(--text-muted)] focus-visible:outline-none focus-visible:border-[var(--accent-red)] focus-visible:ring-1 focus-visible:ring-[var(--accent-red)] transition-colors"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xs bg-[var(--accent-red)] hover:bg-[var(--accent-red-hover)] text-white font-mono font-bold text-xs uppercase tracking-wider transition-colors duration-150 shadow-[0_0_15px_rgba(230,36,41,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white shrink-0 cursor-pointer active:scale-98"
+      >
+        <span>SUBSCRIBE</span>
+        <ArrowRight class="w-4 h-4" aria-hidden="true" />
+      </button>
+    </form>
+
+    <div class="flex items-center justify-center gap-2 mt-4 text-[11px] font-mono text-[var(--text-muted)]">
+      <ShieldCheck class="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" />
+      <span>No spam. Strict unsubscribe anytime. No tracking sell-off.</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  function setupNewsletter() {
+    const form = document.getElementById('newsletter-form') as HTMLFormElement | null;
+    if (!form) return;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('DEMO: Newsletter dispatch subscription confirmed (Prototype Mode).');
+      form.reset();
+    });
+  }
+
+  setupNewsletter();
+  document.addEventListener('astro:page-load', setupNewsletter);
+</script>

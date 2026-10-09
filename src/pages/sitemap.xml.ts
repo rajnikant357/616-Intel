@@ -13,50 +13,85 @@ interface SitemapEntry {
 export const GET: APIRoute = async () => {
   const baseUrl = 'https://616intel.com';
   const entries: SitemapEntry[] = [];
+  const today = new Date().toISOString().split('T')[0];
 
-  // 1. Core Hub & Intel Wire Index Routes
-  entries.push({ url: `${baseUrl}/`, changefreq: 'daily', priority: 1.0 });
-  entries.push({ url: `${baseUrl}/latest`, changefreq: 'daily', priority: 0.9 });
-  entries.push({ url: `${baseUrl}/categories`, changefreq: 'daily', priority: 0.9 });
-  entries.push({ url: `${baseUrl}/categories/superhero-action-concepts`, changefreq: 'daily', priority: 0.8 });
-  entries.push({ url: `${baseUrl}/categories/marvel-characters-teams`, changefreq: 'daily', priority: 0.8 });
-  entries.push({ url: `${baseUrl}/categories/avengers-cinematic-universe`, changefreq: 'daily', priority: 0.8 });
-  entries.push({ url: `${baseUrl}/categories/gaming-digital-web-media`, changefreq: 'daily', priority: 0.8 });
-  entries.push({ url: `${baseUrl}/categories/collectibles-merchandising-industry`, changefreq: 'daily', priority: 0.8 });
-  entries.push({ url: `${baseUrl}/write`, changefreq: 'weekly', priority: 0.9 });
-  entries.push({ url: `${baseUrl}/search`, changefreq: 'daily', priority: 0.8 });
-  entries.push({ url: `${baseUrl}/news`, changefreq: 'daily', priority: 0.8 });
-  entries.push({ url: `${baseUrl}/rumors`, changefreq: 'daily', priority: 0.8 });
-  entries.push({ url: `${baseUrl}/leaks`, changefreq: 'daily', priority: 0.8 });
-  entries.push({ url: `${baseUrl}/breaking`, changefreq: 'daily', priority: 0.8 });
-  entries.push({ url: `${baseUrl}/confirmed`, changefreq: 'daily', priority: 0.8 });
-  entries.push({ url: `${baseUrl}/debunked`, changefreq: 'daily', priority: 0.8 });
-  entries.push({ url: `${baseUrl}/movies`, changefreq: 'daily', priority: 0.8 });
-  entries.push({ url: `${baseUrl}/characters`, changefreq: 'daily', priority: 0.8 });
+  // 1. Primary Navigation Pages (Header & Mobile Nav Buttons)
+  entries.push({ url: `${baseUrl}/`, lastmod: today, changefreq: 'daily', priority: 1.0 });
+  entries.push({ url: `${baseUrl}/latest`, lastmod: today, changefreq: 'daily', priority: 0.9 });
+  entries.push({ url: `${baseUrl}/categories`, lastmod: today, changefreq: 'daily', priority: 0.9 });
+  entries.push({ url: `${baseUrl}/search`, lastmod: today, changefreq: 'daily', priority: 0.8 });
+  entries.push({ url: `${baseUrl}/write`, lastmod: today, changefreq: 'weekly', priority: 0.8 });
 
-  // 2. Informational & Legal Compliance Pages
-  entries.push({ url: `${baseUrl}/about`, changefreq: 'monthly', priority: 0.5 });
-  entries.push({ url: `${baseUrl}/contact`, changefreq: 'monthly', priority: 0.5 });
-  entries.push({ url: `${baseUrl}/disclaimer`, changefreq: 'monthly', priority: 0.5 });
-  entries.push({ url: `${baseUrl}/terms`, changefreq: 'monthly', priority: 0.5 });
-  entries.push({ url: `${baseUrl}/privacy`, changefreq: 'monthly', priority: 0.5 });
-  entries.push({ url: `${baseUrl}/copyright`, changefreq: 'monthly', priority: 0.5 });
+  // 2. Curated Editorial & Featured Pillar Topics (Nav Buttons & Footer Links)
+  const curatedArticleSlugs = [
+    'superhero-action',
+    'doctor-doom-character',
+    'avengers-doomsday',
+    'marvel-rivals',
+    'fantastic-four',
+    'spider-man-brand-new-day',
+  ];
 
-  // 3. All Canonical Marvel Leaks & Reports
   try {
-    const articles = await getAllArticles();
-    for (const a of articles) {
-      const lastmod = a.data.updatedAt || a.data.publishedAt;
+    const allArticles = await getAllArticles();
+    const articleMap = new Map(allArticles.map((a) => [a.data.slug, a]));
+
+    for (const slug of curatedArticleSlugs) {
+      const article = articleMap.get(slug);
+      let lastmod = today;
+      if (article?.data?.updatedAt || article?.data?.publishedAt) {
+        const rawDate = article.data.updatedAt || article.data.publishedAt;
+        try {
+          lastmod = new Date(rawDate).toISOString().split('T')[0];
+        } catch {
+          lastmod = today;
+        }
+      }
+
       entries.push({
-        url: `${baseUrl}/articles/${a.data.slug}`,
-        lastmod: lastmod ? new Date(lastmod).toISOString() : undefined,
+        url: `${baseUrl}/articles/${slug}`,
+        lastmod,
         changefreq: 'weekly',
         priority: 0.9,
       });
     }
   } catch (e) {
-    console.error('Error adding articles to sitemap', e);
+    console.error('Error adding curated articles to sitemap', e);
+    for (const slug of curatedArticleSlugs) {
+      entries.push({
+        url: `${baseUrl}/articles/${slug}`,
+        lastmod: today,
+        changefreq: 'weekly',
+        priority: 0.9,
+      });
+    }
   }
+
+  // 3. Curated Category Archives (Footer Category Links)
+  const categoryPaths = [
+    'superhero-action-concepts',
+    'marvel-characters-teams',
+    'avengers-cinematic-universe',
+    'gaming-digital-web-media',
+    'collectibles-merchandising-industry',
+  ];
+
+  for (const catSlug of categoryPaths) {
+    entries.push({
+      url: `${baseUrl}/categories/${catSlug}`,
+      lastmod: today,
+      changefreq: 'weekly',
+      priority: 0.8,
+    });
+  }
+
+  // 4. Directory, Information & Legal Compliance Pages (MobileNav & Footer Links)
+  entries.push({ url: `${baseUrl}/about`, lastmod: today, changefreq: 'monthly', priority: 0.6 });
+  entries.push({ url: `${baseUrl}/contact`, lastmod: today, changefreq: 'monthly', priority: 0.6 });
+  entries.push({ url: `${baseUrl}/disclaimer`, lastmod: today, changefreq: 'monthly', priority: 0.5 });
+  entries.push({ url: `${baseUrl}/privacy`, lastmod: today, changefreq: 'monthly', priority: 0.5 });
+  entries.push({ url: `${baseUrl}/terms`, lastmod: today, changefreq: 'monthly', priority: 0.5 });
+  entries.push({ url: `${baseUrl}/copyright`, lastmod: today, changefreq: 'monthly', priority: 0.5 });
 
   // Render XML
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

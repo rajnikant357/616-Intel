@@ -6,7 +6,7 @@ import { getArticlesByCategory } from '../../utils/content';
 import { Film } from '@lucide/astro';
 
 const movieArticles = await getArticlesByCategory('Avengers & Cinematic Universe');
-const siteUrl = 'https://616intel.com';
+const siteUrl = Astro.site?.origin || 'https://616intel.prometrion.com';
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',

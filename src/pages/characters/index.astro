@@ -6,7 +6,7 @@ import { getArticlesByCategory } from '../../utils/content';
 import { Users } from '@lucide/astro';
 
 const characterArticles = await getArticlesByCategory('Marvel Characters & Teams');
-const siteUrl = 'https://616intel.com';
+const siteUrl = Astro.site?.origin || 'https://616intel.prometrion.com';
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',

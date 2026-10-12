@@ -71,7 +71,7 @@ const categoryIcons: Record<string, any> = {
 
 const Icon = categoryIcons[categoryName] || Layers;
 
-const siteUrl = 'https://616intel.com';
+const siteUrl = Astro.site?.origin || 'https://616intel.prometrion.com';
 const currentSlug = Astro.params.slug;
 const collectionSchema = {
   '@context': 'https://schema.org',

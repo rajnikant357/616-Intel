@@ -5,7 +5,7 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
-  site: 'https://616intel.com',
+  site: 'https://616intel.prometrion.com',
   output: 'static',
   integrations: [mdx()],
   vite: {

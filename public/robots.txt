@@ -6,4 +6,4 @@ Disallow: /admin/
 Disallow: /payment/
 
 # Crawlable XML Sitemap
-Sitemap: https://616intel.com/sitemap.xml
+Sitemap: https://616intel.prometrion.com/sitemap.xml

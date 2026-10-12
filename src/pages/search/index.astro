@@ -17,7 +17,7 @@ const searchIndex = allArticles.map((a) => ({
   tags: a.data.tags || [],
 }));
 
-const siteUrl = 'https://616intel.com';
+const siteUrl = Astro.site?.origin || 'https://616intel.prometrion.com';
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',

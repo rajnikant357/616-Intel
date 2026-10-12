@@ -19,7 +19,7 @@ const nodeEnv = process.env.NODE_ENV || 'development';
 const isProduction = nodeEnv === 'production';
 const isDevelopment = nodeEnv === 'development';
 
-const siteUrl = process.env.PUBLIC_SITE_URL || 'https://616intel.com';
+const siteUrl = process.env.PUBLIC_SITE_URL || 'https://616intel.prometrion.com';
 
 // Payment secrets
 const paymentSecretKey = process.env.PAYMENT_SECRET_KEY || (

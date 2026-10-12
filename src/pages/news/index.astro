@@ -7,7 +7,7 @@ import { Newspaper } from '@lucide/astro';
 
 const allArticles = await getAllArticles();
 
-const siteUrl = 'https://616intel.com';
+const siteUrl = Astro.site?.origin || 'https://616intel.prometrion.com';
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',

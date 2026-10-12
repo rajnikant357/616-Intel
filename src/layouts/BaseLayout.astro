@@ -24,7 +24,7 @@ const {
 } = Astro.props;
 
 // Build clean normalized canonical URL
-const siteOrigin = 'https://616intel.com';
+const siteOrigin = Astro.site?.origin || 'https://616intel.prometrion.com';
 const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const canonicalUrl = propCanonicalUrl || (pathname === '/' ? `${siteOrigin}/` : `${siteOrigin}${pathname}`);
 

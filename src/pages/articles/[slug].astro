@@ -36,7 +36,7 @@ const formattedUpdatedDate = article.data.updatedAt ? formatDate(article.data.up
 // Calculate approximate word count
 const wordCount = (article.body || '').split(/\s+/).filter(Boolean).length;
 
-const siteUrl = 'https://616intel.com';
+const siteUrl = Astro.site?.origin || 'https://616intel.prometrion.com';
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',

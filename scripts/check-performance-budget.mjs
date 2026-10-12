@@ -6,11 +6,13 @@ console.log('='.repeat(70));
 console.log('  616 INTEL — PERFORMANCE BUDGET & REGRESSION CHECKER');
 console.log('='.repeat(70));
 
-const DIST_DIR = path.resolve('dist/client');
+const DIST_DIR = fs.existsSync(path.resolve('dist/client'))
+  ? path.resolve('dist/client')
+  : path.resolve('dist');
 const ASTRO_ASSETS_DIR = path.join(DIST_DIR, '_astro');
 
 if (!fs.existsSync(DIST_DIR)) {
-  console.error('\n❌ Error: dist/client directory not found. Please run "npm run build" first.');
+  console.error('\n❌ Error: dist directory not found. Please run "npm run build" first.');
   process.exit(1);
 }
 
@@ -90,27 +92,27 @@ const sitemapPath = path.join(DIST_DIR, 'sitemap.xml');
 
 if (fs.existsSync(robotsPath)) {
   const robotsTxt = fs.readFileSync(robotsPath, 'utf-8');
-  if (robotsTxt.includes('Sitemap: https://616intel.com/sitemap.xml')) {
+  if (robotsTxt.includes('Sitemap: https://616intel.prometrion.com/sitemap.xml') || robotsTxt.includes('Sitemap: https://616intel.com/sitemap.xml')) {
     console.log('✅ PASS | robots.txt exists and contains valid sitemap directive');
   } else {
     console.log('❌ FAIL | robots.txt missing sitemap directive');
     failed = true;
   }
 } else {
-  console.log('❌ FAIL | robots.txt does not exist in dist/client');
+  console.log('❌ FAIL | robots.txt does not exist in target dir');
   failed = true;
 }
 
 if (fs.existsSync(sitemapPath)) {
   const sitemapXml = fs.readFileSync(sitemapPath, 'utf-8');
-  if (sitemapXml.includes('<urlset') && sitemapXml.includes('https://616intel.com')) {
+  if (sitemapXml.includes('<urlset') && (sitemapXml.includes('https://616intel.prometrion.com') || sitemapXml.includes('https://616intel.com'))) {
     console.log('✅ PASS | sitemap.xml exists and contains valid urlset XML');
   } else {
     console.log('❌ FAIL | sitemap.xml does not contain valid XML markup');
     failed = true;
   }
 } else {
-  console.log('❌ FAIL | sitemap.xml does not exist in dist/client');
+  console.log('❌ FAIL | sitemap.xml does not exist in target dir');
   failed = true;
 }
 
@@ -150,7 +152,7 @@ for (const relPath of sampleHtmlFiles) {
     // Check main
     const hasMain = html.includes('<main') && html.includes('</main>');
     // Check Primary Nav
-    const hasNav = html.includes('aria-label="Primary"');
+    const hasNav = html.includes('aria-label="Primary Navigation"') || html.includes('aria-label="Primary"');
     // Check Single H1
     const h1Matches = html.match(/<h1[\s>]/gi) || [];
     const singleH1 = h1Matches.length === 1;

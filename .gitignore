@@ -37,10 +37,11 @@ Thumbs.db
 *.sln
 *.sw?
 
-# Markdown files (ignore all except README)
+# Markdown files (ignore all except README and content articles)
 *.md
 **/*.md
 !README.md
 !readme.md
 !**/README.md
 !**/readme.md
+!src/content/articles/**

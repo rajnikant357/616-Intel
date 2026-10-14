@@ -2,6 +2,12 @@
 import CategoryBadge from '../badges/CategoryBadge.astro';
 import { ArrowRight, BookOpen, Sparkles, ShieldAlert, Film, Clapperboard, Flame } from '@lucide/astro';
 
+interface MetricItem {
+  label: string;
+  value: string;
+  color?: string;
+}
+
 interface Props {
   article: {
     slug: string;
@@ -14,6 +20,14 @@ interface Props {
     author?: { name: string; role?: string } | string;
   };
   posterImage?: string;
+  posterTitle?: string;
+  posterSubtitle?: string;
+  posterCaption?: string;
+  posterLink?: string;
+  posterActionText?: string;
+  badgeTag?: string;
+  statusBadge?: string;
+  metrics?: MetricItem[];
   relatedArticles?: Array<{
     slug: string;
     title: string;
@@ -22,6 +36,9 @@ interface Props {
     readingTime?: string;
     status?: string;
   }>;
+  relatedSectionTitle?: string;
+  relatedSectionLink?: string;
+  relatedSectionLinkText?: string;
   variant?: string;
   class?: string;
 }
@@ -29,7 +46,18 @@ interface Props {
 const {
   article,
   posterImage = '/Avengers Doomsday Poster.jpg',
+  posterTitle = 'OFFICIAL POSTER LEAK',
+  posterSubtitle = 'PHASE 6 • MARVEL',
+  posterCaption = 'Theatrical Teaser Visual',
+  posterLink = '/articles/avengers-doomsday-poster',
+  posterActionText = 'Poster Breakdown',
+  badgeTag = 'BREAKING MCU DOSSIER',
+  statusBadge = 'STATUS: CONFIRMED PRODUCTION',
+  metrics,
   relatedArticles = [],
+  relatedSectionTitle = 'AVENGERS: DOOMSDAY INTEL WIRE • RELATED DOSSIERS',
+  relatedSectionLink = '/categories/avengers-cinematic-universe',
+  relatedSectionLinkText = 'All Multiverse Reports →',
   class: className = '',
 } = Astro.props;
 
@@ -58,10 +86,10 @@ const authorName = typeof article.author === 'string' ? article.author : article
           <div class="flex flex-wrap items-center gap-2.5 mb-4">
             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xs bg-[var(--intel-red)]/20 border border-[var(--intel-red)]/40 text-[var(--intel-red)] text-xs font-mono font-bold uppercase tracking-wider">
               <Sparkles class="w-3.5 h-3.5" aria-hidden="true" />
-              <span>BREAKING MCU DOSSIER</span>
+              <span>{badgeTag}</span>
             </span>
             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xs bg-emerald-950/40 border border-emerald-500/40 text-emerald-400 text-xs font-mono font-bold uppercase tracking-wider">
-              <span>STATUS: CONFIRMED PRODUCTION</span>
+              <span>{statusBadge}</span>
             </span>
             <CategoryBadge category={article.category} />
           </div>
@@ -80,27 +108,40 @@ const authorName = typeof article.author === 'string' ? article.author : article
 
           <!-- Key Intelligence Badges Matrix -->
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 mb-6 rounded-xs bg-[var(--intel-charcoal)]/60 border border-[var(--intel-border)] font-mono text-xs">
-            <div>
-              <span class="text-[var(--intel-muted)] block text-[10px] uppercase tracking-wider">DIRECTORS</span>
-              <span class="text-white font-bold flex items-center gap-1.5 mt-0.5">
-                <Clapperboard class="w-3.5 h-3.5 text-[var(--intel-red)]" aria-hidden="true" />
-                Russo Brothers
-              </span>
-            </div>
-            <div>
-              <span class="text-[var(--intel-muted)] block text-[10px] uppercase tracking-wider">PRIMARY VILLAIN</span>
-              <span class="text-white font-bold flex items-center gap-1.5 mt-0.5">
-                <Flame class="w-3.5 h-3.5 text-[var(--intel-red)]" aria-hidden="true" />
-                Doctor Doom (RDJ)
-              </span>
-            </div>
-            <div class="col-span-2 sm:col-span-1">
-              <span class="text-[var(--intel-muted)] block text-[10px] uppercase tracking-wider">NARRATIVE EVENT</span>
-              <span class="text-emerald-400 font-bold flex items-center gap-1.5 mt-0.5">
-                <Film class="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" />
-                Multiverse Incursion
-              </span>
-            </div>
+            {metrics && metrics.length > 0 ? (
+              metrics.map((m) => (
+                <div>
+                  <span class="text-[var(--intel-muted)] block text-[10px] uppercase tracking-wider">{m.label}</span>
+                  <span class:list={["font-bold flex items-center gap-1.5 mt-0.5", m.color || "text-white"]}>
+                    {m.value}
+                  </span>
+                </div>
+              ))
+            ) : (
+              <>
+                <div>
+                  <span class="text-[var(--intel-muted)] block text-[10px] uppercase tracking-wider">DIRECTORS</span>
+                  <span class="text-white font-bold flex items-center gap-1.5 mt-0.5">
+                    <Clapperboard class="w-3.5 h-3.5 text-[var(--intel-red)]" aria-hidden="true" />
+                    Russo Brothers
+                  </span>
+                </div>
+                <div>
+                  <span class="text-[var(--intel-muted)] block text-[10px] uppercase tracking-wider">PRIMARY VILLAIN</span>
+                  <span class="text-white font-bold flex items-center gap-1.5 mt-0.5">
+                    <Flame class="w-3.5 h-3.5 text-[var(--intel-red)]" aria-hidden="true" />
+                    Doctor Doom (RDJ)
+                  </span>
+                </div>
+                <div class="col-span-2 sm:col-span-1">
+                  <span class="text-[var(--intel-muted)] block text-[10px] uppercase tracking-wider">NARRATIVE EVENT</span>
+                  <span class="text-emerald-400 font-bold flex items-center gap-1.5 mt-0.5">
+                    <Film class="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" />
+                    Multiverse Incursion
+                  </span>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -131,16 +172,16 @@ const authorName = typeof article.author === 'string' ? article.author : article
             <div class="flex items-center justify-between pb-2 mb-2 px-1 border-b border-white/10 text-[11px] font-mono text-neutral-300">
               <span class="flex items-center gap-1 text-[var(--intel-red)] font-bold uppercase tracking-wider">
                 <ShieldAlert class="w-3.5 h-3.5" aria-hidden="true" />
-                <span>OFFICIAL POSTER LEAK</span>
+                <span>{posterTitle}</span>
               </span>
-              <span class="text-[10px] text-neutral-400 font-mono">PHASE 6 • MARVEL</span>
+              <span class="text-[10px] text-neutral-400 font-mono">{posterSubtitle}</span>
             </div>
 
             <!-- The Poster Image from public -->
-            <a href="/articles/avengers-doomsday-poster" class="block overflow-hidden rounded-xs bg-black/80 aspect-[735/967]">
+            <a href={posterLink} class="block overflow-hidden rounded-xs bg-black/80 aspect-[735/967]">
               <img
                 src={posterImage}
-                alt="Avengers: Doomsday Official Theatrical Poster Leak featuring Doctor Doom"
+                alt={posterCaption}
                 width="735"
                 height="967"
                 loading="eager"
@@ -150,12 +191,12 @@ const authorName = typeof article.author === 'string' ? article.author : article
 
             <!-- Poster Caption & Link -->
             <div class="mt-2.5 px-1 flex items-center justify-between text-xs font-mono">
-              <span class="text-neutral-400 text-[11px]">Theatrical Teaser Visual</span>
+              <span class="text-neutral-400 text-[11px]">{posterCaption}</span>
               <a
-                href="/articles/avengers-doomsday-poster"
+                href={posterLink}
                 class="text-[var(--intel-red)] hover:text-red-400 font-bold transition-colors inline-flex items-center gap-1"
               >
-                <span>Poster Breakdown</span>
+                <span>{posterActionText}</span>
                 <ArrowRight class="w-3 h-3" aria-hidden="true" />
               </a>
             </div>
@@ -165,21 +206,21 @@ const authorName = typeof article.author === 'string' ? article.author : article
 
     </div>
 
-    <!-- Bottom Hero Row: Avengers Doomsday Related Articles Stream -->
+    <!-- Bottom Hero Row: Related Articles Stream -->
     {relatedArticles && relatedArticles.length > 0 && (
       <div class="mt-10 pt-8 border-t border-[var(--intel-border)]">
         <div class="flex items-center justify-between mb-5">
           <div class="flex items-center gap-2">
             <span class="w-2 h-2 bg-[var(--intel-red)] animate-pulse rounded-full"></span>
             <h2 class="font-mono text-xs font-bold text-white uppercase tracking-widest">
-              AVENGERS: DOOMSDAY INTEL WIRE • RELATED DOSSIERS
+              {relatedSectionTitle}
             </h2>
           </div>
           <a
-            href="/categories/avengers-cinematic-universe"
+            href={relatedSectionLink}
             class="text-xs font-mono text-[var(--intel-muted)] hover:text-white transition-colors"
           >
-            All Multiverse Reports &rarr;
+            {relatedSectionLinkText}
           </a>
         </div>
 

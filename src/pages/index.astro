@@ -9,20 +9,20 @@ import { Search, BookOpen, Sparkles, Shield, Swords, Gamepad2, ShoppingBag } fro
 
 const allArticles = await getAllArticles();
 
-// Featured lead entry (Avengers: Doomsday as requested)
-const featuredArticle = allArticles.find((a) => a.data.slug === 'avengers-doomsday') || allArticles[0];
+// Featured lead entry (Tobey Maguire Spider-Man vs Fox X-Men as top article)
+const featuredArticle = allArticles.find((a) => a.data.slug === 'tobey-spider-man-vs-xmen-avengers-doomsday-leak') || allArticles[0];
 
-// Curated Avengers: Doomsday Related Articles for the Hero section
-const doomsdayRelatedSlugs = [
+// Curated Avengers Doomsday Leaks & Multiverse Incursion Related Articles for the Hero section
+const heroRelatedSlugs = [
+  'avengers-doomsday-deaths-leaked-kill-list',
+  'can-sentry-beat-dr-doom',
   'dr-doom-doomsday',
-  'avengers-doomsday-poster',
-  'avengers-doomsday-release-date',
-  'avengers-doomsday-budget',
-  'is-tom-holland-in-avengers-doomsday',
-  'marvel-movies-in-order-to-watch-before-doomsday',
+  'spider-man-brand-new-day',
+  'who-can-beat-dr-doom',
+  'x-men',
 ];
 
-const doomsdayRelatedArticles = doomsdayRelatedSlugs
+const heroRelatedArticles = heroRelatedSlugs
   .map((slug) => allArticles.find((a) => a.data.slug === slug))
   .filter((a): a is NonNullable<typeof a> => Boolean(a))
   .map((a) => ({
@@ -34,8 +34,17 @@ const doomsdayRelatedArticles = doomsdayRelatedSlugs
     status: a.data.status,
   }));
 
-// High-priority pillar entries
+const heroMetrics = [
+  { label: 'MULTIVERSE CLASH', value: 'Tobey Spider-Man vs. Fox X-Men', color: 'text-white' },
+  { label: 'INCURSION COLLISION', value: 'Earth-96283 vs. Earth-10005', color: 'text-amber-400' },
+  { label: 'SECRET WARS FATE', value: 'Battleworld Survivors Quest', color: 'text-emerald-400' },
+];
+
+// High-priority pillar entries (Top home page articles)
 const prioritySlugs = [
+  'tobey-spider-man-vs-xmen-avengers-doomsday-leak',
+  'avengers-doomsday-deaths-leaked-kill-list',
+  'can-sentry-beat-dr-doom',
   'superhero-action',
   'doctor-doom-character',
   'marvel-rivals',
@@ -95,9 +104,9 @@ const categories = [
 
 <BaseLayout
   title="616 Intel — Marvel Rumors, Movie Leaks & Multiverse News"
-  description="The independent intelligence hub for Marvel leaks, Avengers: Doomsday rumors, Doctor Doom casting, Marvel Rivals intel, and MCU news."
+  description="The independent intelligence hub for Marvel leaks, Avengers: Doomsday rumors, Tobey Maguire Spider-Man scoops, Doctor Doom casting, and MCU news."
 >
-  <!-- LEAD HERO: AVENGERS: DOOMSDAY POSTER & INTEL SHOWCASE -->
+  <!-- LEAD HERO: TOP ARTICLE MULTIVERSE LEAK SHOWCASE -->
   <Hero
     article={{
       slug: `/articles/${featuredArticle.data.slug}`,
@@ -108,8 +117,19 @@ const categories = [
       readingTime: featuredArticle.data.readingTime,
       author: featuredArticle.data.author,
     }}
+    badgeTag="TOP FEATURED INTEL • EXCLUSIVE LEAK WIRE"
+    statusBadge="STATUS: RUMORED PRODUCTION LEAK"
+    metrics={heroMetrics}
     posterImage="/Avengers Doomsday Poster.jpg"
-    relatedArticles={doomsdayRelatedArticles}
+    posterTitle="AVENGERS: DOOMSDAY WIRE"
+    posterSubtitle="EARTH-96283 • EARTH-10005"
+    posterCaption="Tobey Spider-Man vs Fox X-Men Incursion Breakdown"
+    posterLink={`/articles/${featuredArticle.data.slug}`}
+    posterActionText="Read Full Incursion Intel"
+    relatedArticles={heroRelatedArticles}
+    relatedSectionTitle="DOOMSDAY MULTIVERSE WIRE • RELATED LEAKS & KILL LIST DOSSIERS"
+    relatedSectionLink="/categories/avengers-cinematic-universe"
+    relatedSectionLinkText="All Multiverse Reports →"
   />
 
   <!-- QUICK MARVEL LEAKS SEARCH BAR -->

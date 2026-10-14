@@ -37,6 +37,13 @@ const formattedUpdatedDate = article.data.updatedAt ? formatDate(article.data.up
 const wordCount = (article.body || '').split(/\s+/).filter(Boolean).length;
 
 const siteUrl = Astro.site?.origin || 'https://616intel.prometrion.com';
+
+const articleKeywords = article.data.keywords || (article.data.tags && article.data.tags.length > 0 ? article.data.tags.join(', ') : undefined);
+const geoRegion = article.data.geoRegion || 'US';
+const geoPlacename = article.data.geoPlacename || 'United States';
+const geoPosition = article.data.geoPosition || '38.8951;-77.0364';
+const icbm = article.data.icbm || '38.8951, -77.0364';
+
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -47,6 +54,11 @@ const articleSchema = {
   inLanguage: 'en-US',
   wordCount: wordCount,
   genre: 'Superhero Action',
+  spatialCoverage: ['United States', 'Worldwide', 'Global'],
+  contentLocation: {
+    '@type': 'Place',
+    name: geoPlacename,
+  },
   about: {
     '@type': 'Thing',
     name: article.data.title,
@@ -67,7 +79,7 @@ const articleSchema = {
     '@id': `${siteUrl}/articles/${article.data.slug}`,
   },
   articleSection: article.data.category,
-  keywords: article.data.tags?.join(', '),
+  keywords: articleKeywords,
 };
 
 const breadcrumbSchema = {
@@ -100,13 +112,31 @@ const breadcrumbSchema = {
     },
   ],
 };
+
+const faqSchema = article.data.faq && article.data.faq.length > 0 ? {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: article.data.faq.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+} : null;
 ---
 
 <BaseLayout
   title={`${article.data.title} — 616 Intel`}
   description={article.data.description}
   type="article"
-  jsonLd={[articleSchema, breadcrumbSchema]}
+  keywords={articleKeywords}
+  geoRegion={geoRegion}
+  geoPlacename={geoPlacename}
+  geoPosition={geoPosition}
+  icbm={icbm}
+  jsonLd={[articleSchema, breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])]}
 >
   <div class="container-editorial py-6 md:py-10">
     <!-- Breadcrumbs -->

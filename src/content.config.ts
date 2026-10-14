@@ -19,6 +19,19 @@ const articles = defineCollection({
     tags: z.array(z.string()).default([]),
     relatedArticles: z.array(z.string()).default([]),
     readingTime: z.string().optional(),
+    keywords: z.string().optional(),
+    geoRegion: z.string().optional(),
+    geoPlacename: z.string().optional(),
+    geoPosition: z.string().optional(),
+    icbm: z.string().optional(),
+    faq: z
+      .array(
+        z.object({
+          question: z.string(),
+          answer: z.string(),
+        })
+      )
+      .optional(),
     sources: z
       .array(
         z.object({

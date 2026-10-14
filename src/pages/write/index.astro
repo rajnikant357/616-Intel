@@ -104,20 +104,6 @@ const categories = [
       </div>
 
       <div>
-        <label for="author" class="block text-xs font-mono text-neutral-300 uppercase font-bold mb-2">
-          Your Alias or Pen Name *
-        </label>
-        <input
-          type="text"
-          id="author"
-          name="author"
-          required
-          placeholder="e.g. Earth-616 Scout, Latverian Emissary"
-          class="w-full px-4 py-3 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] focus:border-[var(--intel-red)] text-white font-sans text-sm focus:outline-none"
-        />
-      </div>
-
-      <div>
         <label for="content" class="block text-xs font-mono text-neutral-300 uppercase font-bold mb-2">
           Intel Report / Article Body * (Markdown Supported)
         </label>
@@ -144,6 +130,20 @@ const categories = [
           name="tags"
           placeholder="Doctor Doom, Avengers Doomsday, Robert Downey Jr, Phase 6"
           class="w-full px-4 py-3 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] focus:border-[var(--intel-red)] text-white font-mono text-xs focus:outline-none"
+        />
+      </div>
+
+      <div>
+        <label for="author" class="block text-xs font-mono text-neutral-300 uppercase font-bold mb-2">
+          Your Name / Alias (Pen Name) *
+        </label>
+        <input
+          type="text"
+          id="author"
+          name="author"
+          required
+          placeholder="e.g. Earth-616 Scout, Latverian Emissary"
+          class="w-full px-4 py-3 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] focus:border-[var(--intel-red)] text-white font-sans text-sm focus:outline-none"
         />
       </div>
 

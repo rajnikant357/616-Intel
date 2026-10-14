@@ -2,6 +2,20 @@ import type { BreakingTickerItem } from './types';
 
 export const BREAKING_TICKER_DATA: BreakingTickerItem[] = [
   {
+    id: 't-top-1',
+    label: 'EXCLUSIVE LEAK',
+    headline: "Tobey Maguire's Spider-Man vs. Fox X-Men in Avengers: Doomsday: Leaked Opening Incursion & Secret Wars Setup",
+    slug: '/articles/tobey-spider-man-vs-xmen-avengers-doomsday-leak',
+    status: 'rumored',
+  },
+  {
+    id: 't-top-2',
+    label: 'LEAKED KILL LIST',
+    headline: 'Every Death in Avengers: Doomsday: Full Multiverse Casualty List, Bucky, Loki, Thor & Incursion Wipes',
+    slug: '/articles/avengers-doomsday-deaths-leaked-kill-list',
+    status: 'rumored',
+  },
+  {
     id: 't-1',
     label: 'FEATURED ENTRY',
     headline: 'Superhero Action: Core Mechanics, Team Dynamics, and Multiverse Scope',

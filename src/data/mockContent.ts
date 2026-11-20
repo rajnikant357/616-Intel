@@ -2,6 +2,13 @@ import type { BreakingTickerItem } from './types';
 
 export const BREAKING_TICKER_DATA: BreakingTickerItem[] = [
   {
+    id: 't-booking-1',
+    label: 'PRESALE DISPATCH',
+    headline: 'Avengers: Doomsday 18 Dec Global Premiere & Midnight IMAX Incursion Screenings Officially Open for Booking',
+    slug: '/booking',
+    status: 'confirmed',
+  },
+  {
     id: 't-top-1',
     label: 'EXCLUSIVE LEAK',
     headline: "Tobey Maguire's Spider-Man vs. Fox X-Men in Avengers: Doomsday: Leaked Opening Incursion & Secret Wars Setup",

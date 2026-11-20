@@ -1,0 +1,1539 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/navigation/Breadcrumbs.astro';
+import { 
+  Ticket, 
+  Calendar, 
+  Clock, 
+  MapPin, 
+  Film, 
+  Sparkles, 
+  ShieldCheck, 
+  ShieldAlert, 
+  Check, 
+  CreditCard, 
+  Printer, 
+  Download, 
+  Copy, 
+  ArrowRight, 
+  Zap, 
+  Flame, 
+  Eye, 
+  Info, 
+  Lock,
+  ChevronRight,
+  Armchair
+} from '@lucide/astro';
+
+const siteUrl = Astro.site?.origin || 'https://616intel.prometrion.com';
+
+// Structured Data for Google Event & Movie Ticket Pre-Order
+const bookingSchema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ScreeningEvent',
+    name: 'Avengers: Doomsday — Official Opening Night Premiere & Midnight Incursions',
+    description: 'Exclusive worldwide opening night and midnight fan incursion screenings for Marvel Studios Avengers: Doomsday on Friday, December 18, 2026. Featuring IMAX 70mm, Dolby Cinema, and 4DX immersive presentations.',
+    startDate: '2026-12-18T17:00:00-05:00',
+    endDate: '2026-12-19T03:00:00-05:00',
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: {
+      '@type': 'MovieTheater',
+      name: 'AMC Lincoln Square IMAX 70mm',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '1998 Broadway',
+        addressLocality: 'New York',
+        addressRegion: 'NY',
+        postalCode: '10023',
+        addressCountry: 'US',
+      },
+    },
+    workPresented: {
+      '@type': 'Movie',
+      name: 'Avengers: Doomsday',
+      director: [
+        { '@type': 'Person', name: 'Anthony Russo' },
+        { '@type': 'Person', name: 'Joe Russo' },
+      ],
+      actor: [
+        { '@type': 'Person', name: 'Robert Downey Jr.' },
+        { '@type': 'Person', name: 'Pedro Pascal' },
+        { '@type': 'Person', name: 'Tom Holland' },
+        { '@type': 'Person', name: 'Hugh Jackman' },
+      ],
+      duration: 'PT182M',
+    },
+    offers: {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'USD',
+      lowPrice: '16.50',
+      highPrice: '28.50',
+      offerCount: '1200',
+      availability: 'https://schema.org/InStock',
+      validFrom: '2026-11-01',
+      url: `${siteUrl}/booking`,
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+      { '@type': 'ListItem', position: 2, name: 'Avengers: Doomsday', item: `${siteUrl}/articles/avengers-doomsday` },
+      { '@type': 'ListItem', position: 3, name: '18 Dec Booking Wire', item: `${siteUrl}/booking` },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Avengers: Doomsday 18 Dec Tickets & Premiere Booking | 616 Intel"
+  description="Book official opening night and midnight fan screening tickets for Avengers: Doomsday on December 18, 2026. Reserve IMAX 70mm, Dolby Cinema, and collector perk passes."
+  keywords="avengers doomsday tickets, doomsday 18 dec booking, avengers doomsday december 18, doctor doom premiere tickets, imax 70mm avengers doomsday, midnight incursion screening, marvel phase 6 booking"
+  jsonLd={bookingSchema}
+>
+  <div class="container-editorial py-6 md:py-10 max-w-6xl mx-auto print:hidden">
+    <Breadcrumbs
+      items={[
+        { label: 'Intel Wire', href: '/latest' },
+        { label: 'Avengers: Doomsday', href: '/articles/avengers-doomsday' },
+        { label: '18 Dec Premiere Booking' },
+      ]}
+    />
+
+    <!-- Dossier Alert Bar -->
+    <div class="mb-6 p-3 sm:p-4 rounded-xs bg-[var(--intel-charcoal)] border-l-4 border-l-[var(--intel-red)] border-y border-r border-[var(--intel-border)] flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5">
+        <span class="relative flex h-2.5 w-2.5" aria-hidden="true">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+        </span>
+        <span class="text-xs font-mono font-bold tracking-widest text-emerald-400 uppercase">
+          TICKET DISPATCH PROTOCOL ACTIVE
+        </span>
+        <span class="text-xs text-[var(--intel-muted)] font-mono hidden sm:inline">•</span>
+        <span class="text-xs font-mono text-[var(--intel-muted)] hidden sm:inline">
+          TARGET DATE: FRIDAY, 18 DECEMBER 2026
+        </span>
+      </div>
+      <div class="flex items-center gap-2 font-mono text-xs">
+        <span class="px-2 py-0.5 rounded-xs bg-red-950/80 border border-red-500/40 text-red-300 font-bold">
+          94% RESERVED
+        </span>
+        <span class="text-[var(--intel-dim)] text-[11px] hidden md:inline">LIVE THEATER ALLOCATION</span>
+      </div>
+    </div>
+
+    <!-- Hero Header Block -->
+    <header class="mb-10 pb-8 border-b border-[var(--intel-border)]">
+      <div class="flex flex-wrap items-center gap-2 mb-4">
+        <span class="px-2.5 py-1 rounded-xs bg-[var(--intel-red)] text-white font-mono text-xs font-bold tracking-widest uppercase shadow-[0_0_12px_rgba(225,6,0,0.4)]">
+          WORLDWIDE PREMIERE
+        </span>
+        <span class="px-2.5 py-1 rounded-xs bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 font-mono text-xs font-bold tracking-wider uppercase">
+          DECEMBER 18, 2026
+        </span>
+        <span class="px-2.5 py-1 rounded-xs bg-[var(--intel-elevated)] border border-[var(--intel-border)] text-neutral-300 font-mono text-xs font-medium">
+          CLASSIFICATION: PHASE 6 CLIMAX
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-8">
+          <h1 class="font-serif text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.05] mb-4">
+            Avengers: Doomsday
+            <span class="block text-2xl sm:text-3xl lg:text-4xl font-display text-[var(--intel-red)] font-bold tracking-wider mt-1 uppercase">
+              18 Dec Opening Night &amp; Midnight Incursion Booking
+            </span>
+          </h1>
+
+          <p class="font-sans text-base sm:text-lg text-neutral-300 leading-relaxed max-w-3xl mb-6">
+            Witness the cosmic collision of the Marvel Multiverse as <strong class="text-white">Robert Downey Jr.</strong> ascends as Doctor Victor von Doom. Lock in your reserved seats for the historic worldwide premiere and midnight fan screenings on <span class="text-white font-semibold underline decoration-[var(--intel-red)] decoration-2">Friday, 18 December 2026</span> across flagship IMAX 70mm, Dolby Cinema, and 4DX soundstages.
+          </p>
+
+          <!-- Production Metadata Badges -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
+            <div class="p-3 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)]">
+              <span class="text-[var(--intel-muted)] block text-[10px] uppercase">RUNTIME</span>
+              <strong class="text-white text-sm">182 MIN (3H 02M)</strong>
+            </div>
+            <div class="p-3 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)]">
+              <span class="text-[var(--intel-muted)] block text-[10px] uppercase">DIRECTORS</span>
+              <strong class="text-white text-sm">RUSSO BROTHERS</strong>
+            </div>
+            <div class="p-3 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)]">
+              <span class="text-[var(--intel-muted)] block text-[10px] uppercase">SOUND MASTER</span>
+              <strong class="text-white text-sm">DOLBY ATMOS / IMAX</strong>
+            </div>
+            <div class="p-3 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)]">
+              <span class="text-[var(--intel-muted)] block text-[10px] uppercase">PERK INCLUDED</span>
+              <strong class="text-amber-400 text-sm">FOIL TICKET PASS</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Countdown Module -->
+        <div class="lg:col-span-4 p-5 sm:p-6 rounded-xs bg-gradient-to-br from-[var(--intel-obsidian)] to-[var(--intel-charcoal)] border border-[var(--intel-border-strong)] relative overflow-hidden shadow-2xl">
+          <div class="absolute -right-12 -top-12 w-32 h-32 bg-[var(--intel-red)]/10 rounded-full blur-2xl pointer-events-none"></div>
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-[var(--intel-border-subtle)]">
+            <div class="flex items-center gap-2">
+              <Clock class="w-4 h-4 text-[var(--intel-red)]" />
+              <span class="font-mono text-xs uppercase tracking-wider text-neutral-300 font-bold">18 DEC ZERO HOUR</span>
+            </div>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-xs bg-emerald-950/80 border border-emerald-500/50 text-emerald-400">
+              COUNTDOWN
+            </span>
+          </div>
+
+          <div id="countdown-grid" class="grid grid-cols-4 gap-2 text-center mb-4 font-mono">
+            <div class="p-2 rounded-xs bg-[var(--intel-void)] border border-[var(--intel-border-subtle)]">
+              <span id="countdown-days" class="block font-black text-2xl text-white">28</span>
+              <span class="text-[9px] uppercase tracking-wider text-[var(--intel-muted)]">DAYS</span>
+            </div>
+            <div class="p-2 rounded-xs bg-[var(--intel-void)] border border-[var(--intel-border-subtle)]">
+              <span id="countdown-hours" class="block font-black text-2xl text-white">08</span>
+              <span class="text-[9px] uppercase tracking-wider text-[var(--intel-muted)]">HOURS</span>
+            </div>
+            <div class="p-2 rounded-xs bg-[var(--intel-void)] border border-[var(--intel-border-subtle)]">
+              <span id="countdown-minutes" class="block font-black text-2xl text-white">35</span>
+              <span class="text-[9px] uppercase tracking-wider text-[var(--intel-muted)]">MINS</span>
+            </div>
+            <div class="p-2 rounded-xs bg-[var(--intel-void)] border border-[var(--intel-border-subtle)]">
+              <span id="countdown-seconds" class="block font-black text-2xl text-[var(--intel-red)] animate-pulse">42</span>
+              <span class="text-[9px] uppercase tracking-wider text-[var(--intel-muted)]">SECS</span>
+            </div>
+          </div>
+
+          <div class="text-[11px] font-mono text-[var(--intel-muted)] flex items-center justify-between bg-black/40 p-2.5 rounded-xs border border-white/5">
+            <span>Theatrical Lock:</span>
+            <span class="text-white font-bold">Fri, Dec 18, 2026 • 00:01 EST</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Booking Engine Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Left Column: Interactive Booking Wizard Steps -->
+      <div class="lg:col-span-8 space-y-8">
+        
+        <!-- STEP 1: SELECT FORMAT -->
+        <section class="p-6 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)]" aria-labelledby="format-heading">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-[var(--intel-border-subtle)]">
+            <div class="flex items-center gap-2.5">
+              <span class="w-6 h-6 rounded-xs bg-[var(--intel-red)] text-white text-xs font-mono font-bold flex items-center justify-center">1</span>
+              <h2 id="format-heading" class="font-display text-lg font-bold text-white tracking-wide uppercase">
+                Choose Projection &amp; Sound Format
+              </h2>
+            </div>
+            <span class="text-xs font-mono text-[var(--intel-muted)]">Step 1 of 5</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" role="radiogroup" aria-label="Projection Formats">
+            <!-- Format: IMAX 70mm -->
+            <label class="format-card relative p-4 rounded-xs bg-[var(--intel-obsidian)] border-2 border-[var(--intel-red)] cursor-pointer transition-all hover:bg-[var(--intel-elevated)] select-none">
+              <input type="radio" name="experience-format" value="imax-70mm" data-price="28.50" data-name="IMAX 70mm Laser" class="sr-only" checked />
+              <div class="flex items-start justify-between mb-2">
+                <div>
+                  <span class="px-2 py-0.5 rounded-xs bg-[var(--intel-red)]/20 border border-[var(--intel-red)] text-[var(--intel-red)] font-mono text-[10px] font-bold uppercase tracking-wider inline-block mb-1">
+                    DIRECTOR RECOMMENDED
+                  </span>
+                  <h3 class="font-display text-base font-bold text-white uppercase tracking-wider">IMAX 70mm Laser</h3>
+                </div>
+                <span class="font-mono text-lg font-black text-white">$28.50</span>
+              </div>
+              <p class="text-xs text-neutral-300 font-sans mb-3">
+                Full 1.43:1 Battleworld aspect ratio on a 75-foot screen. Includes exclusive physical metallic foil ticket pass.
+              </p>
+              <div class="flex items-center gap-2 text-[10px] font-mono text-emerald-400">
+                <Check class="w-3.5 h-3.5" />
+                <span>Dual 4K Laser + 12-Channel Sound</span>
+              </div>
+            </label>
+
+            <!-- Format: Dolby Cinema -->
+            <label class="format-card relative p-4 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] cursor-pointer transition-all hover:bg-[var(--intel-elevated)] select-none">
+              <input type="radio" name="experience-format" value="dolby-cinema" data-price="24.00" data-name="Dolby Cinema Atmos" class="sr-only" />
+              <div class="flex items-start justify-between mb-2">
+                <div>
+                  <span class="px-2 py-0.5 rounded-xs bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-mono text-[10px] font-bold uppercase tracking-wider inline-block mb-1">
+                    AUDIO OBSESSION
+                  </span>
+                  <h3 class="font-display text-base font-bold text-white uppercase tracking-wider">Dolby Cinema</h3>
+                </div>
+                <span class="font-mono text-lg font-black text-white">$24.00</span>
+              </div>
+              <p class="text-xs text-neutral-300 font-sans mb-3">
+                Dolby Vision dual-laser HDR paired with 128-speaker spatial Dolby Atmos and haptic rumble recliners.
+              </p>
+              <div class="flex items-center gap-2 text-[10px] font-mono text-neutral-400">
+                <Check class="w-3.5 h-3.5" />
+                <span>128 Spatial Objects + Power Recliners</span>
+              </div>
+            </label>
+
+            <!-- Format: 4DX Motion -->
+            <label class="format-card relative p-4 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] cursor-pointer transition-all hover:bg-[var(--intel-elevated)] select-none">
+              <input type="radio" name="experience-format" value="4dx-motion" data-price="26.00" data-name="4DX Immersive Motion" class="sr-only" />
+              <div class="flex items-start justify-between mb-2">
+                <div>
+                  <span class="px-2 py-0.5 rounded-xs bg-purple-950/80 border border-purple-500/40 text-purple-300 font-mono text-[10px] font-bold uppercase tracking-wider inline-block mb-1">
+                    INCURSION SIMULATION
+                  </span>
+                  <h3 class="font-display text-base font-bold text-white uppercase tracking-wider">4DX Multiverse</h3>
+                </div>
+                <span class="font-mono text-lg font-black text-white">$26.00</span>
+              </div>
+              <p class="text-xs text-neutral-300 font-sans mb-3">
+                Synchronized heave, pitch, and roll motions with lightning flashes, wind storms, and ozone mist during incursion battle sequences.
+              </p>
+              <div class="flex items-center gap-2 text-[10px] font-mono text-neutral-400">
+                <Check class="w-3.5 h-3.5" />
+                <span>Synchronized Motion + Atmospheric FX</span>
+              </div>
+            </label>
+
+            <!-- Format: Standard Digital 4K -->
+            <label class="format-card relative p-4 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] cursor-pointer transition-all hover:bg-[var(--intel-elevated)] select-none">
+              <input type="radio" name="experience-format" value="standard-4k" data-price="16.50" data-name="Standard Digital 4K" class="sr-only" />
+              <div class="flex items-start justify-between mb-2">
+                <div>
+                  <span class="px-2 py-0.5 rounded-xs bg-neutral-800 border border-neutral-700 text-neutral-300 font-mono text-[10px] font-bold uppercase tracking-wider inline-block mb-1">
+                    CLASSIC THEATER
+                  </span>
+                  <h3 class="font-display text-base font-bold text-white uppercase tracking-wider">Digital 4K Laser</h3>
+                </div>
+                <span class="font-mono text-lg font-black text-white">$16.50</span>
+              </div>
+              <p class="text-xs text-neutral-300 font-sans mb-3">
+                Crisp 4K digital theatrical master with pristine 7.1 surround sound and premium stadium seating.
+              </p>
+              <div class="flex items-center gap-2 text-[10px] font-mono text-neutral-400">
+                <Check class="w-3.5 h-3.5" />
+                <span>4K Laser Barco + 7.1 Surround</span>
+              </div>
+            </label>
+          </div>
+        </section>
+
+        <!-- STEP 2: SELECT CINEMA & CITY -->
+        <section class="p-6 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)]" aria-labelledby="theater-heading">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-[var(--intel-border-subtle)]">
+            <div class="flex items-center gap-2.5">
+              <span class="w-6 h-6 rounded-xs bg-[var(--intel-red)] text-white text-xs font-mono font-bold flex items-center justify-center">2</span>
+              <h2 id="theater-heading" class="font-display text-lg font-bold text-white tracking-wide uppercase">
+                Select Premiere Flagship Theater
+              </h2>
+            </div>
+            <span class="text-xs font-mono text-[var(--intel-muted)]">Step 2 of 5</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" role="radiogroup" aria-label="Flagship Theaters">
+            <!-- New York -->
+            <label class="theater-card p-3.5 rounded-xs bg-[var(--intel-obsidian)] border-2 border-[var(--intel-red)] cursor-pointer hover:bg-[var(--intel-elevated)] transition-all select-none">
+              <input type="radio" name="theater-location" value="nyc-lincoln" data-name="AMC Lincoln Square IMAX 70mm" data-city="New York, NY" class="sr-only" checked />
+              <div class="flex items-center gap-1.5 text-xs font-mono text-[var(--intel-red)] font-bold mb-1">
+                <MapPin class="w-3.5 h-3.5" />
+                <span>NEW YORK, NY</span>
+              </div>
+              <h3 class="font-sans font-bold text-sm text-white leading-snug">AMC Lincoln Square IMAX</h3>
+              <p class="text-[11px] text-[var(--intel-muted)] font-mono mt-1">Screen 1 • 75' x 100' Dual Laser</p>
+            </label>
+
+            <!-- Los Angeles -->
+            <label class="theater-card p-3.5 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] cursor-pointer hover:bg-[var(--intel-elevated)] transition-all select-none">
+              <input type="radio" name="theater-location" value="la-chinese" data-name="TCL Chinese Theatre IMAX" data-city="Los Angeles, CA" class="sr-only" />
+              <div class="flex items-center gap-1.5 text-xs font-mono text-neutral-400 font-bold mb-1">
+                <MapPin class="w-3.5 h-3.5" />
+                <span>LOS ANGELES, CA</span>
+              </div>
+              <h3 class="font-sans font-bold text-sm text-white leading-snug">TCL Chinese Theatre IMAX</h3>
+              <p class="text-[11px] text-[var(--intel-muted)] font-mono mt-1">Hollywood Blvd • Historic Screen</p>
+            </label>
+
+            <!-- London -->
+            <label class="theater-card p-3.5 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] cursor-pointer hover:bg-[var(--intel-elevated)] transition-all select-none">
+              <input type="radio" name="theater-location" value="london-bfi" data-name="BFI IMAX Waterloo" data-city="London, UK" class="sr-only" />
+              <div class="flex items-center gap-1.5 text-xs font-mono text-neutral-400 font-bold mb-1">
+                <MapPin class="w-3.5 h-3.5" />
+                <span>LONDON, UK</span>
+              </div>
+              <h3 class="font-sans font-bold text-sm text-white leading-snug">BFI IMAX Waterloo</h3>
+              <p class="text-[11px] text-[var(--intel-muted)] font-mono mt-1">South Bank • UK Flagship 70mm</p>
+            </label>
+
+            <!-- Chicago -->
+            <label class="theater-card p-3.5 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] cursor-pointer hover:bg-[var(--intel-elevated)] transition-all select-none">
+              <input type="radio" name="theater-location" value="chicago-regal" data-name="Regal City North IMAX" data-city="Chicago, IL" class="sr-only" />
+              <div class="flex items-center gap-1.5 text-xs font-mono text-neutral-400 font-bold mb-1">
+                <MapPin class="w-3.5 h-3.5" />
+                <span>CHICAGO, IL</span>
+              </div>
+              <h3 class="font-sans font-bold text-sm text-white leading-snug">Regal City North IMAX</h3>
+              <p class="text-[11px] text-[var(--intel-muted)] font-mono mt-1">Western Ave • RPX Large Format</p>
+            </label>
+
+            <!-- Toronto -->
+            <label class="theater-card p-3.5 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] cursor-pointer hover:bg-[var(--intel-elevated)] transition-all select-none">
+              <input type="radio" name="theater-location" value="toronto-scotia" data-name="Scotiabank Theatre IMAX" data-city="Toronto, ON" class="sr-only" />
+              <div class="flex items-center gap-1.5 text-xs font-mono text-neutral-400 font-bold mb-1">
+                <MapPin class="w-3.5 h-3.5" />
+                <span>TORONTO, ON</span>
+              </div>
+              <h3 class="font-sans font-bold text-sm text-white leading-snug">Scotiabank Theatre IMAX</h3>
+              <p class="text-[11px] text-[var(--intel-muted)] font-mono mt-1">Richmond St • Canadian Premiere</p>
+            </label>
+
+            <!-- Atlanta -->
+            <label class="theater-card p-3.5 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] cursor-pointer hover:bg-[var(--intel-elevated)] transition-all select-none">
+              <input type="radio" name="theater-location" value="atlanta-regal" data-name="Regal Atlantic Station IMAX" data-city="Atlanta, GA" class="sr-only" />
+              <div class="flex items-center gap-1.5 text-xs font-mono text-neutral-400 font-bold mb-1">
+                <MapPin class="w-3.5 h-3.5" />
+                <span>ATLANTA, GA</span>
+              </div>
+              <h3 class="font-sans font-bold text-sm text-white leading-snug">Regal Atlantic Station</h3>
+              <p class="text-[11px] text-[var(--intel-muted)] font-mono mt-1">Midtown • Pinewood Cast Hub</p>
+            </label>
+          </div>
+        </section>
+
+        <!-- STEP 3: SELECT 18 DEC SHOWTIMES -->
+        <section class="p-6 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)]" aria-labelledby="showtime-heading">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-[var(--intel-border-subtle)]">
+            <div class="flex items-center gap-2.5">
+              <span class="w-6 h-6 rounded-xs bg-[var(--intel-red)] text-white text-xs font-mono font-bold flex items-center justify-center">3</span>
+              <div>
+                <h2 id="showtime-heading" class="font-display text-lg font-bold text-white tracking-wide uppercase">
+                  Select Friday, 18 December 2026 Showtime
+                </h2>
+                <p class="text-xs text-[var(--intel-muted)] font-mono">Opening Night &amp; Midnight Incursion Schedule</p>
+              </div>
+            </div>
+            <span class="text-xs font-mono text-[var(--intel-muted)]">Step 3 of 5</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" role="radiogroup" aria-label="18 Dec Showtimes">
+            <!-- 5:00 PM -->
+            <label class="showtime-card p-4 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] cursor-pointer hover:bg-[var(--intel-elevated)] transition-all select-none text-center">
+              <input type="radio" name="showtime-slot" value="17:00" data-time="5:00 PM EST" data-event="Early Incursion Screening" class="sr-only" />
+              <span class="text-xs font-mono text-amber-400 uppercase font-semibold block mb-1">EARLY ACCESS</span>
+              <div class="font-mono text-2xl font-black text-white">5:00 PM</div>
+              <span class="text-[10px] font-mono text-[var(--intel-muted)] block mt-1">18 Dec • Doors 4:15 PM</span>
+              <span class="mt-2.5 inline-block text-[10px] font-mono px-2 py-0.5 rounded-xs bg-amber-950/80 text-amber-300 border border-amber-500/30">
+                14 Seats Left
+              </span>
+            </label>
+
+            <!-- 7:30 PM -->
+            <label class="showtime-card p-4 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] cursor-pointer hover:bg-[var(--intel-elevated)] transition-all select-none text-center">
+              <input type="radio" name="showtime-slot" value="19:30" data-time="7:30 PM EST" data-event="Opening Night Gala" class="sr-only" />
+              <span class="text-xs font-mono text-[var(--intel-red)] uppercase font-semibold block mb-1">RED CARPET GALA</span>
+              <div class="font-mono text-2xl font-black text-white">7:30 PM</div>
+              <span class="text-[10px] font-mono text-[var(--intel-muted)] block mt-1">18 Dec • Cast Stream</span>
+              <span class="mt-2.5 inline-block text-[10px] font-mono px-2 py-0.5 rounded-xs bg-red-950/80 text-red-300 border border-red-500/30">
+                Almost Sold Out
+              </span>
+            </label>
+
+            <!-- 10:15 PM -->
+            <label class="showtime-card p-4 rounded-xs bg-[var(--intel-obsidian)] border-2 border-[var(--intel-red)] cursor-pointer hover:bg-[var(--intel-elevated)] transition-all select-none text-center">
+              <input type="radio" name="showtime-slot" value="22:15" data-time="10:15 PM EST" data-event="Prime Incursion Premiere" class="sr-only" checked />
+              <span class="text-xs font-mono text-emerald-400 uppercase font-semibold block mb-1">PRIME PREMIERE</span>
+              <div class="font-mono text-2xl font-black text-white">10:15 PM</div>
+              <span class="text-[10px] font-mono text-[var(--intel-muted)] block mt-1">18 Dec • Full Multiverse</span>
+              <span class="mt-2.5 inline-block text-[10px] font-mono px-2 py-0.5 rounded-xs bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">
+                Popular Choice
+              </span>
+            </label>
+
+            <!-- 11:59 PM (Midnight Zero Hour) -->
+            <label class="showtime-card p-4 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] cursor-pointer hover:bg-[var(--intel-elevated)] transition-all select-none text-center">
+              <input type="radio" name="showtime-slot" value="23:59" data-time="11:59 PM (00:01) EST" data-event="Midnight Zero Hour Incursion" class="sr-only" />
+              <span class="text-xs font-mono text-purple-400 uppercase font-semibold block mb-1">MIDNIGHT ZERO HOUR</span>
+              <div class="font-mono text-2xl font-black text-white">11:59 PM</div>
+              <span class="text-[10px] font-mono text-[var(--intel-muted)] block mt-1">18-19 Dec • Midnight Fan Pack</span>
+              <span class="mt-2.5 inline-block text-[10px] font-mono px-2 py-0.5 rounded-xs bg-purple-950/80 text-purple-300 border border-purple-500/30">
+                Collector Event
+              </span>
+            </label>
+          </div>
+        </section>
+
+        <!-- STEP 4: INTERACTIVE SEATING MAP -->
+        <section class="p-6 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)]" aria-labelledby="seating-heading">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-6 pb-3 border-b border-[var(--intel-border-subtle)]">
+            <div class="flex items-center gap-2.5">
+              <span class="w-6 h-6 rounded-xs bg-[var(--intel-red)] text-white text-xs font-mono font-bold flex items-center justify-center">4</span>
+              <div>
+                <h2 id="seating-heading" class="font-display text-lg font-bold text-white tracking-wide uppercase">
+                  Select Reserved Seats
+                </h2>
+                <p class="text-xs text-[var(--intel-muted)] font-mono">Real-Time Theater Floor Map • Max 6 Seats per Dispatch</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 font-mono text-xs">
+              <span class="text-[var(--intel-muted)]">Seats Chosen:</span>
+              <span id="selected-seat-count" class="px-2 py-0.5 rounded-xs bg-[var(--intel-red)] text-white font-bold">2</span>
+            </div>
+          </div>
+
+          <!-- Cinema Screen Graphic -->
+          <div class="mb-8 text-center relative px-4">
+            <div class="w-full max-w-2xl mx-auto h-4 border-t-4 border-[var(--intel-red)] rounded-t-[100px] shadow-[0_-8px_20px_rgba(225,6,0,0.5)]"></div>
+            <div class="font-mono text-[11px] uppercase tracking-widest text-neutral-400 mt-2 flex items-center justify-center gap-3">
+              <span class="w-8 h-px bg-neutral-700"></span>
+              <Film class="w-3.5 h-3.5 text-[var(--intel-red)] inline" />
+              <span>SCREEN 1: IMAX 70MM DUAL LASER CURVED PROJECTION</span>
+              <span class="w-8 h-px bg-neutral-700"></span>
+            </div>
+          </div>
+
+          <!-- Seat Grid Container -->
+          <div class="overflow-x-auto pb-4">
+            <div class="min-w-[620px] max-w-2xl mx-auto space-y-2.5 select-none" id="theater-seat-grid" role="group" aria-label="Auditorium Seating Matrix">
+              <!-- Dynamically rendered or static semantic seat rows -->
+              <!-- Legend row is below -->
+            </div>
+          </div>
+
+          <!-- Seating Legend -->
+          <div class="mt-6 pt-4 border-t border-[var(--intel-border-subtle)] flex flex-wrap items-center justify-center gap-4 sm:gap-8 font-mono text-xs">
+            <div class="flex items-center gap-2">
+              <div class="w-4 h-4 rounded-xs bg-[var(--intel-elevated)] border border-[var(--intel-border)]"></div>
+              <span class="text-neutral-300">Available</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-4 h-4 rounded-xs bg-[var(--intel-red)] border border-red-400 shadow-[0_0_8px_rgba(225,6,0,0.6)]"></div>
+              <span class="text-white font-semibold">Your Selection</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-4 h-4 rounded-xs bg-amber-950/60 border border-amber-500/80"></div>
+              <span class="text-amber-300">Doom Throne (VIP Prime)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-4 h-4 rounded-xs bg-neutral-900 border border-neutral-800 opacity-40"></div>
+              <span class="text-neutral-500">Reserved / Sold</span>
+            </div>
+          </div>
+
+          <!-- Selected Seats Chips List -->
+          <div class="mt-5 p-3 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border-subtle)] flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <Armchair class="w-4 h-4 text-[var(--intel-red)]" />
+              <span class="text-xs font-mono text-neutral-300 uppercase font-semibold">Allocated Seats:</span>
+            </div>
+            <div id="selected-seats-badge-list" class="flex flex-wrap items-center gap-2">
+              <span class="seat-badge px-2.5 py-1 rounded-xs bg-[var(--intel-red)]/20 border border-[var(--intel-red)] text-white text-xs font-mono font-bold flex items-center gap-1.5">
+                ROW E • SEAT 6 (VIP)
+              </span>
+              <span class="seat-badge px-2.5 py-1 rounded-xs bg-[var(--intel-red)]/20 border border-[var(--intel-red)] text-white text-xs font-mono font-bold flex items-center gap-1.5">
+                ROW E • SEAT 7 (VIP)
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <!-- STEP 5: COLLECTOR ADD-ONS -->
+        <section class="p-6 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)]" aria-labelledby="addons-heading">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-[var(--intel-border-subtle)]">
+            <div class="flex items-center gap-2.5">
+              <span class="w-6 h-6 rounded-xs bg-[var(--intel-red)] text-white text-xs font-mono font-bold flex items-center justify-center">5</span>
+              <div>
+                <h2 id="addons-heading" class="font-display text-lg font-bold text-white tracking-wide uppercase">
+                  Doomsday Collector Perks &amp; Concessions
+                </h2>
+                <p class="text-xs text-[var(--intel-muted)] font-mono">Exclusive Opening Night Memorabilia</p>
+              </div>
+            </div>
+            <span class="text-xs font-mono text-[var(--intel-muted)]">Optional Add-ons</span>
+          </div>
+
+          <div class="space-y-3">
+            <!-- Addon 1 -->
+            <label class="addon-item p-4 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] hover:border-neutral-500 cursor-pointer flex items-start justify-between gap-4 transition-colors select-none">
+              <div class="flex items-start gap-3">
+                <input type="checkbox" id="addon-metal-pass" data-name="Collector Metallic Foil Ticket & Lanyard" data-price="9.99" class="addon-checkbox mt-1 w-4 h-4 rounded-xs accent-[var(--intel-red)]" checked />
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="font-sans font-bold text-sm text-white">Serialized Metallic Incursion Pass &amp; Lanyard</span>
+                    <span class="text-[10px] font-mono px-1.5 py-0.2 rounded-xs bg-amber-950/80 text-amber-300 border border-amber-500/40 font-bold uppercase">HOT PICK</span>
+                  </div>
+                  <p class="text-xs text-neutral-300 font-sans mt-0.5">
+                    Heavy-duty die-cast commemorative metal ticket plate stamped with your seat number and Latverian seal.
+                  </p>
+                </div>
+              </div>
+              <span class="font-mono text-sm font-bold text-white shrink-0">+$9.99</span>
+            </label>
+
+            <!-- Addon 2 -->
+            <label class="addon-item p-4 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] hover:border-neutral-500 cursor-pointer flex items-start justify-between gap-4 transition-colors select-none">
+              <div class="flex items-start gap-3">
+                <input type="checkbox" id="addon-doom-bucket" data-name="Doctor Doom Light-up Popcorn Tub & Cup" data-price="14.99" class="addon-checkbox mt-1 w-4 h-4 rounded-xs accent-[var(--intel-red)]" />
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="font-sans font-bold text-sm text-white">Doctor Doom Mask Popcorn Tub + 44oz Drink</span>
+                    <span class="text-[10px] font-mono px-1.5 py-0.2 rounded-xs bg-emerald-950/80 text-emerald-300 border border-emerald-500/40 font-bold uppercase">LIMITED</span>
+                  </div>
+                  <p class="text-xs text-neutral-300 font-sans mt-0.5">
+                    Sculpted mask bucket with glowing emerald LED visor eyes. Includes free refill voucher on 18 Dec.
+                  </p>
+                </div>
+              </div>
+              <span class="font-mono text-sm font-bold text-white shrink-0">+$14.99</span>
+            </label>
+
+            <!-- Addon 3 -->
+            <label class="addon-item p-4 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] hover:border-neutral-500 cursor-pointer flex items-start justify-between gap-4 transition-colors select-none">
+              <div class="flex items-start gap-3">
+                <input type="checkbox" id="addon-dossier-book" data-name="616 Intel Soundstage Classified Dossier Book" data-price="6.99" class="addon-checkbox mt-1 w-4 h-4 rounded-xs accent-[var(--intel-red)]" />
+                <div>
+                  <span class="font-sans font-bold text-sm text-white">616 Intel Classified Soundstage Companion Book</span>
+                  <p class="text-xs text-neutral-300 font-sans mt-0.5">
+                    32-page collector booklet tracking Pinewood soundstage call sheets, incursion timelines, and concept art breakdowns.
+                  </p>
+                </div>
+              </div>
+              <span class="font-mono text-sm font-bold text-white shrink-0">+$6.99</span>
+            </label>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Right Column: Sticky Live Checkout & Dispatch Summary -->
+      <aside class="lg:col-span-4 sticky top-24 space-y-6">
+        
+        <!-- Live Order Calculation Box -->
+        <div class="p-6 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)] shadow-2xl">
+          <div class="flex items-center justify-between pb-4 mb-4 border-b border-[var(--intel-border)]">
+            <div class="flex items-center gap-2">
+              <Ticket class="w-4 h-4 text-[var(--intel-red)]" />
+              <h3 class="font-display text-base font-bold text-white uppercase tracking-wider">
+                Booking Dispatch Summary
+              </h3>
+            </div>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-xs bg-emerald-950 text-emerald-400 border border-emerald-500/40">
+              RESERVED (10:00)
+            </span>
+          </div>
+
+          <!-- Film & Screening Details -->
+          <div class="space-y-2 mb-5 pb-5 border-b border-[var(--intel-border-subtle)] font-mono text-xs">
+            <div class="flex justify-between">
+              <span class="text-[var(--intel-muted)]">Event:</span>
+              <span class="text-white font-bold text-right">Avengers: Doomsday</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-[var(--intel-muted)]">Date:</span>
+              <span class="text-emerald-400 font-bold">Fri, 18 Dec 2026</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-[var(--intel-muted)]">Showtime:</span>
+              <span id="summary-showtime" class="text-white font-bold">10:15 PM EST</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-[var(--intel-muted)]">Format:</span>
+              <span id="summary-format" class="text-white font-bold">IMAX 70mm Laser</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-[var(--intel-muted)]">Venue:</span>
+              <span id="summary-theater" class="text-white font-bold text-right truncate max-w-[190px]">AMC Lincoln Square</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-[var(--intel-muted)]">Seats:</span>
+              <span id="summary-seats" class="text-amber-400 font-bold">E6, E7 (2 Tickets)</span>
+            </div>
+          </div>
+
+          <!-- Price Calculation Lines -->
+          <div class="space-y-2.5 font-mono text-xs mb-5 pb-5 border-b border-[var(--intel-border-subtle)]">
+            <div class="flex justify-between text-neutral-300">
+              <span id="summary-ticket-line">Tickets (2 × $28.50)</span>
+              <span id="summary-ticket-total" class="font-semibold text-white">$57.00</span>
+            </div>
+            <div class="flex justify-between text-neutral-300">
+              <span>IMAX 70mm Booking Fee</span>
+              <span class="text-white">$2.50</span>
+            </div>
+            <div id="summary-addon-row" class="flex justify-between text-neutral-300">
+              <span>Collector Add-ons</span>
+              <span id="summary-addon-total" class="text-white">$9.99</span>
+            </div>
+            <div id="summary-discount-row" class="hidden justify-between text-emerald-400 font-bold">
+              <span id="summary-discount-label">Promo Discount (20%)</span>
+              <span id="summary-discount-amount">-$11.40</span>
+            </div>
+          </div>
+
+          <!-- Total Due -->
+          <div class="flex items-baseline justify-between mb-6">
+            <span class="font-mono text-xs uppercase tracking-wider text-[var(--intel-muted)] font-bold">Total Amount Due</span>
+            <div class="text-right">
+              <span id="summary-grand-total" class="font-mono text-3xl font-black text-white">$69.49</span>
+              <span class="block text-[10px] font-mono text-[var(--intel-muted)]">All Local Taxes Included</span>
+            </div>
+          </div>
+
+          <!-- Promo Code Input -->
+          <div class="mb-6">
+            <label for="promo-input" class="block font-mono text-[11px] text-[var(--intel-muted)] uppercase mb-1.5">
+              Access Voucher / Fan Code
+            </label>
+            <div class="flex gap-2">
+              <input
+                type="text"
+                id="promo-input"
+                placeholder="Try DOOMSDAY616 or LATVERIA"
+                class="flex-1 px-3 py-2 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] focus:border-[var(--intel-red)] text-white font-mono text-xs uppercase focus:outline-none"
+              />
+              <button
+                type="button"
+                id="apply-promo-btn"
+                class="px-3 py-2 rounded-xs bg-[var(--intel-elevated)] hover:bg-[var(--intel-surface-hover)] border border-[var(--intel-border)] text-white font-mono text-xs font-bold uppercase transition-colors"
+              >
+                Apply
+              </button>
+            </div>
+            <p id="promo-message" class="text-[11px] font-mono mt-1.5 hidden"></p>
+          </div>
+
+          <!-- Attendee Details Form -->
+          <form id="checkout-form" class="space-y-4">
+            <div>
+              <label for="attendee-name" class="block font-mono text-[11px] text-neutral-300 uppercase font-bold mb-1">
+                Full Name for E-Ticket *
+              </label>
+              <input
+                type="text"
+                id="attendee-name"
+                name="name"
+                required
+                placeholder="e.g. Victor Richards"
+                class="w-full px-3 py-2 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] focus:border-[var(--intel-red)] text-white font-sans text-xs focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label for="attendee-email" class="block font-mono text-[11px] text-neutral-300 uppercase font-bold mb-1">
+                Email for Instant QR Delivery *
+              </label>
+              <input
+                type="email"
+                id="attendee-email"
+                name="email"
+                required
+                placeholder="name@multiverse.com"
+                class="w-full px-3 py-2 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] focus:border-[var(--intel-red)] text-white font-sans text-xs focus:outline-none"
+              />
+            </div>
+
+            <!-- Payment Simulation Options -->
+            <div>
+              <span class="block font-mono text-[11px] text-neutral-300 uppercase font-bold mb-1.5">
+                Payment Verification
+              </span>
+              <div class="grid grid-cols-2 gap-2 font-mono text-xs">
+                <button
+                  type="button"
+                  id="pay-card-btn"
+                  class="p-2.5 rounded-xs bg-[var(--intel-obsidian)] border-2 border-[var(--intel-red)] text-white font-bold flex items-center justify-center gap-1.5"
+                >
+                  <CreditCard class="w-3.5 h-3.5 text-[var(--intel-red)]" />
+                  <span>Credit Card</span>
+                </button>
+                <button
+                  type="button"
+                  id="pay-express-btn"
+                  class="p-2.5 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border)] text-neutral-300 hover:text-white flex items-center justify-center gap-1.5"
+                >
+                  <Zap class="w-3.5 h-3.5 text-amber-400" />
+                  <span>Apple / Google Pay</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Main Submit Button -->
+            <button
+              type="submit"
+              id="submit-booking-btn"
+              class="w-full mt-4 py-3.5 px-4 rounded-xs bg-[var(--intel-red)] hover:bg-[var(--intel-red-hover)] text-white font-display text-sm font-black tracking-widest uppercase transition-all duration-150 shadow-[0_0_20px_rgba(225,6,0,0.5)] flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <Lock class="w-4 h-4" />
+              <span>LOCK 18 DEC TICKETS NOW</span>
+            </button>
+
+            <div class="text-center pt-2">
+              <span class="font-mono text-[10px] text-[var(--intel-muted)] flex items-center justify-center gap-1">
+                <ShieldCheck class="w-3.5 h-3.5 text-emerald-400" />
+                256-Bit SSL Secured Theatrical Dispatch
+              </span>
+            </div>
+          </form>
+        </div>
+
+        <!-- 18 Dec Perks Banner -->
+        <div class="p-4 rounded-xs bg-amber-950/20 border border-amber-500/30 text-amber-200 text-xs font-sans space-y-2">
+          <div class="flex items-center gap-2 text-amber-300 font-mono font-bold uppercase text-[11px]">
+            <Sparkles class="w-4 h-4 text-amber-400" />
+            <span>18 Dec Premiere Inclusions:</span>
+          </div>
+          <ul class="space-y-1 text-[11px] list-disc list-inside text-neutral-300 font-sans">
+            <li>Commemorative foil ticket pass included at box office</li>
+            <li>Early entry permitted 45 minutes prior for red carpet stream</li>
+            <li>Post-credits 5-minute teaser for <em>Avengers: Secret Wars</em></li>
+          </ul>
+        </div>
+
+      </aside>
+    </div>
+
+    <!-- Theatrical FAQ & Policies Section -->
+    <section class="mt-16 pt-10 border-t border-[var(--intel-border)]" aria-labelledby="faq-heading">
+      <div class="mb-8">
+        <h2 id="faq-heading" class="font-serif text-2xl sm:text-3xl font-bold text-white mb-2">
+          18 Dec Premiere Protocols &amp; Fan Intel
+        </h2>
+        <p class="font-sans text-sm text-[var(--intel-muted)]">
+          Essential screening policies, costume guidelines, and entry checkpoints for Avengers: Doomsday.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="p-5 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)]">
+          <h3 class="font-display text-base font-bold text-white uppercase tracking-wider mb-2 flex items-center gap-2">
+            <Clock class="w-4 h-4 text-[var(--intel-red)]" />
+            Zero Hour Arrival Time
+          </h3>
+          <p class="text-xs text-neutral-300 font-sans leading-relaxed">
+            Theaters will begin security intake and ticket verification 45 minutes prior to scheduled showtimes. Fans attending the 7:30 PM Gala or 11:59 PM Midnight shows are advised to arrive 60 minutes early to experience the lobby photo ops and collect their metallic ticket passes.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)]">
+          <h3 class="font-display text-base font-bold text-white uppercase tracking-wider mb-2 flex items-center gap-2">
+            <ShieldAlert class="w-4 h-4 text-amber-400" />
+            Cosplay &amp; Doom Armor Policy
+          </h3>
+          <p class="text-xs text-neutral-300 font-sans leading-relaxed">
+            Marvel cosplay is enthusiastically encouraged! In accordance with theater safety policies, metallic Doctor Doom masks or full-face coverings must be briefly removed at security checkpoints. Simulated props must be inspected and tagged.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)]">
+          <h3 class="font-display text-base font-bold text-white uppercase tracking-wider mb-2 flex items-center gap-2">
+            <Eye class="w-4 h-4 text-[var(--intel-red)]" />
+            Anti-Piracy &amp; Leak Lockdown
+          </h3>
+          <p class="text-xs text-neutral-300 font-sans leading-relaxed">
+            To prevent multiversal spoiler leaks, all screenings are subject to strict anti-recording protocols. Infrared scanning will be deployed during the screening. Phone usage is strictly prohibited inside the auditorium.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)]">
+          <h3 class="font-display text-base font-bold text-white uppercase tracking-wider mb-2 flex items-center gap-2">
+            <ShieldCheck class="w-4 h-4 text-emerald-400" />
+            Ticket Protection &amp; Refunds
+          </h3>
+          <p class="text-xs text-neutral-300 font-sans leading-relaxed">
+            Tickets may be rescheduled or cancelled for a 100% refund up to 2 hours before your booked December 18 showtime directly through your confirmation dispatch or by contacting the theater concierge desk.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Doomsday Dispatches -->
+    <section class="mt-12 pt-8 border-t border-[var(--intel-border-subtle)]">
+      <h3 class="font-display text-sm font-bold text-[var(--intel-muted)] uppercase tracking-wider mb-4">
+        Related Avengers: Doomsday Intelligence Dossiers
+      </h3>
+      <div class="flex flex-wrap gap-2 text-xs font-mono">
+        <a href="/articles/avengers-doomsday" class="px-3 py-1.5 rounded-xs bg-[var(--intel-charcoal)] hover:bg-[var(--intel-elevated)] border border-[var(--intel-border)] text-neutral-300 hover:text-white transition-colors">
+          → Avengers: Doomsday Overview
+        </a>
+        <a href="/articles/doctor-doom-character" class="px-3 py-1.5 rounded-xs bg-[var(--intel-charcoal)] hover:bg-[var(--intel-elevated)] border border-[var(--intel-border)] text-neutral-300 hover:text-white transition-colors">
+          → Doctor Doom Character Dossier
+        </a>
+        <a href="/articles/avengers-doomsday-preventa" class="px-3 py-1.5 rounded-xs bg-[var(--intel-charcoal)] hover:bg-[var(--intel-elevated)] border border-[var(--intel-border)] text-neutral-300 hover:text-white transition-colors">
+          → Avengers Doomsday Preventa Intel
+        </a>
+        <a href="/articles/tobey-spider-man-vs-xmen-avengers-doomsday-leak" class="px-3 py-1.5 rounded-xs bg-[var(--intel-charcoal)] hover:bg-[var(--intel-elevated)] border border-[var(--intel-border)] text-neutral-300 hover:text-white transition-colors">
+          → Tobey Spider-Man vs X-Men Leak
+        </a>
+        <a href="/articles/avengers-doomsday-deaths-leaked-kill-list" class="px-3 py-1.5 rounded-xs bg-[var(--intel-charcoal)] hover:bg-[var(--intel-elevated)] border border-[var(--intel-border)] text-neutral-300 hover:text-white transition-colors">
+          → Leaked Multiverse Kill List
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- BOOKING CONFIRMATION MODAL & DIGITAL CINEMA PASS -->
+  <div
+    id="confirmation-modal"
+    class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="ticket-modal-title"
+  >
+    <div class="w-full max-w-xl max-h-[92vh] overflow-y-auto bg-[var(--intel-obsidian)] border-2 border-[var(--intel-red)] rounded-xs shadow-[0_0_50px_rgba(225,6,0,0.4)] p-6 sm:p-8">
+      
+      <!-- Modal Top Status -->
+      <div class="flex items-center justify-between pb-4 mb-4 border-b border-[var(--intel-border-subtle)]">
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-emerald-500 animate-ping"></span>
+          <span class="font-mono text-xs font-bold text-emerald-400 uppercase tracking-widest">
+            TICKETS OFFICIALLY CONFIRMED
+          </span>
+        </div>
+        <button
+          type="button"
+          id="close-modal-x"
+          class="text-[var(--intel-muted)] hover:text-white font-mono text-sm p-1 rounded-xs hover:bg-white/10"
+          aria-label="Close modal"
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- THE PRINTABLE DIGITAL CINEMA BOARDING PASS -->
+      <div id="printable-ticket" class="p-6 rounded-xs bg-gradient-to-br from-[#121215] to-[#0A0A0C] border border-[var(--intel-border-strong)] relative overflow-hidden text-white shadow-xl my-4">
+        <!-- Watermark / Background Accent -->
+        <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-[var(--intel-red)]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- Ticket Header -->
+        <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
+          <div>
+            <div class="text-[10px] font-mono tracking-widest text-[var(--intel-red)] font-black uppercase">
+              MARVEL STUDIOS • 616 INTEL DISPATCH
+            </div>
+            <h3 id="ticket-modal-title" class="font-serif text-2xl font-black text-white mt-0.5 tracking-tight">
+              AVENGERS: DOOMSDAY
+            </h3>
+            <span class="text-xs font-mono text-emerald-400 font-semibold block">
+              WORLDWIDE OPENING NIGHT PREMIERE
+            </span>
+          </div>
+          <div class="text-right">
+            <span class="font-mono text-[10px] text-neutral-400 block uppercase">PASS REF</span>
+            <span id="ticket-ref-code" class="font-mono text-sm font-black text-white tracking-wider">DOOM-20261218-8492</span>
+          </div>
+        </div>
+
+        <!-- Ticket Grid Information -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 font-mono text-xs mb-5">
+          <div class="bg-black/50 p-2.5 rounded-xs border border-white/5">
+            <span class="text-neutral-400 text-[10px] block uppercase">DATE</span>
+            <strong class="text-white">FRI, 18 DEC 2026</strong>
+          </div>
+          <div class="bg-black/50 p-2.5 rounded-xs border border-white/5">
+            <span class="text-neutral-400 text-[10px] block uppercase">SHOWTIME</span>
+            <strong id="ticket-modal-time" class="text-white">10:15 PM EST</strong>
+          </div>
+          <div class="bg-black/50 p-2.5 rounded-xs border border-white/5 col-span-2 sm:col-span-1">
+            <span class="text-neutral-400 text-[10px] block uppercase">FORMAT</span>
+            <strong id="ticket-modal-format" class="text-amber-400">IMAX 70MM LASER</strong>
+          </div>
+          <div class="bg-black/50 p-2.5 rounded-xs border border-white/5 col-span-2">
+            <span class="text-neutral-400 text-[10px] block uppercase">THEATER LOCATION</span>
+            <strong id="ticket-modal-venue" class="text-white truncate block">AMC Lincoln Square IMAX, New York</strong>
+          </div>
+          <div class="bg-black/50 p-2.5 rounded-xs border border-white/5">
+            <span class="text-neutral-400 text-[10px] block uppercase">AUDITORIUM</span>
+            <strong class="text-emerald-400">SCREEN 1</strong>
+          </div>
+        </div>
+
+        <!-- Seats Showcase -->
+        <div class="p-3 bg-red-950/30 border border-red-500/40 rounded-xs mb-5 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <Armchair class="w-4 h-4 text-[var(--intel-red)]" />
+            <span class="font-mono text-xs uppercase text-neutral-300">Reserved Seats:</span>
+          </div>
+          <span id="ticket-modal-seats" class="font-mono text-sm font-black text-white">
+            ROW E • SEATS 6, 7 (VIP PRIME)
+          </span>
+        </div>
+
+        <!-- Attendee & Price Info -->
+        <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-neutral-400 mb-5 pb-4 border-b border-white/10">
+          <div>
+            <span>Attendee: </span>
+            <strong id="ticket-modal-name" class="text-white">Victor Richards</strong>
+          </div>
+          <div>
+            <span>Total Verified: </span>
+            <strong id="ticket-modal-price" class="text-emerald-400">$69.49</strong>
+          </div>
+        </div>
+
+        <!-- Scannable Barcode & QR Code Section -->
+        <div class="flex items-center justify-between gap-4 pt-1">
+          <!-- Live Vector SVG QR Code -->
+          <div class="w-20 h-20 bg-white p-1.5 rounded-xs shrink-0 flex items-center justify-center">
+            <svg class="w-full h-full text-black" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 0h30v30H0zm6 6v18h18V6zm4 4h10v10H10zm60-10h30v30H70zm6 6v18h18V6zm4 4h10v10H80zM0 70h30v30H0zm6 6v18h18V76zm4 4h10v10H10zm35-70h10v20H45zm5 25h15v10H50zm15 15h15v15H65zm-20 0h10v25H45zm25 10h10v15H70zm15 10h10v10H85zm-50-5h10v15H35zm0 20h20v10H35z" />
+            </svg>
+          </div>
+
+          <!-- Barcode simulation lines -->
+          <div class="flex-1 text-center font-mono">
+            <div class="h-10 flex items-center justify-center gap-0.5 overflow-hidden">
+              <div class="w-1 h-full bg-white"></div>
+              <div class="w-0.5 h-full bg-white"></div>
+              <div class="w-1.5 h-full bg-white"></div>
+              <div class="w-0.5 h-full bg-white"></div>
+              <div class="w-2 h-full bg-white"></div>
+              <div class="w-1 h-full bg-white"></div>
+              <div class="w-0.5 h-full bg-white"></div>
+              <div class="w-2 h-full bg-white"></div>
+              <div class="w-0.5 h-full bg-white"></div>
+              <div class="w-1 h-full bg-white"></div>
+              <div class="w-1.5 h-full bg-white"></div>
+              <div class="w-0.5 h-full bg-white"></div>
+              <div class="w-2 h-full bg-white"></div>
+              <div class="w-1 h-full bg-white"></div>
+              <div class="w-0.5 h-full bg-white"></div>
+              <div class="w-1.5 h-full bg-white"></div>
+            </div>
+            <span class="text-[9px] text-neutral-400 tracking-widest block mt-1">ENTRY SCAN VALID ONLY ON 18 DEC 2026</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Action Buttons -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mt-6 font-mono text-xs">
+        <button
+          type="button"
+          id="print-ticket-btn"
+          class="p-3 rounded-xs bg-[var(--intel-charcoal)] hover:bg-[var(--intel-elevated)] border border-[var(--intel-border)] text-white font-bold flex items-center justify-center gap-2 transition-colors"
+        >
+          <Printer class="w-4 h-4 text-emerald-400" />
+          <span>Print / Save PDF</span>
+        </button>
+
+        <button
+          type="button"
+          id="copy-code-btn"
+          class="p-3 rounded-xs bg-[var(--intel-charcoal)] hover:bg-[var(--intel-elevated)] border border-[var(--intel-border)] text-white font-bold flex items-center justify-center gap-2 transition-colors"
+        >
+          <Copy class="w-4 h-4 text-cyan-400" />
+          <span id="copy-btn-text">Copy Code</span>
+        </button>
+
+        <button
+          type="button"
+          id="done-ticket-btn"
+          class="p-3 rounded-xs bg-[var(--intel-red)] hover:bg-[var(--intel-red-hover)] text-white font-bold flex items-center justify-center gap-2 transition-colors"
+        >
+          <Check class="w-4 h-4" />
+          <span>Done</span>
+        </button>
+      </div>
+
+      <div class="mt-4 text-center">
+        <p class="text-[11px] font-mono text-[var(--intel-muted)]">
+          A duplicate confirmation dispatch has been sent to your email with direct Apple / Google Wallet passlinks.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Client-Side Booking Logic Script -->
+  <script is:inline>
+    (function initBookingApp() {
+      // 1. COUNTDOWN TO 18 DEC 2026 ZERO HOUR
+      const targetDate = new Date('2026-12-18T00:01:00Z').getTime();
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const difference = targetDate - now;
+
+        if (difference > 0) {
+          const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+          const daysEl = document.getElementById('countdown-days');
+          const hoursEl = document.getElementById('countdown-hours');
+          const minsEl = document.getElementById('countdown-minutes');
+          const secsEl = document.getElementById('countdown-seconds');
+
+          if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+          if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+          if (minsEl) minsEl.textContent = String(minutes).padStart(2, '0');
+          if (secsEl) secsEl.textContent = String(seconds).padStart(2, '0');
+        }
+      }
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+
+      // 2. STATE MANAGEMENT
+      const state = {
+        formatName: 'IMAX 70mm Laser',
+        formatPrice: 28.50,
+        theaterName: 'AMC Lincoln Square IMAX 70mm',
+        theaterCity: 'New York, NY',
+        showtime: '10:15 PM EST',
+        selectedSeats: ['E6', 'E7'],
+        addons: [
+          { id: 'addon-metal-pass', name: 'Collector Metallic Foil Ticket & Lanyard', price: 9.99 }
+        ],
+        promoDiscountPercent: 0,
+        promoFlatDiscount: 0,
+        promoCodeApplied: '',
+        attendeeName: 'Victor Richards',
+        attendeeEmail: 'victor@latveria.com',
+        bookingRef: 'DOOM-20261218-8492'
+      };
+
+      // 3. GENERATE INTERACTIVE AUDITORIUM SEAT MAP
+      const seatGrid = document.getElementById('theater-seat-grid');
+      const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+      const cols = 12;
+
+      // Realistic pre-reserved seats for scarcity effect
+      const reservedSeats = new Set([
+        'A1', 'A2', 'A11', 'A12',
+        'B3', 'B4', 'B5', 'B8', 'B9',
+        'C2', 'C6', 'C7', 'C11',
+        'D1', 'D2', 'D11', 'D12',
+        'F4', 'F5', 'F6', 'F7', 'F8',
+        'G3', 'G10',
+        'H1', 'H2', 'H11', 'H12'
+      ]);
+
+      function isVipSeat(row, col) {
+        return (row === 'D' || row === 'E') && col >= 4 && col <= 9;
+      }
+
+      function renderSeatGrid() {
+        if (!seatGrid) return;
+        seatGrid.innerHTML = '';
+
+        rows.forEach(function(row) {
+          const rowDiv = document.createElement('div');
+          rowDiv.className = 'flex items-center justify-center gap-1.5 sm:gap-2';
+
+          // Row Label Left
+          const labelLeft = document.createElement('span');
+          labelLeft.className = 'w-4 text-center font-mono text-[11px] text-[var(--intel-muted)] font-bold';
+          labelLeft.textContent = row;
+          rowDiv.appendChild(labelLeft);
+
+          // Seats 1 to 12
+          for (let col = 1; col <= cols; col++) {
+            // Aisle divider in center
+            if (col === 7) {
+              const aisle = document.createElement('div');
+              aisle.className = 'w-4 sm:w-6';
+              rowDiv.appendChild(aisle);
+            }
+
+            const seatId = row + col;
+            const isReserved = reservedSeats.has(seatId);
+            const isSelected = state.selectedSeats.includes(seatId);
+            const isVip = isVipSeat(row, col);
+
+            const seatBtn = document.createElement('button');
+            seatBtn.type = 'button';
+            seatBtn.setAttribute('data-seat-id', seatId);
+            seatBtn.setAttribute('aria-label', `Row ${row} Seat ${col}${isVip ? ' VIP Prime' : ''}${isReserved ? ' (Reserved)' : ''}`);
+            seatBtn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+
+            let seatClasses = 'w-6 h-6 sm:w-7 sm:h-7 rounded-xs font-mono text-[10px] font-bold flex items-center justify-center transition-all duration-150 ';
+
+            if (isReserved) {
+              seatClasses += 'bg-neutral-900 border border-neutral-800 text-neutral-600 cursor-not-allowed opacity-40';
+              seatBtn.disabled = true;
+            } else if (isSelected) {
+              seatClasses += 'bg-[var(--intel-red)] border border-red-400 text-white shadow-[0_0_10px_rgba(225,6,0,0.8)] scale-105';
+            } else if (isVip) {
+              seatClasses += 'bg-amber-950/40 border border-amber-500/70 text-amber-300 hover:bg-amber-900/60 hover:scale-105';
+            } else {
+              seatClasses += 'bg-[var(--intel-elevated)] border border-[var(--intel-border)] text-neutral-300 hover:border-[var(--intel-red)] hover:text-white hover:scale-105';
+            }
+
+            seatBtn.className = seatClasses;
+            seatBtn.textContent = String(col);
+
+            seatBtn.addEventListener('click', function() {
+              toggleSeat(seatId);
+            });
+
+            rowDiv.appendChild(seatBtn);
+          }
+
+          // Row Label Right
+          const labelRight = document.createElement('span');
+          labelRight.className = 'w-4 text-center font-mono text-[11px] text-[var(--intel-muted)] font-bold';
+          labelRight.textContent = row;
+          rowDiv.appendChild(labelRight);
+
+          seatGrid.appendChild(rowDiv);
+        });
+      }
+
+      function toggleSeat(seatId) {
+        const index = state.selectedSeats.indexOf(seatId);
+        if (index > -1) {
+          // Deselect (ensure at least 1 remains or allow empty with message)
+          if (state.selectedSeats.length === 1) {
+            alert('At least one seat must be selected to proceed with booking.');
+            return;
+          }
+          state.selectedSeats.splice(index, 1);
+        } else {
+          // Max 6 seats limit
+          if (state.selectedSeats.length >= 6) {
+            alert('Maximum 6 seats per transaction for premiere night allocation.');
+            return;
+          }
+          state.selectedSeats.push(seatId);
+        }
+        renderSeatGrid();
+        updateSummary();
+      }
+
+      // 4. UPDATE LIVE PRICE & ORDER SUMMARY
+      function updateSummary() {
+        const seatCount = state.selectedSeats.length;
+        const seatCountEl = document.getElementById('selected-seat-count');
+        if (seatCountEl) seatCountEl.textContent = String(seatCount);
+
+        // Update allocated badges
+        const badgeList = document.getElementById('selected-seats-badge-list');
+        if (badgeList) {
+          badgeList.innerHTML = '';
+          state.selectedSeats.forEach(function(s) {
+            const span = document.createElement('span');
+            span.className = 'seat-badge px-2.5 py-1 rounded-xs bg-[var(--intel-red)]/20 border border-[var(--intel-red)] text-white text-xs font-mono font-bold flex items-center gap-1.5';
+            span.innerHTML = `ROW ${s.charAt(0)} • SEAT ${s.slice(1)} <button type="button" class="text-neutral-400 hover:text-white" aria-label="Remove ${s}">✕</button>`;
+            span.querySelector('button')?.addEventListener('click', function(e) {
+              e.stopPropagation();
+              toggleSeat(s);
+            });
+            badgeList.appendChild(span);
+          });
+        }
+
+        // Summary details
+        const summaryShowtime = document.getElementById('summary-showtime');
+        if (summaryShowtime) summaryShowtime.textContent = state.showtime;
+
+        const summaryFormat = document.getElementById('summary-format');
+        if (summaryFormat) summaryFormat.textContent = state.formatName;
+
+        const summaryTheater = document.getElementById('summary-theater');
+        if (summaryTheater) summaryTheater.textContent = state.theaterName;
+
+        const summarySeats = document.getElementById('summary-seats');
+        if (summarySeats) summarySeats.textContent = `${state.selectedSeats.join(', ')} (${seatCount} Tickets)`;
+
+        // Calculations
+        const ticketsSubtotal = seatCount * state.formatPrice;
+        const bookingFee = 2.50;
+        
+        let addonsSubtotal = 0;
+        state.addons.forEach(function(a) {
+          addonsSubtotal += a.price;
+        });
+
+        const ticketLine = document.getElementById('summary-ticket-line');
+        if (ticketLine) ticketLine.textContent = `Tickets (${seatCount} × $${state.formatPrice.toFixed(2)})`;
+
+        const ticketTotal = document.getElementById('summary-ticket-total');
+        if (ticketTotal) ticketTotal.textContent = `$${ticketsSubtotal.toFixed(2)}`;
+
+        const addonRow = document.getElementById('summary-addon-row');
+        const addonTotal = document.getElementById('summary-addon-total');
+        if (addonRow && addonTotal) {
+          if (addonsSubtotal > 0) {
+            addonRow.classList.remove('hidden');
+            addonTotal.textContent = `$${addonsSubtotal.toFixed(2)}`;
+          } else {
+            addonRow.classList.add('hidden');
+          }
+        }
+
+        // Promo calculations
+        let discount = 0;
+        if (state.promoDiscountPercent > 0) {
+          discount = (ticketsSubtotal * state.promoDiscountPercent) / 100;
+        } else if (state.promoFlatDiscount > 0) {
+          discount = Math.min(state.promoFlatDiscount, ticketsSubtotal);
+        }
+
+        const discountRow = document.getElementById('summary-discount-row');
+        const discountLabel = document.getElementById('summary-discount-label');
+        const discountAmount = document.getElementById('summary-discount-amount');
+        if (discountRow && discountLabel && discountAmount) {
+          if (discount > 0) {
+            discountRow.classList.remove('hidden');
+            discountRow.classList.add('flex');
+            discountLabel.textContent = `Promo Code (${state.promoCodeApplied})`;
+            discountAmount.textContent = `-$${discount.toFixed(2)}`;
+          } else {
+            discountRow.classList.add('hidden');
+            discountRow.classList.remove('flex');
+          }
+        }
+
+        const grandTotal = Math.max(0, (ticketsSubtotal + bookingFee + addonsSubtotal - discount));
+        const grandTotalEl = document.getElementById('summary-grand-total');
+        if (grandTotalEl) grandTotalEl.textContent = `$${grandTotal.toFixed(2)}`;
+      }
+
+      // 5. EVENT LISTENERS: FORMAT SELECTION
+      document.querySelectorAll('input[name="experience-format"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+          state.formatPrice = parseFloat(this.getAttribute('data-price') || '28.50');
+          state.formatName = this.getAttribute('data-name') || 'IMAX 70mm Laser';
+
+          // Update card active styles
+          document.querySelectorAll('.format-card').forEach(function(card) {
+            card.classList.remove('border-[var(--intel-red)]', 'border-2');
+            card.classList.add('border-[var(--intel-border)]', 'border');
+          });
+          const parent = radio.closest('.format-card');
+          if (parent) {
+            parent.classList.remove('border-[var(--intel-border)]', 'border');
+            parent.classList.add('border-[var(--intel-red)]', 'border-2');
+          }
+
+          updateSummary();
+        });
+      });
+
+      // 6. EVENT LISTENERS: THEATER LOCATION
+      document.querySelectorAll('input[name="theater-location"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+          state.theaterName = this.getAttribute('data-name') || '';
+          state.theaterCity = this.getAttribute('data-city') || '';
+
+          document.querySelectorAll('.theater-card').forEach(function(card) {
+            card.classList.remove('border-[var(--intel-red)]', 'border-2');
+            card.classList.add('border-[var(--intel-border)]', 'border');
+          });
+          const parent = radio.closest('.theater-card');
+          if (parent) {
+            parent.classList.remove('border-[var(--intel-border)]', 'border');
+            parent.classList.add('border-[var(--intel-red)]', 'border-2');
+          }
+
+          updateSummary();
+        });
+      });
+
+      // 7. EVENT LISTENERS: SHOWTIME SELECTION
+      document.querySelectorAll('input[name="showtime-slot"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+          state.showtime = this.getAttribute('data-time') || '10:15 PM EST';
+
+          document.querySelectorAll('.showtime-card').forEach(function(card) {
+            card.classList.remove('border-[var(--intel-red)]', 'border-2');
+            card.classList.add('border-[var(--intel-border)]', 'border');
+          });
+          const parent = radio.closest('.showtime-card');
+          if (parent) {
+            parent.classList.remove('border-[var(--intel-border)]', 'border');
+            parent.classList.add('border-[var(--intel-red)]', 'border-2');
+          }
+
+          updateSummary();
+        });
+      });
+
+      // 8. EVENT LISTENERS: ADD-ONS
+      document.querySelectorAll('.addon-checkbox').forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+          const id = this.id;
+          const name = this.getAttribute('data-name') || '';
+          const price = parseFloat(this.getAttribute('data-price') || '0');
+
+          if (this.checked) {
+            state.addons.push({ id, name, price });
+          } else {
+            state.addons = state.addons.filter(function(a) { return a.id !== id; });
+          }
+          updateSummary();
+        });
+      });
+
+      // 9. PROMO CODE ENGINE
+      const applyBtn = document.getElementById('apply-promo-btn');
+      const promoInput = document.getElementById('promo-input');
+      const promoMsg = document.getElementById('promo-message');
+
+      if (applyBtn && promoInput && promoMsg) {
+        applyBtn.addEventListener('click', function() {
+          const code = promoInput.value.trim().toUpperCase();
+          if (!code) return;
+
+          if (code === 'DOOMSDAY616') {
+            state.promoDiscountPercent = 20;
+            state.promoFlatDiscount = 0;
+            state.promoCodeApplied = 'DOOMSDAY616 (20% OFF)';
+            promoMsg.className = 'text-[11px] font-mono mt-1.5 text-emerald-400 block';
+            promoMsg.textContent = '✓ 20% Multiverse fan discount applied to tickets!';
+          } else if (code === 'LATVERIA') {
+            state.promoDiscountPercent = 0;
+            state.promoFlatDiscount = 10.00;
+            state.promoCodeApplied = 'LATVERIA ($10 OFF)';
+            promoMsg.className = 'text-[11px] font-mono mt-1.5 text-emerald-400 block';
+            promoMsg.textContent = '✓ $10 Latverian monarch treasury voucher applied!';
+          } else if (code === 'RDJDOOM') {
+            state.promoDiscountPercent = 15;
+            state.promoFlatDiscount = 0;
+            state.promoCodeApplied = 'RDJDOOM (15% OFF)';
+            promoMsg.className = 'text-[11px] font-mono mt-1.5 text-emerald-400 block';
+            promoMsg.textContent = '✓ 15% Doctor Doom cast insider discount applied!';
+          } else {
+            state.promoDiscountPercent = 0;
+            state.promoFlatDiscount = 0;
+            state.promoCodeApplied = '';
+            promoMsg.className = 'text-[11px] font-mono mt-1.5 text-red-400 block';
+            promoMsg.textContent = '✕ Invalid voucher code. Try DOOMSDAY616 or LATVERIA.';
+          }
+          updateSummary();
+        });
+      }
+
+      // 10. CHECKOUT SUBMISSION & MODAL CONFIRMATION
+      const checkoutForm = document.getElementById('checkout-form');
+      const modal = document.getElementById('confirmation-modal');
+      const closeModalX = document.getElementById('close-modal-x');
+      const doneBtn = document.getElementById('done-ticket-btn');
+      const printBtn = document.getElementById('print-ticket-btn');
+      const copyCodeBtn = document.getElementById('copy-code-btn');
+      const copyBtnText = document.getElementById('copy-btn-text');
+
+      if (checkoutForm && modal) {
+        checkoutForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          if (state.selectedSeats.length === 0) {
+            alert('Please select at least 1 seat before checking out.');
+            return;
+          }
+
+          const nameInput = document.getElementById('attendee-name');
+          const emailInput = document.getElementById('attendee-email');
+          const attendeeName = nameInput ? nameInput.value.trim() : 'Victor Richards';
+          const attendeeEmail = emailInput ? emailInput.value.trim() : 'victor@latveria.com';
+
+          // Generate random reference code
+          const randomNum = Math.floor(1000 + Math.random() * 9000);
+          state.bookingRef = `DOOM-20261218-${randomNum}`;
+
+          // Populate Modal with state
+          const refEl = document.getElementById('ticket-ref-code');
+          if (refEl) refEl.textContent = state.bookingRef;
+
+          const timeEl = document.getElementById('ticket-modal-time');
+          if (timeEl) timeEl.textContent = state.showtime;
+
+          const formatEl = document.getElementById('ticket-modal-format');
+          if (formatEl) formatEl.textContent = state.formatName.toUpperCase();
+
+          const venueEl = document.getElementById('ticket-modal-venue');
+          if (venueEl) venueEl.textContent = `${state.theaterName}, ${state.theaterCity}`;
+
+          const seatsEl = document.getElementById('ticket-modal-seats');
+          if (seatsEl) seatsEl.textContent = `${state.selectedSeats.map(s => `ROW ${s.charAt(0)} • SEAT ${s.slice(1)}`).join(', ')}`;
+
+          const nameEl = document.getElementById('ticket-modal-name');
+          if (nameEl) nameEl.textContent = attendeeName;
+
+          const grandTotalEl = document.getElementById('summary-grand-total');
+          const modalPriceEl = document.getElementById('ticket-modal-price');
+          if (modalPriceEl && grandTotalEl) modalPriceEl.textContent = grandTotalEl.textContent;
+
+          // Open Modal
+          modal.classList.remove('invisible', 'opacity-0');
+          modal.classList.add('visible', 'opacity-100');
+          document.body.style.overflow = 'hidden';
+        });
+
+        function closeModal() {
+          modal.classList.remove('visible', 'opacity-100');
+          modal.classList.add('invisible', 'opacity-0');
+          document.body.style.overflow = '';
+        }
+
+        if (closeModalX) closeModalX.addEventListener('click', closeModal);
+        if (doneBtn) doneBtn.addEventListener('click', closeModal);
+
+        if (printBtn) {
+          printBtn.addEventListener('click', function() {
+            window.print();
+          });
+        }
+
+        if (copyCodeBtn && copyBtnText) {
+          copyCodeBtn.addEventListener('click', function() {
+            navigator.clipboard.writeText(state.bookingRef).then(function() {
+              copyBtnText.textContent = 'Copied!';
+              setTimeout(function() {
+                copyBtnText.textContent = 'Copy Code';
+              }, 2000);
+            });
+          });
+        }
+      }
+
+      // Initialize
+      renderSeatGrid();
+      updateSummary();
+    })();
+  </script>
+
+  <!-- Dedicated Print Stylesheet for Pristine Cinema Pass Printing -->
+  <style is:inline>
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+      #confirmation-modal,
+      #confirmation-modal * {
+        visibility: visible !important;
+      }
+      #confirmation-modal {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        background: #ffffff !important;
+        padding: 0 !important;
+      }
+      #confirmation-modal > div {
+        max-width: 100% !important;
+        border: 2px solid #000000 !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+      }
+      #printable-ticket {
+        background: #ffffff !important;
+        color: #000000 !important;
+        border: 1px solid #333333 !important;
+      }
+      #printable-ticket * {
+        color: #000000 !important;
+      }
+      #close-modal-x,
+      #print-ticket-btn,
+      #copy-code-btn,
+      #done-ticket-btn {
+        display: none !important;
+      }
+    }
+  </style>
+</BaseLayout>

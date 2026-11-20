@@ -58,6 +58,7 @@ export const GET: APIRoute = async ({ site }) => {
   addEntry({ url: `${baseUrl}/categories`, lastmod: today, changefreq: 'daily', priority: 0.8 });
   addEntry({ url: `${baseUrl}/search`, lastmod: today, changefreq: 'daily', priority: 0.7 });
   addEntry({ url: `${baseUrl}/write`, lastmod: today, changefreq: 'weekly', priority: 0.7 });
+  addEntry({ url: `${baseUrl}/booking`, lastmod: today, changefreq: 'daily', priority: 0.9 });
 
   // 2. Curated & Dynamic Category Archives (matching src/pages/categories/[slug].astro)
   const categoryMetadata: Record<string, string> = {

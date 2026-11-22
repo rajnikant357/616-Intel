@@ -1,15 +1,12 @@
 ---
 import Logo from '../ui/Logo.astro';
-import { X, Search, BookOpen, Sparkles, Shield, Swords, Gamepad2, Layers, SquarePen, Ticket } from '@lucide/astro';
+import { X, Search, Home, BookOpen, Layers, SquarePen, Ticket } from '@lucide/astro';
 
 const navItems = [
+  { label: 'HOME', href: '/', icon: Home, count: '616' },
   { label: 'ALL LEAKS', href: '/latest', icon: BookOpen, count: '344' },
-  { label: 'SUPERHERO ACTION', href: '/articles/superhero-action', icon: Swords, count: 'CORE' },
-  { label: 'DOCTOR DOOM', href: '/articles/doctor-doom-character', icon: Shield, count: 'DOOM' },
-  { label: 'AVENGERS DOOMSDAY', href: '/articles/avengers-doomsday', icon: Sparkles, count: '2026' },
-  { label: '18 DEC TICKETS', href: '/booking', icon: Ticket, count: 'PRESALE' },
-  { label: 'MARVEL RIVALS', href: '/articles/marvel-rivals', icon: Gamepad2, count: 'META' },
-  { label: 'CATEGORIES', href: '/categories', icon: Layers, count: 'TOPICS' },
+  { label: 'CATEGORY', href: '/categories', icon: Layers, count: 'TOPICS' },
+  { label: 'TICKET', href: '/booking', icon: Ticket, count: 'PLATFORMS' },
 ];
 ---
 
@@ -59,15 +56,15 @@ const navItems = [
     </form>
 
     <!-- Primary Nav Links -->
-    <nav class="flex-1 py-1" aria-label="Mobile Primary">
-      <ul class="space-y-1 font-display uppercase tracking-wider text-lg font-bold">
+    <nav class="flex-1 py-4" aria-label="Mobile Primary">
+      <ul class="space-y-2 font-display uppercase tracking-wider text-lg font-bold">
         {navItems.map((item) => {
           const Icon = item.icon;
           return (
             <li>
               <a
                 href={item.href}
-                class="mobile-nav-link flex items-center justify-between px-3 py-2.5 rounded-xs text-slate-200 hover:text-white hover:bg-white/5 transition-all group"
+                class="mobile-nav-link flex items-center justify-between px-3 py-3 rounded-xs text-slate-200 hover:text-white hover:bg-white/5 transition-all group"
               >
                 <span class="flex items-center gap-3">
                   <Icon class="w-4 h-4 text-[var(--intel-red)] group-hover:scale-110 transition-transform" aria-hidden="true" />
@@ -89,7 +86,7 @@ const navItems = [
         <a href="/about" class="hover:text-white transition-colors">About 616 Intel</a>
         <a href="/write" class="hover:text-white text-[var(--intel-red)] transition-colors font-bold inline-flex items-center gap-1.5">
           <SquarePen class="w-3.5 h-3.5" aria-hidden="true" />
-          <span>Write</span>
+          <span>Write Article</span>
         </a>
       </div>
       <p class="text-[10px] text-[var(--intel-dim)] text-center mt-2">

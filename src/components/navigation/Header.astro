@@ -10,13 +10,10 @@ interface Props {
 const { currentPath = '/' } = Astro.props;
 
 const mainNavItems = [
+  { label: 'HOME', href: '/', match: '/' },
   { label: 'ALL LEAKS', href: '/latest', match: '/latest' },
-  { label: 'SUPERHERO ACTION', href: '/articles/superhero-action', match: '/articles/superhero-action' },
-  { label: 'DOCTOR DOOM', href: '/articles/doctor-doom-character', match: '/articles/doctor-doom-character' },
-  { label: 'AVENGERS DOOMSDAY', href: '/articles/avengers-doomsday', match: '/articles/avengers-doomsday' },
-  { label: '18 DEC TICKETS', href: '/booking', match: '/booking', highlight: true },
-  { label: 'MARVEL RIVALS', href: '/articles/marvel-rivals', match: '/articles/marvel-rivals' },
-  { label: 'CATEGORIES', href: '/categories', match: '/categories' },
+  { label: 'CATEGORY', href: '/categories', match: '/categories' },
+  { label: 'TICKET', href: '/booking', match: '/booking' },
 ];
 ---
 
@@ -26,7 +23,7 @@ const mainNavItems = [
 >
   <div class="container-editorial flex items-center justify-between gap-4">
     <!-- Left: Mobile Menu Trigger + Brand Logo -->
-    <div class="flex items-center gap-3 lg:gap-8">
+    <div class="flex items-center gap-3 lg:gap-8 shrink-0 min-w-0 md:min-w-[200px]">
       <!-- Mobile Menu Button (md:hidden) -->
       <button
         id="open-mobile-drawer-btn"
@@ -41,20 +38,20 @@ const mainNavItems = [
       <Logo variant="primary" />
     </div>
 
-    <!-- Center: Desktop Editorial Navigation Links -->
-    <nav class="hidden md:flex items-center space-x-1 lg:space-x-2" aria-label="Primary Navigation">
+    <!-- Center: Centered Desktop Navigation Links -->
+    <nav class="hidden md:flex flex-1 items-center justify-center space-x-2 lg:space-x-4" aria-label="Primary Navigation">
       {mainNavItems.map((item) => {
-        const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+        const isActive = currentPath === item.href || 
+          (item.href !== '/' && currentPath.startsWith(item.href)) ||
+          (item.href === '/latest' && currentPath.startsWith('/leaks'));
         return (
           <a
             href={item.href}
             class:list={[
-              "relative px-2.5 lg:px-3 py-1.5 font-display text-xs lg:text-sm tracking-wider font-bold uppercase transition-[color,background-color] duration-150 rounded-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--intel-red)] select-none",
+              "relative px-3.5 py-1.5 font-display text-xs lg:text-sm tracking-wider font-bold uppercase transition-[color,background-color] duration-150 rounded-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--intel-red)] select-none",
               isActive 
                 ? "text-white bg-white/5" 
-                : item.highlight
-                  ? "text-red-400 hover:text-white bg-red-950/40 border border-red-500/30 hover:border-red-500 shadow-[0_0_8px_rgba(225,6,0,0.2)]"
-                  : "text-[var(--intel-muted)] hover:text-white hover:bg-white/5"
+                : "text-[var(--intel-muted)] hover:text-white hover:bg-white/5"
             ]}
           >
             {item.label}
@@ -66,17 +63,29 @@ const mainNavItems = [
       })}
     </nav>
 
-    <!-- Right: Search & Write Action -->
-    <div class="flex items-center gap-2 sm:gap-3">
+    <!-- Right: Search Box & Write Action Button -->
+    <div class="flex items-center justify-end gap-2 sm:gap-3 shrink-0 min-w-0 md:min-w-[200px]">
+      <!-- Search Box (Desktop/Tablet) -->
+      <form action="/search" method="get" class="relative hidden sm:block">
+        <input
+          type="search"
+          name="q"
+          placeholder="Search leaks..."
+          class="w-32 md:w-36 lg:w-48 pl-8 pr-3 py-1.5 rounded-xs bg-[var(--intel-charcoal)] hover:bg-[var(--intel-elevated)] border border-[var(--intel-border)] focus:border-[var(--intel-red)] text-white font-mono text-xs placeholder:text-[var(--intel-muted)] transition-colors focus:outline-none"
+        />
+        <Search class="w-3.5 h-3.5 text-[var(--intel-red)] absolute left-2.5 top-2.5 pointer-events-none" aria-hidden="true" />
+      </form>
+
+      <!-- Mobile Search Icon (Mobile Only) -->
       <a
         href="/search"
-        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xs bg-[var(--intel-charcoal)] hover:bg-[var(--intel-elevated)] border border-[var(--intel-border)] hover:border-[var(--intel-border-strong)] text-[var(--intel-muted)] hover:text-white font-mono text-xs transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--intel-red)]"
+        class="sm:hidden inline-flex items-center justify-center p-2 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)] text-[var(--intel-muted)] hover:text-white"
         aria-label="Search Marvel leaks and rumors"
       >
-        <Search class="w-3.5 h-3.5 text-[var(--intel-red)]" aria-hidden="true" />
-        <span class="hidden sm:inline">Search Leaks</span>
+        <Search class="w-4 h-4 text-[var(--intel-red)]" aria-hidden="true" />
       </a>
 
+      <!-- Write Article Button -->
       <a
         href="/write"
         class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xs bg-[var(--intel-red)]/15 hover:bg-[var(--intel-red)]/25 border border-[var(--intel-red)]/50 text-white font-mono text-xs font-semibold tracking-wider uppercase transition-colors duration-150"

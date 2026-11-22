@@ -9,17 +9,17 @@ import { Search, BookOpen, Sparkles, Shield, Swords, Gamepad2, ShoppingBag } fro
 
 const allArticles = await getAllArticles();
 
-// Featured lead entry (Tobey Maguire Spider-Man vs Fox X-Men as top article)
-const featuredArticle = allArticles.find((a) => a.data.slug === 'tobey-spider-man-vs-xmen-avengers-doomsday-leak') || allArticles[0];
+// Featured lead entry (Void vs Dr Doom as main highlighted article on the main page hero section)
+const featuredArticle = allArticles.find((a) => a.data.slug === 'void-vs-dr-doom') || allArticles[0];
 
-// Curated Avengers Doomsday Leaks & Multiverse Incursion Related Articles for the Hero section
+// Curated Void vs Doctor Doom & Avengers Doomsday Related Articles for the Hero section
 const heroRelatedSlugs = [
-  'avengers-doomsday-deaths-leaked-kill-list',
-  'can-sentry-beat-dr-doom',
-  'dr-doom-doomsday',
-  'spider-man-brand-new-day',
-  'who-can-beat-dr-doom',
-  'x-men',
+  'avengers-doomsday-movie-review',
+  'can-the-void-beat-doctor-doom',
+  'how-will-dr-doom-survive-void',
+  'santry-vs-dr-doom-full-fight',
+  'will-there-be-knull-in-doomsday',
+  'who-is-stronger-than-the-void',
 ];
 
 const heroRelatedArticles = heroRelatedSlugs
@@ -35,13 +35,40 @@ const heroRelatedArticles = heroRelatedSlugs
   }));
 
 const heroMetrics = [
-  { label: 'MULTIVERSE CLASH', value: 'Tobey Spider-Man vs. Fox X-Men', color: 'text-white' },
-  { label: 'INCURSION COLLISION', value: 'Earth-96283 vs. Earth-10005', color: 'text-amber-400' },
-  { label: 'SECRET WARS FATE', value: 'Battleworld Survivors Quest', color: 'text-emerald-400' },
+  { label: 'COSMIC SHOWDOWN', value: 'The Void vs. Doctor Doom', color: 'text-white' },
+  { label: 'POWER PARADOX', value: '1,000,000 Suns vs. Sorcery & Prep', color: 'text-amber-400' },
+  { label: 'SECRET WARS DESTINY', value: 'Battleworld Incursion Climax', color: 'text-emerald-400' },
 ];
 
 // High-priority pillar entries (Top home page articles)
 const prioritySlugs = [
+  'void-vs-dr-doom',
+  'avengers-doomsday-movie-review',
+  'santry-vs-dr-doom-full-fight',
+  'santry-powers-vs-dr-doom-powers',
+  'will-there-be-knull-in-doomsday',
+  'how-will-dr-doom-survive-void',
+  'can-the-void-beat-doctor-doom',
+  'who-can-defeat-dr-doom-easily',
+  'who-is-stronger-than-the-void',
+  'who-is-dr-doom-afraid-of',
+  'is-dr-doom-technically-indian',
+  'who-kills-doom-in-marvel',
+  'who-defeats-the-void',
+  'is-sentry-stronger-than-dr-doom',
+  'can-doom-lift-thors-hammer',
+  'is-galactus-afraid-of-dr-doom',
+  'who-is-no-1-powerful-avenger',
+  'who-finally-kills-doomsday',
+  'whos-stronger-void-or-sentry',
+  'why-is-void-so-powerful',
+  'does-the-void-beat-thanos',
+  'can-sentry-void-defeat-knull',
+  'is-hulk-afraid-of-sentry',
+  'who-is-more-powerful-than-the-void-in-marvel',
+  'has-doom-killed-galactus',
+  'is-doctor-doom-immortal',
+  'who-is-doctor-dooms-greatest-enemy',
   'is-iron-man-dr-doom-loki-vs-doctor-doom-doomsday',
   'first-death-in-avengers-doomsday',
   'first-appearance-of-doctor-doom-in-avengers-doomsday',
@@ -121,19 +148,19 @@ const categories = [
       readingTime: featuredArticle.data.readingTime,
       author: featuredArticle.data.author,
     }}
-    badgeTag="TOP FEATURED INTEL • EXCLUSIVE LEAK WIRE"
-    statusBadge="STATUS: RUMORED PRODUCTION LEAK"
+    badgeTag="MAIN HERO DOSSIER • SUPREME MULTIVERSE SHOWDOWN"
+    statusBadge="STATUS: CONFIRMED PRODUCTION DOSSIER"
     metrics={heroMetrics}
     posterImage="/Avengers Doomsday Poster.jpg"
-    posterTitle="AVENGERS: DOOMSDAY WIRE"
-    posterSubtitle="EARTH-96283 • EARTH-10005"
-    posterCaption="Tobey Spider-Man vs Fox X-Men Incursion Breakdown"
+    posterTitle="THE VOID VS DOCTOR DOOM"
+    posterSubtitle="PRIMORDIAL DARKNESS • LATVERIAN SUPREMACY"
+    posterCaption="Sentry's Shadow vs Sorcery, Prep Time & Reality Warping Breakdown"
     posterLink={`/articles/${featuredArticle.data.slug}`}
-    posterActionText="Read Full Incursion Intel"
+    posterActionText="Read Full Clash Dossier"
     relatedArticles={heroRelatedArticles}
-    relatedSectionTitle="DOOMSDAY MULTIVERSE WIRE • RELATED LEAKS & KILL LIST DOSSIERS"
-    relatedSectionLink="/categories/avengers-cinematic-universe"
-    relatedSectionLinkText="All Multiverse Reports →"
+    relatedSectionTitle="VOID & DOCTOR DOOM CLASH WIRE • RELATED DOSSIERS"
+    relatedSectionLink="/categories/marvel-characters-teams"
+    relatedSectionLinkText="All Marvel Character Dossiers →"
   />
 
   <!-- QUICK MARVEL LEAKS SEARCH BAR -->

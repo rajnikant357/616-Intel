@@ -142,26 +142,27 @@ const faqs = [
       <!-- Player Stage (Autoplaying YouTube IFrame with Full Audio) -->
       <div id="video-stage" class="relative w-full aspect-video bg-black overflow-hidden group">
         
-        <!-- The Autoplaying YouTube IFrame (Rendered with autoplay=1&mute=0 for instant playback with audio) -->
+        <!-- The Autoplaying YouTube IFrame (Rendered with autoplay=1&mute=1 for guaranteed instant playback) -->
         <iframe 
           id="trailer-youtube-iframe"
           class="w-full h-full border-0 absolute inset-0 z-10" 
-          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=0&playsinline=1&controls=1&rel=0&modestbranding=1&enablejsapi=1`}
+          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&playsinline=1&controls=1&rel=0&modestbranding=1&enablejsapi=1`}
           title="Marvel Studios Avengers: Doomsday Official Final Trailer"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; speaker; audio" 
           allowfullscreen
         ></iframe>
 
-        <!-- Floating Sound Banner (Pops up if browser policy holds audio until first click/touch) -->
-        <button
-          type="button"
-          id="floating-unmute-overlay"
-          class="absolute top-4 right-4 z-20 px-3.5 py-2 rounded-full bg-black/90 hover:bg-black text-white border-2 border-[var(--intel-red)] shadow-[0_0_20px_rgba(225,6,0,0.85)] backdrop-blur-md flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer animate-pulse hover:scale-105"
-          aria-label="Click to Enable Trailer Audio"
+        <!-- Audio Unlock Overlay (Active while video autoplays muted until first click/tap) -->
+        <div 
+          id="audio-unlock-overlay" 
+          class="absolute inset-0 z-20 flex items-center justify-center bg-black/15 hover:bg-black/35 transition-colors cursor-pointer group"
+          title="Click anywhere to turn audio on"
         >
-          <Volume2 class="w-4 h-4 text-[var(--intel-red)]" />
-          <span id="floating-btn-text">TAP FOR AUDIO 🔊</span>
-        </button>
+          <div class="px-5 py-3 rounded-full bg-black/90 border-2 border-[var(--intel-red)] text-white font-mono text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2.5 shadow-[0_0_30px_rgba(225,6,0,0.85)] group-hover:scale-105 transition-all animate-pulse">
+            <Volume2 class="w-4 h-4 text-[var(--intel-red)] shrink-0" />
+            <span>PLAYING AUTONOMOUSLY • CLICK FOR FULL AUDIO 🔊</span>
+          </div>
+        </div>
 
       </div>
 
@@ -566,7 +567,7 @@ const faqs = [
     const copyBtn = document.getElementById('copy-trailer-link-btn');
     const copyBtnText = document.getElementById('copy-btn-text');
     const timestampBtns = document.querySelectorAll('.timestamp-jump-btn');
-    const floatingUnmuteOverlay = document.getElementById('floating-unmute-overlay');
+    const audioUnlockOverlay = document.getElementById('audio-unlock-overlay');
     const audioToggleBtn = document.getElementById('audio-toggle-btn');
     const hudAudioIconOn = document.getElementById('hud-audio-icon-on');
     const hudAudioIconOff = document.getElementById('hud-audio-icon-off');
@@ -590,8 +591,9 @@ const faqs = [
     function updateAudioUI(unmuted) {
       isAudioActive = unmuted;
       if (unmuted) {
-        if (floatingUnmuteOverlay) {
-          floatingUnmuteOverlay.classList.add('opacity-0', 'pointer-events-none');
+        if (audioUnlockOverlay) {
+          audioUnlockOverlay.classList.add('opacity-0', 'pointer-events-none');
+          audioUnlockOverlay.style.display = 'none';
         }
         if (hudAudioIconOn) hudAudioIconOn.classList.remove('hidden');
         if (hudAudioIconOff) hudAudioIconOff.classList.add('hidden');
@@ -601,8 +603,9 @@ const faqs = [
           audioToggleBtn.classList.add('bg-[var(--intel-red)]');
         }
       } else {
-        if (floatingUnmuteOverlay) {
-          floatingUnmuteOverlay.classList.remove('opacity-0', 'pointer-events-none');
+        if (audioUnlockOverlay) {
+          audioUnlockOverlay.classList.remove('opacity-0', 'pointer-events-none');
+          audioUnlockOverlay.style.display = 'flex';
         }
         if (hudAudioIconOn) hudAudioIconOn.classList.add('hidden');
         if (hudAudioIconOff) hudAudioIconOff.classList.remove('hidden');
@@ -651,9 +654,9 @@ const faqs = [
       });
     }
 
-    // Floating overlay click
-    if (floatingUnmuteOverlay) {
-      floatingUnmuteOverlay.addEventListener('click', (e) => {
+    // Full player overlay click to unmute and enable controls
+    if (audioUnlockOverlay) {
+      audioUnlockOverlay.addEventListener('click', (e) => {
         e.stopPropagation();
         unmuteAndPlay();
       });
@@ -678,25 +681,24 @@ const faqs = [
           ytPlayer = new window.YT.Player('trailer-youtube-iframe', {
             events: {
               onReady: (event) => {
-                event.target.unMute();
-                event.target.setVolume(100);
-                event.target.playVideo();
+                try {
+                  event.target.playVideo();
+                } catch (e) {}
 
-                // If browser blocks unmuted playback, fallback to playing so video is always rolling
+                // Attempt to activate audio if permitted by browser policy
                 setTimeout(() => {
                   try {
-                    const state = event.target.getPlayerState();
-                    if (state !== window.YT.PlayerState.PLAYING) {
-                      event.target.mute();
-                      event.target.playVideo();
-                      updateAudioUI(false);
-                    } else if (event.target.isMuted()) {
+                    event.target.unMute();
+                    event.target.setVolume(100);
+                    if (event.target.isMuted()) {
                       updateAudioUI(false);
                     } else {
                       updateAudioUI(true);
                     }
-                  } catch (e) {}
-                }, 500);
+                  } catch (e) {
+                    updateAudioUI(false);
+                  }
+                }, 300);
               },
               onStateChange: (event) => {
                 if (event.data === window.YT.PlayerState.PLAYING) {
@@ -736,10 +738,9 @@ const faqs = [
     if (iframe) {
       iframe.addEventListener('load', () => {
         iframe.contentWindow?.postMessage(JSON.stringify({ event: 'listening' }), '*');
-        unmuteAndPlay();
-        setTimeout(unmuteAndPlay, 400);
-        setTimeout(unmuteAndPlay, 1200);
-        setTimeout(unmuteAndPlay, 2500);
+        sendCommand('playVideo', []);
+        setTimeout(() => sendCommand('playVideo', []), 300);
+        setTimeout(() => sendCommand('playVideo', []), 1000);
       });
     }
 

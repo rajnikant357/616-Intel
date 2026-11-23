@@ -59,12 +59,14 @@ export const GET: APIRoute = async ({ site }) => {
   addEntry({ url: `${baseUrl}/search`, lastmod: today, changefreq: 'daily', priority: 0.7 });
   addEntry({ url: `${baseUrl}/write`, lastmod: today, changefreq: 'weekly', priority: 0.7 });
   addEntry({ url: `${baseUrl}/booking`, lastmod: today, changefreq: 'daily', priority: 0.9 });
+  addEntry({ url: `${baseUrl}/booking/doomsday-18-dec`, lastmod: today, changefreq: 'daily', priority: 0.8 });
 
   // 2. Curated & Dynamic Category Archives (matching src/pages/categories/[slug].astro)
   const categoryMetadata: Record<string, string> = {
     'Superhero Action & Concepts': 'superhero-action-concepts',
     'Marvel Characters & Teams': 'marvel-characters-teams',
     'Avengers & Cinematic Universe': 'avengers-cinematic-universe',
+    'Avengers: Doomsday (2026)': 'avengers-doomsday-2026',
     'Gaming, Digital & Web Media': 'gaming-digital-web-media',
     'Collectibles, Merchandising & Industry': 'collectibles-merchandising-industry',
   };
@@ -93,6 +95,7 @@ export const GET: APIRoute = async ({ site }) => {
       'superhero-action-concepts',
       'marvel-characters-teams',
       'avengers-cinematic-universe',
+      'avengers-doomsday-2026',
       'gaming-digital-web-media',
       'collectibles-merchandising-industry',
     ];
@@ -114,6 +117,19 @@ export const GET: APIRoute = async ({ site }) => {
     'marvel-rivals',
     'fantastic-four',
     'spider-man-brand-new-day',
+    'who-is-the-strongest-villain-in-marvel',
+    'who-is-the-strongest-person-in-avengers-doomsday',
+    'star-cast-of-avengers-doomsday',
+    'is-avengers-doomsday-bigger-than-endgame',
+    'who-is-smarter-than-dr-doom',
+    'who-can-defeat-dr-doom-easily',
+    'can-doomsday-beat-the-avengers',
+    'can-tony-stark-defeat-dr-doom',
+    'has-thor-ever-beaten-dr-doom',
+    'can-odin-defeat-dr-doom',
+    'who-wins-knull-or-doomsday',
+    'who-can-defeat-doomsday-easily',
+    'is-dr-doom-smarter-than-batman',
   ]);
 
   try {

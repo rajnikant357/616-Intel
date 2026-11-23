@@ -23,14 +23,14 @@ export interface DoomsdayVideo {
 export const DOOMSDAY_VIDEOS: DoomsdayVideo[] = [
   {
     id: 'final-trailer',
-    videoId: 'Wb8Tq_HD4E8',
+    videoId: '98dc5qNpPjw',
     title: 'Avengers: Doomsday | Final Trailer | In Theaters December 18',
     headline: 'The Cataclysmic Final Incursion Climax & Robert Downey Jr.\'s Doctor Doom Ascension',
     category: 'Official Trailer',
     duration: '03:18',
     durationSeconds: 198,
     releaseDate: '2026-10-15',
-    thumbnail: 'https://img.youtube.com/vi/Wb8Tq_HD4E8/maxresdefault.jpg',
+    thumbnail: 'https://img.youtube.com/vi/98dc5qNpPjw/maxresdefault.jpg',
     seoKeywords: [
       'Avengers Doomsday final trailer',
       'Robert Downey Jr Doctor Doom trailer',

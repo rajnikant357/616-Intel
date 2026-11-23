@@ -28,7 +28,7 @@ interface Props {
 }
 
 const {
-  videoId = 'Wb8Tq_HD4E8',
+  videoId = '98dc5qNpPjw',
   posterImage = '/Final trailer.png',
   title = 'AVENGERS: DOOMSDAY',
   tagline = 'OFFICIAL MARVEL STUDIOS FINAL TRAILER',
@@ -112,6 +112,20 @@ const faqs = [
           <span class="px-1.5 py-0.5 rounded-xs bg-neutral-800 text-neutral-300 text-[10px] font-bold hidden sm:inline">
             DOLBY ATMOS 7.1
           </span>
+
+          <!-- Audio Status & Unmute Toggle Button -->
+          <button
+            type="button"
+            id="audio-toggle-btn"
+            class="px-2.5 py-1 rounded-xs bg-[var(--intel-red)] hover:bg-red-700 text-white transition-all flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider cursor-pointer shadow-[0_0_12px_rgba(225,6,0,0.6)]"
+            title="Toggle Audio (Sound On/Off)"
+            aria-label="Toggle Audio"
+          >
+            <Volume2 class="w-3.5 h-3.5 text-white" id="hud-audio-icon-on" />
+            <VolumeX class="w-3.5 h-3.5 text-neutral-300 hidden" id="hud-audio-icon-off" />
+            <span id="hud-audio-text">AUDIO ON (100%)</span>
+          </button>
+
           <button 
             type="button" 
             id="cinema-toggle-btn" 
@@ -132,11 +146,22 @@ const faqs = [
         <iframe 
           id="trailer-youtube-iframe"
           class="w-full h-full border-0 absolute inset-0 z-10" 
-          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=0&playsinline=1&controls=1&rel=0&modestbranding=1&enablejsapi=1&origin=${encodeURIComponent(siteOrigin)}`}
+          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=0&playsinline=1&controls=1&rel=0&modestbranding=1&enablejsapi=1`}
           title="Marvel Studios Avengers: Doomsday Official Final Trailer"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; speaker; audio" 
           allowfullscreen
         ></iframe>
+
+        <!-- Floating Sound Banner (Pops up if browser policy holds audio until first click/touch) -->
+        <button
+          type="button"
+          id="floating-unmute-overlay"
+          class="absolute top-4 right-4 z-20 px-3.5 py-2 rounded-full bg-black/90 hover:bg-black text-white border-2 border-[var(--intel-red)] shadow-[0_0_20px_rgba(225,6,0,0.85)] backdrop-blur-md flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer animate-pulse hover:scale-105"
+          aria-label="Click to Enable Trailer Audio"
+        >
+          <Volume2 class="w-4 h-4 text-[var(--intel-red)]" />
+          <span id="floating-btn-text">TAP FOR AUDIO 🔊</span>
+        </button>
 
       </div>
 
@@ -541,51 +566,103 @@ const faqs = [
     const copyBtn = document.getElementById('copy-trailer-link-btn');
     const copyBtnText = document.getElementById('copy-btn-text');
     const timestampBtns = document.querySelectorAll('.timestamp-jump-btn');
+    const floatingUnmuteOverlay = document.getElementById('floating-unmute-overlay');
+    const audioToggleBtn = document.getElementById('audio-toggle-btn');
+    const hudAudioIconOn = document.getElementById('hud-audio-icon-on');
+    const hudAudioIconOff = document.getElementById('hud-audio-icon-off');
+    const hudAudioText = document.getElementById('hud-audio-text');
 
     let isCinemaMode = false;
+    let ytPlayer = null;
+    let isAudioActive = false;
 
-    // Helper: Send command to YouTube iframe via postMessage
-    function sendCommand(func, args = '') {
+    // Helper: Send command to YouTube iframe via postMessage (guarantee array for args)
+    function sendCommand(func, args = []) {
       if (!iframe || !iframe.contentWindow) return;
       const message = JSON.stringify({
         event: 'command',
         func: func,
-        args: args,
+        args: Array.isArray(args) ? args : (args ? [args] : []),
       });
       iframe.contentWindow.postMessage(message, '*');
     }
 
-    // Unmute & Full Volume Activation
-    function enableAudioAuto() {
-      sendCommand('unMute');
-      sendCommand('setVolume', [100]);
-      sendCommand('playVideo');
+    function updateAudioUI(unmuted) {
+      isAudioActive = unmuted;
+      if (unmuted) {
+        if (floatingUnmuteOverlay) {
+          floatingUnmuteOverlay.classList.add('opacity-0', 'pointer-events-none');
+        }
+        if (hudAudioIconOn) hudAudioIconOn.classList.remove('hidden');
+        if (hudAudioIconOff) hudAudioIconOff.classList.add('hidden');
+        if (hudAudioText) hudAudioText.textContent = 'SOUND ON (100%)';
+        if (audioToggleBtn) {
+          audioToggleBtn.classList.remove('bg-neutral-800');
+          audioToggleBtn.classList.add('bg-[var(--intel-red)]');
+        }
+      } else {
+        if (floatingUnmuteOverlay) {
+          floatingUnmuteOverlay.classList.remove('opacity-0', 'pointer-events-none');
+        }
+        if (hudAudioIconOn) hudAudioIconOn.classList.add('hidden');
+        if (hudAudioIconOff) hudAudioIconOff.classList.remove('hidden');
+        if (hudAudioText) hudAudioText.textContent = 'UNMUTE AUDIO';
+        if (audioToggleBtn) {
+          audioToggleBtn.classList.remove('bg-[var(--intel-red)]');
+          audioToggleBtn.classList.add('bg-neutral-800');
+        }
+      }
     }
 
-    // 1. Automatic Audio Activation on Load & Player Events
-    if (iframe) {
-      iframe.addEventListener('load', () => {
-        enableAudioAuto();
-        setTimeout(enableAudioAuto, 400);
-        setTimeout(enableAudioAuto, 1200);
-        setTimeout(enableAudioAuto, 2500);
+    // Unmute & Full Volume Activation
+    function unmuteAndPlay() {
+      if (ytPlayer && typeof ytPlayer.unMute === 'function') {
+        try {
+          ytPlayer.unMute();
+          ytPlayer.setVolume(100);
+          ytPlayer.playVideo();
+        } catch (e) {}
+      }
+      sendCommand('unMute', []);
+      sendCommand('setVolume', [100]);
+      sendCommand('playVideo', []);
+      updateAudioUI(true);
+    }
+
+    function muteAudio() {
+      if (ytPlayer && typeof ytPlayer.mute === 'function') {
+        try {
+          ytPlayer.mute();
+        } catch (e) {}
+      }
+      sendCommand('mute', []);
+      updateAudioUI(false);
+    }
+
+    // Toggle Audio button
+    if (audioToggleBtn) {
+      audioToggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (isAudioActive) {
+          muteAudio();
+        } else {
+          unmuteAndPlay();
+        }
       });
     }
 
-    window.addEventListener('message', (event) => {
-      try {
-        const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
-        if (data && (data.event === 'onReady' || data.info?.playerState === 1)) {
-          enableAudioAuto();
-        }
-      } catch (e) {}
-    });
+    // Floating overlay click
+    if (floatingUnmuteOverlay) {
+      floatingUnmuteOverlay.addEventListener('click', (e) => {
+        e.stopPropagation();
+        unmuteAndPlay();
+      });
+    }
 
-    // Seamless unblock for strict browser autoplay security policies:
-    // Any initial gesture (scroll, touch, click, key) automatically ensures audio is playing at 100%
-    const gestureEvents = ['scroll', 'pointerdown', 'touchstart', 'click', 'keydown'];
+    // Automatic audio unlock on any user gesture (Chrome / Safari Autoplay policy compliance)
+    const gestureEvents = ['pointerdown', 'touchstart', 'click', 'keydown'];
     function onFirstUserGesture() {
-      enableAudioAuto();
+      unmuteAndPlay();
       gestureEvents.forEach((evt) => {
         window.removeEventListener(evt, onFirstUserGesture, { capture: true });
       });
@@ -594,12 +671,98 @@ const faqs = [
       window.addEventListener(evt, onFirstUserGesture, { capture: true, once: true, passive: true });
     });
 
+    // YouTube Iframe API setup
+    function setupYTPlayer() {
+      if (window.YT && window.YT.Player && !ytPlayer) {
+        try {
+          ytPlayer = new window.YT.Player('trailer-youtube-iframe', {
+            events: {
+              onReady: (event) => {
+                event.target.unMute();
+                event.target.setVolume(100);
+                event.target.playVideo();
+
+                // If browser blocks unmuted playback, fallback to playing so video is always rolling
+                setTimeout(() => {
+                  try {
+                    const state = event.target.getPlayerState();
+                    if (state !== window.YT.PlayerState.PLAYING) {
+                      event.target.mute();
+                      event.target.playVideo();
+                      updateAudioUI(false);
+                    } else if (event.target.isMuted()) {
+                      updateAudioUI(false);
+                    } else {
+                      updateAudioUI(true);
+                    }
+                  } catch (e) {}
+                }, 500);
+              },
+              onStateChange: (event) => {
+                if (event.data === window.YT.PlayerState.PLAYING) {
+                  try {
+                    if (event.target.isMuted()) {
+                      updateAudioUI(false);
+                    } else {
+                      updateAudioUI(true);
+                    }
+                  } catch (e) {}
+                }
+              }
+            }
+          });
+        } catch (e) {}
+      }
+    }
+
+    // Inject YouTube API script if needed
+    if (!window.YT) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      const firstScript = document.getElementsByTagName('script')[0];
+      firstScript?.parentNode?.insertBefore(tag, firstScript);
+    }
+
+    const prevReady = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = function() {
+      if (typeof prevReady === 'function') prevReady();
+      setupYTPlayer();
+    };
+    if (window.YT && window.YT.Player) {
+      setupYTPlayer();
+    }
+
+    // Direct postMessage initialization & retries on load
+    if (iframe) {
+      iframe.addEventListener('load', () => {
+        iframe.contentWindow?.postMessage(JSON.stringify({ event: 'listening' }), '*');
+        unmuteAndPlay();
+        setTimeout(unmuteAndPlay, 400);
+        setTimeout(unmuteAndPlay, 1200);
+        setTimeout(unmuteAndPlay, 2500);
+      });
+    }
+
+    window.addEventListener('message', (event) => {
+      try {
+        const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+        if (data && (data.event === 'onReady' || data.info?.playerState === 1)) {
+          unmuteAndPlay();
+        }
+      } catch (e) {}
+    });
+
     // 2. Timestamp Jump Handling
     timestampBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         const secs = parseInt(btn.getAttribute('data-seconds') || '0', 10);
+        if (ytPlayer && typeof ytPlayer.seekTo === 'function') {
+          try {
+            ytPlayer.seekTo(secs, true);
+          } catch (e) {}
+        }
         sendCommand('seekTo', [secs, true]);
-        enableAudioAuto();
+        unmuteAndPlay();
 
         // Smooth scroll to player stage if off screen
         const rect = playerContainer?.getBoundingClientRect();

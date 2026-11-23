@@ -1,0 +1,506 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/navigation/Breadcrumbs.astro';
+import { DOOMSDAY_VIDEOS } from '../../data/doomsdayVideos';
+import { 
+  Film, 
+  Sparkles, 
+  Clock, 
+  MapPin, 
+  Calendar, 
+  ExternalLink, 
+  Share2, 
+  Ticket, 
+  CheckCircle2, 
+  Compass, 
+  Building2, 
+  Flame, 
+  Globe2,
+  Tv,
+  Layers,
+  ShieldAlert
+} from '@lucide/astro';
+
+const siteUrl = Astro.site?.origin || 'https://616intel.prometrion.com';
+
+// 1. Open Graph & SEO Metadata
+const pageTitle = "Avengers: Doomsday — Official Video Vault & All Multiverse Film Trailers | 616 Intel";
+const pageDescription = "Complete official video intelligence archive for Marvel Studios' Avengers: Doomsday. Stream all 14 official trailers, teasers, character return spotlights, and CinemaCon reveals with dedicated analytical SEO & GEO dossiers.";
+const canonicalUrl = `${siteUrl}/avengers-doomsday`;
+const ogImageUrl = `${siteUrl}/Final%20trailer.png`;
+const leadTrailerEmbed = "https://www.youtube-nocookie.com/embed/Wb8Tq_HD4E8";
+
+// 2. Schema.org Structured Data
+const videoListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Avengers: Doomsday Official Video Archive',
+  description: pageDescription,
+  numberOfItems: DOOMSDAY_VIDEOS.length,
+  itemListElement: DOOMSDAY_VIDEOS.map((v, idx) => ({
+    '@type': 'ListItem',
+    position: idx + 1,
+    item: {
+      '@type': 'VideoObject',
+      name: v.title,
+      description: v.articleSummary,
+      thumbnailUrl: [v.thumbnail, `${siteUrl}/Final%20trailer.png`],
+      uploadDate: `${v.releaseDate}T09:00:00+00:00`,
+      duration: `PT${Math.floor(v.durationSeconds / 60)}M${v.durationSeconds % 60}S`,
+      contentUrl: `https://www.youtube.com/watch?v=${v.videoId}`,
+      embedUrl: `https://www.youtube-nocookie.com/embed/${v.videoId}`,
+      publisher: {
+        '@type': 'Organization',
+        name: 'Marvel Studios / 616 Intel',
+        logo: {
+          '@type': 'ImageObject',
+          url: `${siteUrl}/favicon.svg`,
+        },
+      },
+      actor: [
+        { '@type': 'Person', name: 'Robert Downey Jr.' },
+        { '@type': 'Person', name: 'Pedro Pascal' },
+        { '@type': 'Person', name: 'Tom Holland' },
+        { '@type': 'Person', name: 'Chris Hemsworth' },
+        { '@type': 'Person', name: 'Hugh Jackman' },
+      ],
+      director: [
+        { '@type': 'Person', name: 'Anthony Russo' },
+        { '@type': 'Person', name: 'Joe Russo' },
+      ],
+    },
+  })),
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Movies', item: `${siteUrl}/movies` },
+    { '@type': 'ListItem', position: 3, name: 'Avengers: Doomsday Vault', item: canonicalUrl },
+  ],
+};
+
+const categories = ['All 14 Videos', 'Official Trailer', 'Teaser Spotlight', 'Character Return', 'Theatrical & Merch', 'Live Event'];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  type="video.movie"
+  canonicalUrl={canonicalUrl}
+  ogImage={ogImageUrl}
+  ogVideo={leadTrailerEmbed}
+  twitterCard="summary_large_image"
+  keywords="avengers doomsday, avengers doomsday trailers, doctor doom robert downey jr, marvel studios phase 6, secret wars, battleworld, pedro pascal reed richards, x-men incursion, thor return, steve rogers doomsday, pinewood studios, trilith studios"
+  geoRegion="US"
+  geoPlacename="United States / Global Theatrical Exhibition"
+  geoPosition="38.8951;-77.0364"
+  icbm="38.8951, -77.0364"
+  jsonLd={[breadcrumbSchema, videoListSchema]}
+>
+  <div class="container-editorial py-6 md:py-10 max-w-6xl mx-auto">
+    <Breadcrumbs
+      items={[
+        { label: 'Intel Wire', href: '/latest' },
+        { label: 'Cinematic Universe', href: '/movies' },
+        { label: 'Avengers: Doomsday Video Vault' },
+      ]}
+    />
+
+    <!-- PAGE HERO HEADER -->
+    <header class="mb-10 pb-8 border-b border-[var(--intel-border)]">
+      <div class="flex flex-wrap items-center gap-2 mb-4 font-mono text-xs font-bold uppercase tracking-wider">
+        <span class="px-2.5 py-1 rounded-xs bg-[var(--intel-red)] text-white shadow-[0_0_15px_rgba(225,6,0,0.5)]">
+          MARVEL STUDIOS PHASE 6 VAULT
+        </span>
+        <span class="px-2.5 py-1 rounded-xs bg-emerald-950/80 border border-emerald-500/40 text-emerald-300">
+          {DOOMSDAY_VIDEOS.length} OFFICIAL TRANSMISSIONS
+        </span>
+        <span class="px-2.5 py-1 rounded-xs bg-[var(--intel-elevated)] border border-[var(--intel-border)] text-neutral-300">
+          GLOBAL PREMIERE: DEC 18, 2026
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-8">
+          <h1 class="font-display font-black text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight uppercase leading-[0.95] mb-4">
+            AVENGERS: DOOMSDAY
+            <span class="block text-2xl sm:text-3xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-400 to-amber-300 tracking-tight mt-1">
+              COMPLETE OFFICIAL VIDEO INTELLIGENCE VAULT
+            </span>
+          </h1>
+
+          <p class="font-sans text-base sm:text-lg text-neutral-300 leading-relaxed max-w-3xl mb-6">
+            Welcome to the definitive video intelligence archive for Marvel Studios' <strong class="text-white">Avengers: Doomsday</strong>. Stream all 14 official video releases—including the record-shattering final trailer, Robert Downey Jr.'s San Diego Comic-Con and CinemaCon reveals, character return spotlights (X-Men, Thor, Steve Rogers), and exclusive theatrical bumpers—each accompanied by dedicated scene-by-scene analysis and global production/geographical context.
+          </p>
+
+          <!-- Key Metrics -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 font-mono text-xs">
+            <div class="p-3 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)]">
+              <span class="text-[var(--intel-muted)] block text-[10px] uppercase">DIRECTORS</span>
+              <strong class="text-white text-sm">The Russo Brothers</strong>
+            </div>
+            <div class="p-3 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)]">
+              <span class="text-[var(--intel-muted)] block text-[10px] uppercase">LEAD VILLAIN</span>
+              <strong class="text-amber-400 text-sm">Doctor Doom (RDJ)</strong>
+            </div>
+            <div class="p-3 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)] col-span-2 sm:col-span-1">
+              <span class="text-[var(--intel-muted)] block text-[10px] uppercase">THEATRICAL FORMAT</span>
+              <strong class="text-emerald-400 text-sm">IMAX 70mm &amp; 4K Laser</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Official Poster & Quick Presale Ticket Box -->
+        <div class="lg:col-span-4 p-5 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border-strong)] shadow-2xl">
+          <div class="flex items-center gap-2 pb-3 mb-3 border-b border-[var(--intel-border-subtle)] font-mono text-xs text-neutral-300">
+            <Ticket class="w-4 h-4 text-[var(--intel-red)]" />
+            <span class="font-bold uppercase tracking-wider text-white">THEATRICAL TICKETING WIRE</span>
+          </div>
+
+          <div class="aspect-video mb-3 rounded-xs overflow-hidden border border-white/10 bg-black">
+            <img 
+              src="/Final trailer.png" 
+              alt="Avengers Doomsday Official Final Trailer Poster" 
+              class="w-full h-full object-cover" 
+              loading="eager"
+            />
+          </div>
+
+          <p class="font-sans text-xs text-neutral-300 leading-relaxed mb-4">
+            Target Premiere: <strong class="text-white">Friday, December 18, 2026</strong>. Advance booking redirection is open across verified multiplex platforms.
+          </p>
+
+          <a
+            href="/booking"
+            class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xs bg-[var(--intel-red)] hover:bg-[var(--intel-red-hover)] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(225,6,0,0.4)]"
+          >
+            <span>Book Tickets on District / BMS</span>
+            <ExternalLink class="w-3.5 h-3.5" />
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- QUICK CATEGORY FILTER BAR -->
+    <nav class="mb-10 p-3 sm:p-4 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)] flex items-center gap-2 overflow-x-auto scroll-rail select-none" aria-label="Filter videos by category">
+      <span class="text-xs font-mono text-[var(--intel-muted)] uppercase tracking-wider whitespace-nowrap pl-2 pr-1 font-bold">
+        FILTER:
+      </span>
+      {categories.map((cat, idx) => (
+        <button
+          type="button"
+          class:list={[
+            "filter-pill px-3 py-1.5 rounded-xs font-mono text-xs font-bold uppercase tracking-wider transition-colors whitespace-nowrap cursor-pointer",
+            idx === 0 
+              ? "bg-[var(--intel-red)] text-white shadow-[0_0_10px_rgba(225,6,0,0.4)]" 
+              : "bg-[var(--intel-obsidian)] text-neutral-300 hover:text-white hover:bg-[var(--intel-elevated)] border border-[var(--intel-border)]"
+          ]}
+          data-category={cat}
+        >
+          {cat}
+        </button>
+      ))}
+    </nav>
+
+    <!-- 14 DEDICATED VIDEO ARTICLES STREAM -->
+    <div class="space-y-12 sm:space-y-16" id="videos-stream">
+      {DOOMSDAY_VIDEOS.map((video, idx) => (
+        <article 
+          id={video.id} 
+          class="video-card p-5 sm:p-8 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)] hover:border-[var(--intel-border-strong)] transition-all shadow-xl"
+          data-category={video.category}
+          aria-labelledby={`heading-${video.id}`}
+        >
+          <!-- Video Header Meta -->
+          <div class="flex flex-wrap items-center justify-between gap-2.5 mb-4 pb-3 border-b border-[var(--intel-border-subtle)] font-mono text-xs">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-2 py-0.5 rounded-xs bg-[var(--intel-red)]/20 border border-[var(--intel-red)]/40 text-[var(--intel-red)] font-bold uppercase tracking-wider text-[11px]">
+                TRANSMISSION #{String(idx + 1).padStart(2, '0')} • {video.category}
+              </span>
+              <span class="px-2 py-0.5 rounded-xs bg-neutral-800 text-neutral-300 text-[11px] flex items-center gap-1">
+                <Clock class="w-3 h-3 text-[var(--intel-red)]" />
+                <span>{video.duration}</span>
+              </span>
+              <span class="px-2 py-0.5 rounded-xs bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-[11px] flex items-center gap-1">
+                <Calendar class="w-3 h-3 text-emerald-400" />
+                <span>{video.releaseDate}</span>
+              </span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button
+                type="button"
+                class="copy-video-anchor-btn text-[11px] text-[var(--intel-muted)] hover:text-white flex items-center gap-1 transition-colors cursor-pointer"
+                data-anchor={`#${video.id}`}
+                title="Copy link to this video"
+              >
+                <Share2 class="w-3 h-3 text-[var(--intel-red)]" />
+                <span>Share Anchor</span>
+              </button>
+              <a
+                href={`https://www.youtube.com/watch?v=${video.videoId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-[11px] text-neutral-300 hover:text-[var(--intel-red)] flex items-center gap-1 transition-colors"
+                title="Watch on official YouTube"
+              >
+                <span>YouTube</span>
+                <ExternalLink class="w-3 h-3" />
+              </a>
+            </div>
+          </div>
+
+          <!-- Video Title & Headline -->
+          <div class="mb-6">
+            <h2 id={`heading-${video.id}`} class="font-serif text-2xl sm:text-3xl font-bold text-white leading-tight">
+              {video.title}
+            </h2>
+            <p class="font-mono text-xs sm:text-sm text-[var(--intel-red)] font-bold uppercase tracking-wider mt-1.5">
+              {video.headline}
+            </p>
+          </div>
+
+          <!-- Responsive 16:9 Video Embed Player -->
+          <div class="relative w-full aspect-video rounded-xs overflow-hidden border border-[var(--intel-border)] bg-black mb-6 shadow-2xl">
+            <iframe
+              class="w-full h-full border-0 absolute inset-0"
+              src={`https://www.youtube-nocookie.com/embed/${video.videoId}?rel=0&modestbranding=1&playsinline=1`}
+              title={video.title}
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+
+          <!-- SEO & GEO Dedicated Article Grid -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            <!-- Left: SEO Lore & Scene Analysis (8 cols) -->
+            <div class="lg:col-span-8 space-y-4 font-sans text-neutral-300 text-sm leading-relaxed">
+              <div class="p-4 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border-subtle)]">
+                <h3 class="font-mono text-xs font-bold text-white uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <Film class="w-3.5 h-3.5 text-[var(--intel-red)]" />
+                  <span>NARRATIVE DOSSIER &amp; CANON CONTEXT</span>
+                </h3>
+                <p class="text-neutral-200">
+                  {video.articleSummary}
+                </p>
+              </div>
+
+              <div class="space-y-2.5">
+                <h4 class="font-mono text-xs font-bold text-neutral-400 uppercase tracking-wider">
+                  SCENE-BY-SCENE ANALYSIS &amp; MULTIVERSE SECRETS
+                </h4>
+                {video.detailedAnalysis.map((point) => (
+                  <p class="text-neutral-300 text-xs sm:text-sm leading-relaxed pl-3 border-l-2 border-[var(--intel-red)]">
+                    {point}
+                  </p>
+                ))}
+              </div>
+
+              <!-- Key Moments Timestamps -->
+              {video.keyMoments && video.keyMoments.length > 0 && (
+                <div class="pt-3 border-t border-[var(--intel-border-subtle)]">
+                  <span class="block font-mono text-[11px] text-[var(--intel-muted)] uppercase mb-2 font-bold">
+                    KEY CHAPTER BREAKDOWNS:
+                  </span>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono text-xs">
+                    {video.keyMoments.map((km) => (
+                      <div class="p-2 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border-subtle)] flex items-center gap-2">
+                        <span class="text-[var(--intel-red)] font-bold">{km.time}</span>
+                        <span class="text-neutral-300 text-[11px] line-clamp-1">{km.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <!-- Right: GEO Telemetry & Production Details (4 cols) -->
+            <div class="lg:col-span-4 space-y-4">
+              <div class="p-4 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border-subtle)] font-mono text-xs">
+                <div class="flex items-center gap-1.5 font-bold text-emerald-400 uppercase mb-3 pb-2 border-b border-[var(--intel-border-subtle)]">
+                  <MapPin class="w-3.5 h-3.5" />
+                  <span>GEO &amp; PRODUCTION TELEMETRY</span>
+                </div>
+
+                <div class="space-y-2.5">
+                  <div>
+                    <span class="text-[var(--intel-muted)] block text-[10px] uppercase">FILMING SOUNDSTAGE / LOCATION</span>
+                    <strong class="text-white text-xs">{video.geoTarget.filmingLocation}</strong>
+                  </div>
+
+                  <div>
+                    <span class="text-[var(--intel-muted)] block text-[10px] uppercase">COORDINATES</span>
+                    <span class="text-neutral-300 text-[11px]">{video.geoTarget.coordinates}</span>
+                  </div>
+
+                  <div>
+                    <span class="text-[var(--intel-muted)] block text-[10px] uppercase">PRODUCTION PIPELINE HUB</span>
+                    <span class="text-neutral-300 text-[11px]">{video.geoTarget.productionHub}</span>
+                  </div>
+
+                  <div>
+                    <span class="text-[var(--intel-muted)] block text-[10px] uppercase">PRIMARY THEATRICAL CIRCUITS</span>
+                    <span class="text-neutral-300 text-[11px] leading-snug block">{video.geoTarget.theatricalMarkets}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Target Keywords Badges -->
+              <div class="p-4 rounded-xs bg-[var(--intel-obsidian)] border border-[var(--intel-border-subtle)] font-mono text-xs">
+                <span class="block font-mono text-[10px] text-[var(--intel-muted)] uppercase mb-2 font-bold">
+                  INDEXED SEO KEYWORDS:
+                </span>
+                <div class="flex flex-wrap gap-1.5">
+                  {video.seoKeywords.map((kw) => (
+                    <span class="px-2 py-0.5 rounded-xs bg-[var(--intel-charcoal)] border border-white/5 text-[10px] text-neutral-300">
+                      {kw}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <!-- Quick Presale Jump -->
+              <a
+                href="/booking"
+                class="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xs bg-[var(--intel-elevated)] hover:bg-[var(--intel-surface-hover)] border border-[var(--intel-border)] hover:border-[var(--intel-red)] text-white font-mono text-xs font-bold uppercase tracking-wider transition-colors"
+              >
+                <Ticket class="w-3.5 h-3.5 text-[var(--intel-red)]" />
+                <span>Reserve Tickets for Dec 18</span>
+              </a>
+            </div>
+
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- GLOBAL PRODUCTION & EXHIBITION FACTS TABLE -->
+    <section class="mt-16 pt-10 border-t border-[var(--intel-border)]" aria-labelledby="facts-table-heading">
+      <div class="flex items-center justify-between mb-6 pb-3 border-b border-[var(--intel-border)]">
+        <div>
+          <h2 id="facts-table-heading" class="font-serif text-2xl sm:text-3xl font-bold text-white">
+            Avengers: Doomsday Complete Promotional Roster &amp; Specifications
+          </h2>
+          <p class="font-sans text-xs sm:text-sm text-[var(--intel-muted)] mt-1">
+            Exhibition breakdown for all 14 official video transmissions distributed by Marvel Studios.
+          </p>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto p-4 rounded-xs bg-[var(--intel-charcoal)] border border-[var(--intel-border)]">
+        <table class="w-full text-left font-sans text-xs border-collapse">
+          <thead>
+            <tr class="border-b border-[var(--intel-border)] font-mono text-[10px] text-[var(--intel-muted)] uppercase tracking-wider">
+              <th class="py-2.5 pr-4">#</th>
+              <th class="py-2.5 px-4">Title / Video Asset</th>
+              <th class="py-2.5 px-4">Category</th>
+              <th class="py-2.5 px-4">Runtime</th>
+              <th class="py-2.5 px-4">Debut Date</th>
+              <th class="py-2.5 pl-4">Primary Production Unit</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[var(--intel-border-subtle)] font-mono text-xs">
+            {DOOMSDAY_VIDEOS.map((v, i) => (
+              <tr class="hover:bg-[var(--intel-elevated)]/50 transition-colors">
+                <td class="py-2.5 pr-4 text-[var(--intel-red)] font-bold">
+                  {String(i + 1).padStart(2, '0')}
+                </td>
+                <td class="py-2.5 px-4 font-sans font-bold text-white">
+                  <a href={`#${v.id}`} class="hover:text-[var(--intel-red)] transition-colors">
+                    {v.title}
+                  </a>
+                </td>
+                <td class="py-2.5 px-4 text-rose-300 text-[11px]">
+                  {v.category}
+                </td>
+                <td class="py-2.5 px-4 text-neutral-300">
+                  {v.duration}
+                </td>
+                <td class="py-2.5 px-4 text-emerald-400 text-[11px]">
+                  {v.releaseDate}
+                </td>
+                <td class="py-2.5 pl-4 text-neutral-400 text-[11px] font-sans">
+                  {v.geoTarget.filmingLocation.split('&')[0]}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- BOTTOM THEATRICAL CALLOUT -->
+    <section class="mt-12 p-6 sm:p-8 rounded-xs bg-gradient-to-r from-[var(--intel-charcoal)] to-[var(--intel-obsidian)] border border-[var(--intel-border-strong)] text-center">
+      <h3 class="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight mb-2">
+        EXPERIENCE AVENGERS: DOOMSDAY IN THEATERS DECEMBER 18, 2026
+      </h3>
+      <p class="font-sans text-sm text-neutral-300 max-w-2xl mx-auto mb-6">
+        Reserve tickets across verified partners including District, MakeMyTrip, BookMyShow, and Fandango to ensure opening-night seating in IMAX 70mm and Dolby Cinema auditoriums worldwide.
+      </p>
+      <a
+        href="/booking"
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-xs bg-[var(--intel-red)] hover:bg-[var(--intel-red-hover)] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(225,6,0,0.5)]"
+      >
+        <Ticket class="w-4 h-4" />
+        <span>Open Ticketing Redirection Hub &rarr;</span>
+      </a>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  (function initDoomsdayVaultFilter() {
+    const filterPills = document.querySelectorAll('.filter-pill');
+    const videoCards = document.querySelectorAll('.video-card');
+    const copyBtns = document.querySelectorAll('.copy-video-anchor-btn');
+
+    filterPills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        const cat = pill.getAttribute('data-category');
+        
+        filterPills.forEach((p) => {
+          p.classList.remove('bg-[var(--intel-red)]', 'text-white', 'shadow-[0_0_10px_rgba(225,6,0,0.4)]');
+          p.classList.add('bg-[var(--intel-obsidian)]', 'text-neutral-300', 'border', 'border-[var(--intel-border)]');
+        });
+
+        pill.classList.remove('bg-[var(--intel-obsidian)]', 'text-neutral-300', 'border', 'border-[var(--intel-border)]');
+        pill.classList.add('bg-[var(--intel-red)]', 'text-white', 'shadow-[0_0_10px_rgba(225,6,0,0.4)]');
+
+        videoCards.forEach((card) => {
+          const cardCat = card.getAttribute('data-category');
+          if (cat === 'All 14 Videos' || cardCat === cat) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    copyBtns.forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const anchor = btn.getAttribute('data-anchor');
+        const url = `${window.location.origin}/avengers-doomsday${anchor}`;
+        try {
+          if (navigator.clipboard) {
+            await navigator.clipboard.writeText(url);
+          }
+          const span = btn.querySelector('span');
+          if (span) {
+            const original = span.textContent;
+            span.textContent = 'Copied!';
+            setTimeout(() => { span.textContent = original; }, 2000);
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      });
+    });
+  })();
+</script>

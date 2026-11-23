@@ -4,6 +4,7 @@ import Hero from '../components/editorial/Hero.astro';
 import SectionHeader from '../components/editorial/SectionHeader.astro';
 import ArticleCard from '../components/cards/ArticleCard.astro';
 import CommunityBanner from '../components/editorial/CommunityBanner.astro';
+import CustomTrailerPlayer from '../components/video/CustomTrailerPlayer.astro';
 import { getAllArticles } from '../utils/content';
 import { Search, BookOpen, Sparkles, Shield, Swords, Gamepad2, ShoppingBag } from '@lucide/astro';
 
@@ -131,36 +132,136 @@ const categories = [
     count: categoryCounts['Collectibles, Merchandising & Industry'] || 0,
   },
 ];
+
+const siteOrigin = Astro.site?.origin || 'https://616intel.prometrion.com';
+
+const ogAlternateTitles = [
+  'doomsday final trailer out',
+  'final trailer out?',
+  'avengers doomsday final trailer out?',
+  'New trailer of avengers doomsday',
+  'final Hindi trailer of doomsday',
+  'Doomsday final trailer hindi',
+];
+
+const homeKeywords = [
+  'doomsday final trailer out',
+  'final trailer out?',
+  'avengers doomsday final trailer out?',
+  'New trailer of avengers doomsday',
+  'final Hindi trailer of doomsday',
+  'Doomsday final trailer hindi',
+  'avengers doomsday final trailer',
+  'avengers doomsday trailer',
+  'doctor doom trailer',
+  'robert downey jr doctor doom',
+  'superhero action',
+  'marvel leaks',
+  'multiverse',
+  'marvel cinematic universe',
+  'mcu phase 6',
+  'marvel rivals'
+].join(', ');
+
+const trailerVideoSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: 'Avengers Doomsday Final Trailer Out? New Trailer of Avengers Doomsday | Final Hindi Trailer of Doomsday',
+  alternateName: [
+    'doomsday final trailer out',
+    'final trailer out?',
+    'avengers doomsday final trailer out?',
+    'New trailer of avengers doomsday',
+    'final Hindi trailer of doomsday',
+    'Doomsday final trailer hindi',
+    'Avengers: Doomsday Official Final Trailer',
+    'Avengers Doomsday Full Movie Trailer'
+  ],
+  description: 'Avengers Doomsday final trailer out? Watch the brand new trailer of Avengers Doomsday and final Hindi trailer of Doomsday in 4K featuring Robert Downey Jr. as Doctor Doom alongside Pedro Pascal and the Multiverse Avengers on 616 Intel.',
+  thumbnailUrl: [
+    `${siteOrigin}/Final%20trailer.png`,
+    `${siteOrigin}/final-trailer.png`,
+    `${siteOrigin}/Avengers%20Doomsday%20Poster.jpg`,
+    'https://img.youtube.com/vi/Wb8Tq_HD4E8/maxresdefault.jpg',
+  ],
+  uploadDate: '2026-10-15T09:00:00+00:00',
+  duration: 'PT3M18S',
+  contentUrl: 'https://www.youtube.com/watch?v=Wb8Tq_HD4E8',
+  embedUrl: 'https://www.youtube-nocookie.com/embed/Wb8Tq_HD4E8',
+  url: `${siteOrigin}/`,
+  inLanguage: ['en', 'hi'],
+  publisher: {
+    '@type': 'Organization',
+    name: 'Marvel Studios / 616 Intel',
+    url: `${siteOrigin}/`,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${siteOrigin}/favicon.svg`,
+    },
+  },
+  actor: [
+    { '@type': 'Person', name: 'Robert Downey Jr.' },
+    { '@type': 'Person', name: 'Pedro Pascal' },
+    { '@type': 'Person', name: 'Tom Holland' },
+    { '@type': 'Person', name: 'Anthony Mackie' },
+    { '@type': 'Person', name: 'Florence Pugh' },
+    { '@type': 'Person', name: 'Hugh Jackman' },
+    { '@type': 'Person', name: 'Sebastian Stan' },
+  ],
+  director: [
+    { '@type': 'Person', name: 'Anthony Russo' },
+    { '@type': 'Person', name: 'Joe Russo' },
+  ],
+};
+
+const trailerFaqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Is the Avengers Doomsday final trailer out?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes! The official Avengers: Doomsday final trailer is officially out now. Stream the full 4K trailer on 616 Intel featuring Robert Downey Jr. as Victor von Doom (Doctor Doom), Pedro Pascal as Reed Richards, and the Multiverse Avengers.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Is there a final Hindi trailer of Doomsday?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes! Marvel Studios has officially rolled out the final Hindi trailer of Doomsday (Doomsday final trailer Hindi) alongside regional Indian languages for theatrical release on December 18, 2026.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Where can I watch the new trailer of Avengers Doomsday and all videos?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'You can watch the new trailer of Avengers: Doomsday right here on 616 Intel\'s homepage with auto audio, and access all 14 official trailers, teasers, and character spotlights in our dedicated Avengers Doomsday vault at /avengers-doomsday.',
+      },
+    },
+  ],
+};
 ---
 
 <BaseLayout
-  title="616 Intel — Marvel Rumors, Movie Leaks & Multiverse News"
-  description="The independent intelligence hub for Marvel leaks, Avengers: Doomsday rumors, Tobey Maguire Spider-Man scoops, Doctor Doom casting, and MCU news."
+  title="Avengers Doomsday Final Trailer Out? New Trailer of Avengers Doomsday | Final Hindi Trailer | 616 Intel"
+  description="Avengers Doomsday final trailer out? Stream the official new trailer of Avengers Doomsday and final Hindi trailer of Doomsday in 4K with audio. Robert Downey Jr. ascends as Doctor Doom alongside Pedro Pascal and the Multiverse Avengers."
+  keywords={homeKeywords}
+  ogImage={`${siteOrigin}/Final%20trailer.png`}
+  canonicalUrl={`${siteOrigin}/`}
+  ogAlternateTitles={ogAlternateTitles}
+  jsonLd={[trailerVideoSchema, trailerFaqSchema]}
 >
-  <!-- LEAD HERO: TOP ARTICLE MULTIVERSE LEAK SHOWCASE -->
-  <Hero
-    article={{
-      slug: `/articles/${featuredArticle.data.slug}`,
-      title: featuredArticle.data.title,
-      excerpt: featuredArticle.data.excerpt,
-      category: featuredArticle.data.category,
-      publishedAt: featuredArticle.data.publishedAt,
-      readingTime: featuredArticle.data.readingTime,
-      author: featuredArticle.data.author,
-    }}
-    badgeTag="MAIN HERO DOSSIER • SUPREME MULTIVERSE SHOWDOWN"
-    statusBadge="STATUS: CONFIRMED PRODUCTION DOSSIER"
-    metrics={heroMetrics}
-    posterImage="/Avengers Doomsday Poster.jpg"
-    posterTitle="THE VOID VS DOCTOR DOOM"
-    posterSubtitle="PRIMORDIAL DARKNESS • LATVERIAN SUPREMACY"
-    posterCaption="Sentry's Shadow vs Sorcery, Prep Time & Reality Warping Breakdown"
-    posterLink={`/articles/${featuredArticle.data.slug}`}
-    posterActionText="Read Full Clash Dossier"
-    relatedArticles={heroRelatedArticles}
-    relatedSectionTitle="VOID & DOCTOR DOOM CLASH WIRE • RELATED DOSSIERS"
-    relatedSectionLink="/categories/marvel-characters-teams"
-    relatedSectionLinkText="All Marvel Character Dossiers →"
+  <!-- SUPREME HERO SECTION: AVENGERS DOOMSDAY OFFICIAL FINAL TRAILER (AUTOPLAYING AT THE VERY FRONT) -->
+  <CustomTrailerPlayer
+    videoId="Wb8Tq_HD4E8"
+    posterImage="/Final trailer.png"
+    title="AVENGERS: DOOMSDAY"
+    tagline="OFFICIAL MARVEL STUDIOS FINAL TRAILER"
+    isHero={true}
   />
 
   <!-- QUICK MARVEL LEAKS SEARCH BAR -->
@@ -177,6 +278,32 @@ const categories = [
       </form>
     </div>
   </section>
+
+  <!-- FEATURED CLASH DOSSIER: THE VOID VS DOCTOR DOOM -->
+  <Hero
+    article={{
+      slug: `/articles/${featuredArticle.data.slug}`,
+      title: featuredArticle.data.title,
+      excerpt: featuredArticle.data.excerpt,
+      category: featuredArticle.data.category,
+      publishedAt: featuredArticle.data.publishedAt,
+      readingTime: featuredArticle.data.readingTime,
+      author: featuredArticle.data.author,
+    }}
+    badgeTag="FEATURED CLASH DOSSIER • SUPREME MULTIVERSE SHOWDOWN"
+    statusBadge="STATUS: CONFIRMED PRODUCTION DOSSIER"
+    metrics={heroMetrics}
+    posterImage="/Avengers Doomsday Poster.jpg"
+    posterTitle="THE VOID VS DOCTOR DOOM"
+    posterSubtitle="PRIMORDIAL DARKNESS • LATVERIAN SUPREMACY"
+    posterCaption="Sentry's Shadow vs Sorcery, Prep Time & Reality Warping Breakdown"
+    posterLink={`/articles/${featuredArticle.data.slug}`}
+    posterActionText="Read Full Clash Dossier"
+    relatedArticles={heroRelatedArticles}
+    relatedSectionTitle="VOID & DOCTOR DOOM CLASH WIRE • RELATED DOSSIERS"
+    relatedSectionLink="/categories/marvel-characters-teams"
+    relatedSectionLinkText="All Marvel Character Dossiers →"
+  />
 
   <!-- CATEGORIES GRID -->
   <section class="container-editorial py-12 sm:py-16 border-b border-[var(--intel-border)]" aria-labelledby="categories-heading">

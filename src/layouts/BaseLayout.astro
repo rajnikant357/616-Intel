@@ -8,7 +8,7 @@ import { BREAKING_TICKER_DATA } from '../data/mockContent';
 interface Props {
   title?: string;
   description?: string;
-  type?: 'website' | 'article';
+  type?: 'website' | 'article' | 'video.movie' | 'video.other';
   canonicalUrl?: string;
   noindex?: boolean;
   jsonLd?: Record<string, any> | Array<Record<string, any>>;
@@ -17,6 +17,10 @@ interface Props {
   geoPlacename?: string;
   geoPosition?: string;
   icbm?: string;
+  ogImage?: string;
+  ogVideo?: string;
+  twitterCard?: 'summary' | 'summary_large_image' | 'player';
+  ogAlternateTitles?: string[];
 }
 
 const {
@@ -31,6 +35,10 @@ const {
   geoPlacename = 'United States',
   geoPosition = '38.8951;-77.0364',
   icbm = '38.8951, -77.0364',
+  ogImage,
+  ogVideo,
+  twitterCard,
+  ogAlternateTitles,
 } = Astro.props;
 
 // Build clean normalized canonical URL
@@ -135,20 +143,41 @@ const allSchemas = jsonLd
     <meta name="distribution" content="Global" />
     <meta name="rating" content="General" />
 
-    <!-- Open Graph (No Images/Videos - Pure Article) -->
+    <!-- Open Graph -->
     <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:site_name" content="616 Intel — Marvel Leaks &amp; Rumors" />
     <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="hi_IN" />
+    {ogImage && (
+      <>
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:image:secure_url" content={ogImage} />
+        <meta property="og:image:alt" content={title} />
+      </>
+    )}
+    {ogVideo && (
+      <>
+        <meta property="og:video" content={ogVideo} />
+        <meta property="og:video:type" content="text/html" />
+      </>
+    )}
+    {ogAlternateTitles && ogAlternateTitles.map((altTitle) => (
+      <meta property="og:title:alternate" content={altTitle} />
+    ))}
 
-    <!-- Twitter / X Cards (Summary without image) -->
-    <meta name="twitter:card" content="summary" />
+    <!-- Twitter / X Cards -->
+    <meta name="twitter:card" content={twitterCard || (ogImage ? 'summary_large_image' : 'summary')} />
     <meta name="twitter:site" content="@616Intel" />
     <meta name="twitter:url" content={canonicalUrl} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+    {ogAlternateTitles && ogAlternateTitles.map((altTitle) => (
+      <meta name="twitter:title:alt" content={altTitle} />
+    ))}
 
     <!-- Structured Data (JSON-LD) -->
     {allSchemas.map((schema) => (

@@ -1,13 +1,33 @@
 import type { APIRoute } from 'astro';
 import { getAllArticles, getAllCategories } from '../utils/content';
+import { DOOMSDAY_VIDEOS } from '../data/doomsdayVideos';
 
 export const prerender = true;
+
+interface VideoMetadata {
+  thumbnailLoc: string;
+  title: string;
+  description: string;
+  contentLoc: string;
+  playerLoc: string;
+  duration: number; // in seconds
+  publicationDate: string;
+  familyFriendly?: 'yes' | 'no';
+  tags?: string[];
+  category?: string;
+  uploader?: {
+    name: string;
+    info?: string;
+  };
+}
 
 interface SitemapEntry {
   url: string;
   lastmod?: string;
   changefreq?: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly';
   priority?: number;
+  video?: VideoMetadata;
+  videos?: VideoMetadata[];
 }
 
 function escapeXml(unsafe: string): string {
@@ -44,8 +64,68 @@ export const GET: APIRoute = async ({ site }) => {
     }
   };
 
-  // 1. Core Hub & Intel Wire Index Routes
-  addEntry({ url: `${baseUrl}/`, lastmod: today, changefreq: 'daily', priority: 1.0 });
+  // 1. Core Hub & Intel Wire Index Routes (with Google Video Sitemap Schema for Homepage Trailer)
+  addEntry({ 
+    url: `${baseUrl}/`, 
+    lastmod: today, 
+    changefreq: 'daily', 
+    priority: 1.0,
+    video: {
+      thumbnailLoc: `${baseUrl}/Final%20trailer.png`,
+      title: 'Avengers Doomsday Final Trailer Out? New Trailer of Avengers Doomsday | Final Hindi Trailer',
+      description: 'Stream the official final trailer for Marvel Studios\' Avengers: Doomsday featuring Robert Downey Jr. as Victor von Doom, Pedro Pascal, Tom Holland, and the Multiverse Avengers in the Russo Brothers\' Phase 6 epic with complete audio.',
+      contentLoc: 'https://www.youtube.com/watch?v=Wb8Tq_HD4E8',
+      playerLoc: 'https://www.youtube-nocookie.com/embed/Wb8Tq_HD4E8',
+      duration: 198,
+      publicationDate: '2026-10-15T09:00:00+00:00',
+      familyFriendly: 'yes',
+      tags: [
+        'doomsday final trailer out',
+        'final trailer out?',
+        'avengers doomsday final trailer out?',
+        'New trailer of avengers doomsday',
+        'final Hindi trailer of doomsday',
+        'Doomsday final trailer hindi',
+        'Avengers Doomsday',
+        'Avengers Doomsday Final Trailer',
+        'Doctor Doom',
+        'Robert Downey Jr',
+        'Marvel Studios',
+        'Multiverse Incursion',
+        'Secret Wars',
+        'MCU Phase 6',
+        'The Russo Brothers'
+      ],
+      category: 'Entertainment',
+      uploader: {
+        name: '616 Intel',
+        info: baseUrl,
+      },
+    }
+  });
+  // Dedicated Avengers: Doomsday Video Intelligence Hub (with all 14 official playlist videos)
+  addEntry({
+    url: `${baseUrl}/avengers-doomsday`,
+    lastmod: today,
+    changefreq: 'daily',
+    priority: 1.0,
+    videos: DOOMSDAY_VIDEOS.map((v) => ({
+      thumbnailLoc: v.thumbnail,
+      title: v.title,
+      description: v.articleSummary,
+      contentLoc: `https://www.youtube.com/watch?v=${v.videoId}`,
+      playerLoc: `https://www.youtube-nocookie.com/embed/${v.videoId}`,
+      duration: v.durationSeconds,
+      publicationDate: `${v.releaseDate}T09:00:00+00:00`,
+      familyFriendly: 'yes',
+      tags: v.seoKeywords,
+      category: v.category,
+      uploader: {
+        name: 'Marvel Studios / 616 Intel',
+        info: baseUrl,
+      },
+    })),
+  });
   addEntry({ url: `${baseUrl}/latest`, lastmod: today, changefreq: 'daily', priority: 0.9 });
   addEntry({ url: `${baseUrl}/news`, lastmod: today, changefreq: 'daily', priority: 0.9 });
   addEntry({ url: `${baseUrl}/rumors`, lastmod: today, changefreq: 'daily', priority: 0.9 });
@@ -171,16 +251,33 @@ export const GET: APIRoute = async ({ site }) => {
   addEntry({ url: `${baseUrl}/terms`, lastmod: today, changefreq: 'monthly', priority: 0.5 });
   addEntry({ url: `${baseUrl}/copyright`, lastmod: today, changefreq: 'monthly', priority: 0.5 });
 
-  // Render XML
+  // Render XML with official Google Video Sitemap extension schema
   const entries = Array.from(entryMap.values());
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 ${entries
-  .map(
-    (e) => `  <url>
-    <loc>${escapeXml(e.url)}</loc>${e.lastmod ? `\n    <lastmod>${e.lastmod}</lastmod>` : ''}${e.changefreq ? `\n    <changefreq>${e.changefreq}</changefreq>` : ''}${e.priority !== undefined ? `\n    <priority>${e.priority.toFixed(1)}</priority>` : ''}
-  </url>`
-  )
+  .map((e) => {
+    let videoXml = '';
+    const videoList = e.videos || (e.video ? [e.video] : []);
+    for (const v of videoList) {
+      videoXml += `
+    <video:video>
+      <video:thumbnail_loc>${escapeXml(v.thumbnailLoc)}</video:thumbnail_loc>
+      <video:title>${escapeXml(v.title)}</video:title>
+      <video:description>${escapeXml(v.description)}</video:description>
+      <video:content_loc>${escapeXml(v.contentLoc)}</video:content_loc>
+      <video:player_loc allow_embed="yes" autoplay="ap=1">${escapeXml(v.playerLoc)}</video:player_loc>
+      <video:duration>${v.duration}</video:duration>
+      <video:publication_date>${escapeXml(v.publicationDate)}</video:publication_date>
+      <video:family_friendly>${v.familyFriendly || 'yes'}</video:family_friendly>
+      <video:live>no</video:live>${v.category ? `\n      <video:category>${escapeXml(v.category)}</video:category>` : ''}${v.uploader ? `\n      <video:uploader${v.uploader.info ? ` info="${escapeXml(v.uploader.info)}"` : ''}>${escapeXml(v.uploader.name)}</video:uploader>` : ''}${v.tags && v.tags.length > 0 ? '\n' + v.tags.map((t) => `      <video:tag>${escapeXml(t)}</video:tag>`).join('\n') : ''}
+    </video:video>`;
+    }
+
+    return `  <url>
+    <loc>${escapeXml(e.url)}</loc>${e.lastmod ? `\n    <lastmod>${e.lastmod}</lastmod>` : ''}${e.changefreq ? `\n    <changefreq>${e.changefreq}</changefreq>` : ''}${e.priority !== undefined ? `\n    <priority>${e.priority.toFixed(1)}</priority>` : ''}${videoXml}
+  </url>`;
+  })
   .join('\n')}
 </urlset>`;
 

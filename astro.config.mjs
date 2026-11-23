@@ -7,6 +7,14 @@ export default defineConfig({
   },
   site: 'https://616intel.prometrion.com',
   output: 'static',
+  redirects: {
+    '/doomsday-final-trailer-out': '/',
+    '/final-trailer-out': '/',
+    '/avengers-doomsday-final-trailer-out': '/',
+    '/new-trailer-of-avengers-doomsday': '/',
+    '/final-hindi-trailer-of-doomsday': '/',
+    '/doomsday-final-trailer-hindi': '/',
+  },
   integrations: [mdx()],
   vite: {
     plugins: [tailwindcss()],

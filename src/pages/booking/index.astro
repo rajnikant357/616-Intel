@@ -18,7 +18,7 @@ import {
   Calendar
 } from '@lucide/astro';
 
-const siteUrl = Astro.site?.origin || 'https://616intel.prometrion.com';
+const siteUrl = Astro.site?.origin || 'https://www.616intel.prometrion.com';
 
 const bookingSchema = [
   {
@@ -301,7 +301,8 @@ const upcomingMovies = [
     </section>
 
     <!-- SECTION: OFFICIAL BOOKING PLATFORMS -->
-    <section class="mb-14" aria-labelledby="platforms-heading">
+    <div id="platforms" class="scroll-mt-24" aria-hidden="true"></div>
+    <section class="mb-14 scroll-mt-24" aria-labelledby="platforms-heading">
       <div class="flex items-center justify-between mb-6 pb-3 border-b border-[var(--intel-border)]">
         <div>
           <h2 id="platforms-heading" class="font-serif text-2xl sm:text-3xl font-bold text-white">
@@ -367,7 +368,9 @@ const upcomingMovies = [
     </section>
 
     <!-- SECTION: UPCOMING MARVEL RELEASES & DIRECT JUMP -->
-    <section class="mb-14" aria-labelledby="movies-heading">
+    <div id="pricing" class="scroll-mt-24" aria-hidden="true"></div>
+    <div id="movies" class="scroll-mt-24" aria-hidden="true"></div>
+    <section class="mb-14 scroll-mt-24" aria-labelledby="movies-heading">
       <div class="flex items-center justify-between mb-6 pb-3 border-b border-[var(--intel-border)]">
         <div>
           <h2 id="movies-heading" class="font-serif text-2xl sm:text-3xl font-bold text-white">
@@ -464,7 +467,9 @@ const upcomingMovies = [
     </section>
 
     <!-- SECTION: TICKET BUYER SAFETY & FAQ -->
-    <section class="pt-8 border-t border-[var(--intel-border)]" aria-labelledby="safety-heading">
+    <div id="theaters" class="scroll-mt-24" aria-hidden="true"></div>
+    <div id="faq" class="scroll-mt-24" aria-hidden="true"></div>
+    <section id="safety" class="pt-8 border-t border-[var(--intel-border)] scroll-mt-24" aria-labelledby="safety-heading">
       <div class="mb-6">
         <h2 id="safety-heading" class="font-serif text-2xl font-bold text-white mb-2">
           Fan Safety &amp; Official Booking Checkpoints

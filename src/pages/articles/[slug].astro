@@ -36,7 +36,7 @@ const formattedUpdatedDate = article.data.updatedAt ? formatDate(article.data.up
 // Calculate approximate word count
 const wordCount = (article.body || '').split(/\s+/).filter(Boolean).length;
 
-const siteUrl = Astro.site?.origin || 'https://616intel.prometrion.com';
+const siteUrl = Astro.site?.origin || 'https://www.616intel.prometrion.com';
 
 const articleKeywords = article.data.keywords || (article.data.tags && article.data.tags.length > 0 ? article.data.tags.join(', ') : undefined);
 const geoRegion = article.data.geoRegion || 'US';

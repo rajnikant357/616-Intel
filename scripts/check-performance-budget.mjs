@@ -92,7 +92,7 @@ const sitemapPath = path.join(DIST_DIR, 'sitemap.xml');
 
 if (fs.existsSync(robotsPath)) {
   const robotsTxt = fs.readFileSync(robotsPath, 'utf-8');
-  if (robotsTxt.includes('Sitemap: https://616intel.prometrion.com/sitemap.xml') || robotsTxt.includes('Sitemap: https://616intel.com/sitemap.xml')) {
+  if (robotsTxt.includes('Sitemap: https://www.616intel.prometrion.com/sitemap.xml') || robotsTxt.includes('Sitemap: https://616intel.prometrion.com/sitemap.xml') || robotsTxt.includes('Sitemap: https://616intel.com/sitemap.xml')) {
     console.log('✅ PASS | robots.txt exists and contains valid sitemap directive');
   } else {
     console.log('❌ FAIL | robots.txt missing sitemap directive');
@@ -105,7 +105,7 @@ if (fs.existsSync(robotsPath)) {
 
 if (fs.existsSync(sitemapPath)) {
   const sitemapXml = fs.readFileSync(sitemapPath, 'utf-8');
-  if (sitemapXml.includes('<urlset') && (sitemapXml.includes('https://616intel.prometrion.com') || sitemapXml.includes('https://616intel.com'))) {
+  if (sitemapXml.includes('<urlset') && (sitemapXml.includes('https://www.616intel.prometrion.com') || sitemapXml.includes('https://616intel.prometrion.com') || sitemapXml.includes('https://616intel.com'))) {
     console.log('✅ PASS | sitemap.xml exists and contains valid urlset XML');
   } else {
     console.log('❌ FAIL | sitemap.xml does not contain valid XML markup');

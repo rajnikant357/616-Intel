@@ -5,7 +5,7 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
-  site: 'https://616intel.prometrion.com',
+  site: 'https://www.616intel.prometrion.com',
   output: 'static',
   redirects: {
     '/doomsday-final-trailer-out': '/',

@@ -21,7 +21,7 @@ import {
   ShieldAlert
 } from '@lucide/astro';
 
-const siteUrl = Astro.site?.origin || 'https://616intel.prometrion.com';
+const siteUrl = Astro.site?.origin || 'https://www.616intel.prometrion.com';
 
 // 1. Open Graph & SEO Metadata
 const pageTitle = "Avengers: Doomsday — Official Video Vault & All Multiverse Film Trailers | 616 Intel";
@@ -206,6 +206,7 @@ const categories = ['All 14 Videos', 'Official Trailer', 'Teaser Spotlight', 'Ch
     </nav>
 
     <!-- 14 DEDICATED VIDEO ARTICLES STREAM -->
+    <div id="videos" class="scroll-mt-24" aria-hidden="true"></div>
     <div class="space-y-12 sm:space-y-16" id="videos-stream">
       {DOOMSDAY_VIDEOS.map((video, idx) => (
         <article 
@@ -380,7 +381,11 @@ const categories = ['All 14 Videos', 'Official Trailer', 'Teaser Spotlight', 'Ch
     </div>
 
     <!-- GLOBAL PRODUCTION & EXHIBITION FACTS TABLE -->
-    <section class="mt-16 pt-10 border-t border-[var(--intel-border)]" aria-labelledby="facts-table-heading">
+    <div id="synopsis" class="scroll-mt-24" aria-hidden="true"></div>
+    <div id="cast" class="scroll-mt-24" aria-hidden="true"></div>
+    <div id="theaters" class="scroll-mt-24" aria-hidden="true"></div>
+    <div id="faq" class="scroll-mt-24" aria-hidden="true"></div>
+    <section id="production-intel" class="mt-16 pt-10 border-t border-[var(--intel-border)] scroll-mt-24" aria-labelledby="facts-table-heading">
       <div class="flex items-center justify-between mb-6 pb-3 border-b border-[var(--intel-border)]">
         <div>
           <h2 id="facts-table-heading" class="font-serif text-2xl sm:text-3xl font-bold text-white">

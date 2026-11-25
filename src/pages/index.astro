@@ -133,7 +133,7 @@ const categories = [
   },
 ];
 
-const siteOrigin = Astro.site?.origin || 'https://616intel.prometrion.com';
+const siteOrigin = Astro.site?.origin || 'https://www.616intel.prometrion.com';
 
 const ogAlternateTitles = [
   'doomsday final trailer out',
@@ -256,6 +256,10 @@ const trailerFaqSchema = {
   jsonLd={[trailerVideoSchema, trailerFaqSchema]}
 >
   <!-- SUPREME HERO SECTION: AVENGERS DOOMSDAY OFFICIAL FINAL TRAILER (AUTOPLAYING AT THE VERY FRONT) -->
+  <div id="avengers" class="scroll-mt-24" aria-hidden="true"></div>
+  <div id="trailer" class="scroll-mt-24" aria-hidden="true"></div>
+  <div id="doomsday" class="scroll-mt-24" aria-hidden="true"></div>
+  <div id="final-trailer" class="scroll-mt-24" aria-hidden="true"></div>
   <CustomTrailerPlayer
     videoId="98dc5qNpPjw"
     posterImage="/Final trailer.png"
@@ -265,7 +269,7 @@ const trailerFaqSchema = {
   />
 
   <!-- QUICK MARVEL LEAKS SEARCH BAR -->
-  <section class="container-editorial py-8 border-b border-[var(--intel-border)]" aria-label="Search Leaks">
+  <section id="search" class="container-editorial py-8 border-b border-[var(--intel-border)] scroll-mt-24" aria-label="Search Leaks">
     <div class="max-w-3xl mx-auto">
       <form action="/search" method="get" class="relative flex items-center">
         <Search class="w-5 h-5 text-[var(--intel-red)] absolute left-4 pointer-events-none" aria-hidden="true" />
@@ -280,6 +284,9 @@ const trailerFaqSchema = {
   </section>
 
   <!-- FEATURED CLASH DOSSIER: THE VOID VS DOCTOR DOOM -->
+  <div id="clash" class="scroll-mt-24" aria-hidden="true"></div>
+  <div id="doctor-doom" class="scroll-mt-24" aria-hidden="true"></div>
+  <div id="void-vs-doom" class="scroll-mt-24" aria-hidden="true"></div>
   <Hero
     article={{
       slug: `/articles/${featuredArticle.data.slug}`,
@@ -306,7 +313,7 @@ const trailerFaqSchema = {
   />
 
   <!-- CATEGORIES GRID -->
-  <section class="container-editorial py-12 sm:py-16 border-b border-[var(--intel-border)]" aria-labelledby="categories-heading">
+  <section id="categories" class="container-editorial py-12 sm:py-16 border-b border-[var(--intel-border)] scroll-mt-24" aria-labelledby="categories-heading">
     <SectionHeader
       title="INTEL CATEGORIES"
       tagline="CURATED TOPIC DOMAINS"
@@ -349,7 +356,8 @@ const trailerFaqSchema = {
   </section>
 
   <!-- KEY PRIORITY DOSSIERS (Dense Text-First Grid) -->
-  <section class="container-editorial py-12 sm:py-16 border-b border-[var(--intel-border)]" aria-labelledby="key-articles-heading">
+  <div id="dossiers" class="scroll-mt-24" aria-hidden="true"></div>
+  <section id="breaking" class="container-editorial py-12 sm:py-16 border-b border-[var(--intel-border)] scroll-mt-24" aria-labelledby="key-articles-heading">
     <SectionHeader
       title="BREAKING DOSSIERS"
       tagline="HIGH-RELEVANCE MARVEL INTEL"
@@ -375,7 +383,8 @@ const trailerFaqSchema = {
   </section>
 
   <!-- RECENT ARTICLES DIRECTORY (Text List) -->
-  <section class="container-editorial py-12 sm:py-16" aria-labelledby="directory-heading">
+  <div id="dispatches" class="scroll-mt-24" aria-hidden="true"></div>
+  <section id="latest" class="container-editorial py-12 sm:py-16 scroll-mt-24" aria-labelledby="directory-heading">
     <SectionHeader
       title="LATEST MARVEL LEAKS & DISPATCHES"
       tagline={`${allArticles.length} INDEXED REPORTS`}
@@ -416,7 +425,8 @@ const trailerFaqSchema = {
   </section>
 
   <!-- WRITE A LEAK / GOT INTEL? (High-Impact Banner Above Footer) -->
-  <section class="container-editorial py-10 sm:py-16 border-t border-[var(--intel-border)]" aria-label="Submit Marvel Intel">
+  <div id="community" class="scroll-mt-24" aria-hidden="true"></div>
+  <section id="submit" class="container-editorial py-10 sm:py-16 border-t border-[var(--intel-border)] scroll-mt-24" aria-label="Submit Marvel Intel">
     <CommunityBanner />
   </section>
 </BaseLayout>

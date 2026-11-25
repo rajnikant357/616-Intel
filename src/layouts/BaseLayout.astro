@@ -42,23 +42,40 @@ const {
 } = Astro.props;
 
 // Build clean normalized canonical URL
-const siteOrigin = Astro.site?.origin || 'https://616intel.prometrion.com';
+const siteOrigin = Astro.site?.origin || 'https://www.616intel.prometrion.com';
 const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const canonicalUrl = propCanonicalUrl || (pathname === '/' ? `${siteOrigin}/` : `${siteOrigin}${pathname}`);
 
-// Base Organization & WebSite Structured Data with Geo Coordinates
+// Base Organization, WebSite & Deep-Link SiteNavigationElement Structured Data
 const baseSchemas: Array<Record<string, any>> = [
   {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: '616 Intel',
+    alternateName: ['Earth-616 Intel', '616Intel', 'Marvel 616 Intelligence Bureau'],
     url: siteOrigin,
-    logo: `${siteOrigin}/favicon.svg`,
-    description: 'Independent intelligence hub documenting Marvel leaks, rumors, superhero action, and cinematic news.',
-    areaServed: {
-      '@type': 'Country',
-      name: 'United States',
+    logo: {
+      '@type': 'ImageObject',
+      url: `${siteOrigin}/favicon.svg`,
+      width: '512',
+      height: '512',
     },
+    image: `${siteOrigin}/Final%20trailer.png`,
+    description: 'Independent intelligence hub documenting Marvel leaks, rumors, superhero action, and cinematic news.',
+    sameAs: [
+      'https://x.com/616intel',
+      'https://www.youtube.com/@Marvel',
+      'https://en.wikipedia.org/wiki/Earth-616',
+      'https://marvel.com',
+    ],
+    areaServed: [
+      { '@type': 'Country', name: 'United States' },
+      { '@type': 'Country', name: 'India' },
+      { '@type': 'Country', name: 'United Kingdom' },
+      { '@type': 'Country', name: 'Canada' },
+      { '@type': 'Country', name: 'Australia' },
+      { '@type': 'AdministrativeArea', name: 'Worldwide' },
+    ],
     knowsAbout: [
       'Superhero Action',
       'Marvel Comics',
@@ -68,6 +85,10 @@ const baseSchemas: Array<Record<string, any>> = [
       'Fantastic Four',
       'Spider-Man',
       'Marvel Rivals',
+      'The Void',
+      'Sentry',
+      'Secret Wars',
+      'Phase 6',
     ],
   },
   {
@@ -75,11 +96,74 @@ const baseSchemas: Array<Record<string, any>> = [
     '@type': 'WebSite',
     name: '616 Intel',
     url: siteOrigin,
+    inLanguage: ['en-US', 'hi-IN'],
     potentialAction: {
       '@type': 'SearchAction',
       target: `${siteOrigin}/search?q={search_term_string}`,
       'query-input': 'required name=search_term_string',
     },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SiteNavigationElement',
+    name: 'Main Site Sections',
+    itemListElement: [
+      {
+        '@type': 'SiteNavigationElement',
+        name: 'Avengers Doomsday Final Trailer',
+        url: `${siteOrigin}/#avengers`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        name: '4K Trailer Player',
+        url: `${siteOrigin}/#trailer`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        name: 'The Void vs Doctor Doom Clash',
+        url: `${siteOrigin}/#clash`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        name: 'Curated Intel Categories',
+        url: `${siteOrigin}/#categories`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        name: 'Breaking Marvel Dossiers',
+        url: `${siteOrigin}/#breaking`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        name: 'Latest Dispatches Wire',
+        url: `${siteOrigin}/#latest`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        name: 'Search Marvel Wire',
+        url: `${siteOrigin}/#search`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        name: 'Advance Ticket Booking',
+        url: `${siteOrigin}/#booking`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        name: 'Submit Marvel Leak',
+        url: `${siteOrigin}/#submit`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        name: 'Avengers: Doomsday Video Vault',
+        url: `${siteOrigin}/avengers-doomsday`,
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        name: 'Ticket Redirection Platforms',
+        url: `${siteOrigin}/booking`,
+      },
+    ],
   },
 ];
 
@@ -113,9 +197,25 @@ const allSchemas = jsonLd
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Canonical & International Language Targeting -->
     <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
+    <link rel="alternate" hreflang="en" href={canonicalUrl} />
+    <link rel="alternate" hreflang="en-US" href={canonicalUrl} />
+    <link rel="alternate" hreflang="en-GB" href={canonicalUrl} />
+    <link rel="alternate" hreflang="en-IN" href={canonicalUrl} />
+    <link rel="alternate" hreflang="hi-IN" href={canonicalUrl} />
+    
     <meta name="generator" content={Astro.generator} />
     <meta name="monetag" content="9aa1dd052c4080c94b9889214dde4c92" />
+    <meta name="theme-color" content="#e62429" />
+    <meta name="msapplication-TileColor" content="#0a0a0c" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="616 Intel" />
+    <meta name="application-name" content="616 Intel" />
+    <meta name="format-detection" content="telephone=no" />
 
     <!-- Google Fonts Preconnect & Font Optimization for Wikipedia-Style Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -125,61 +225,90 @@ const allSchemas = jsonLd
       rel="stylesheet"
     />
 
-    <!-- Primary SEO & Google Ranking Meta -->
+    <!-- Primary SEO & Search Engine Ranking Meta -->
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
+    <meta name="news_keywords" content="Avengers Doomsday, Doctor Doom, Robert Downey Jr, Marvel Leaks, MCU Phase 6, Multiverse Incursion, Secret Wars, The Void, Sentry" />
+    <meta name="author" content="616 Intel Editorial Bureau" />
+    <meta name="publisher" content="616 Intel" />
+    
+    <!-- Crawler Directives (Google, Bing, Google News, AI Crawlers) -->
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'} />
     <meta name="googlebot" content={noindex ? 'noindex, nofollow' : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'} />
+    <meta name="googlebot-news" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+    <meta name="googlebot-image" content="index, follow, max-image-preview:large" />
     <meta name="bingbot" content={noindex ? 'noindex, nofollow' : 'index, follow, max-snippet:-1, max-image-preview:large'} />
 
-    <!-- SEO Geo-Targeting Tags (US & Worldwide Distribution) -->
+    <!-- SEO & GEO-Targeting Tags (US, India, UK, Global Multiverse Distribution) -->
     <meta name="geo.region" content={geoRegion} />
     <meta name="geo.placename" content={geoPlacename} />
     <meta name="geo.position" content={geoPosition} />
     <meta name="ICBM" content={icbm} />
     <meta name="coverage" content="Worldwide" />
     <meta name="distribution" content="Global" />
+    <meta name="target" content="all" />
+    <meta name="audience" content="all" />
     <meta name="rating" content="General" />
+    <meta name="revisit-after" content="1 days" />
 
-    <!-- Open Graph -->
+    <!-- Open Graph / Facebook / WhatsApp / Telegram Viral Previews -->
     <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:site_name" content="616 Intel — Marvel Leaks &amp; Rumors" />
+    <meta property="og:site_name" content="616 Intel — Marvel Rumors, Movie Leaks &amp; Multiverse News" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="hi_IN" />
+    <meta property="og:locale:alternate" content="en_GB" />
+    <meta property="og:locale:alternate" content="es_ES" />
+    <meta property="og:locale:alternate" content="ja_JP" />
+    <meta property="og:locale:alternate" content="pt_BR" />
+    <meta property="og:locale:alternate" content="fr_FR" />
+    <meta property="og:locale:alternate" content="de_DE" />
     {ogImage && (
       <>
         <meta property="og:image" content={ogImage} />
         <meta property="og:image:secure_url" content={ogImage} />
+        <meta property="og:image:type" content={ogImage.endsWith('.png') ? 'image/png' : 'image/jpeg'} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content={title} />
       </>
     )}
     {ogVideo && (
       <>
         <meta property="og:video" content={ogVideo} />
+        <meta property="og:video:secure_url" content={ogVideo} />
         <meta property="og:video:type" content="text/html" />
+        <meta property="og:video:width" content="1280" />
+        <meta property="og:video:height" content="720" />
       </>
     )}
     {ogAlternateTitles && ogAlternateTitles.map((altTitle) => (
       <meta property="og:title:alternate" content={altTitle} />
     ))}
 
-    <!-- Twitter / X Cards -->
+    <!-- Twitter / X Cards (Large Visual Card for Maximum CTR) -->
     <meta name="twitter:card" content={twitterCard || (ogImage ? 'summary_large_image' : 'summary')} />
     <meta name="twitter:site" content="@616Intel" />
+    <meta name="twitter:creator" content="@616Intel" />
+    <meta name="twitter:domain" content="www.616intel.prometrion.com" />
     <meta name="twitter:url" content={canonicalUrl} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    {ogImage && <meta name="twitter:image" content={ogImage} />}
+    {ogImage && (
+      <>
+        <meta name="twitter:image" content={ogImage} />
+        <meta name="twitter:image:alt" content={title} />
+      </>
+    )}
     {ogAlternateTitles && ogAlternateTitles.map((altTitle) => (
       <meta name="twitter:title:alt" content={altTitle} />
     ))}
 
-    <!-- Structured Data (JSON-LD) -->
+    <!-- Structured Data (JSON-LD for Google Rich Results & Generative AI Overviews) -->
     {allSchemas.map((schema) => (
       <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     ))}

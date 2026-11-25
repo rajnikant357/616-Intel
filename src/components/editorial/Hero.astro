@@ -95,11 +95,11 @@ const authorName = typeof article.author === 'string' ? article.author : article
           </div>
 
           <!-- Main Headline -->
-          <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-4 leading-[1.1]">
+          <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-4 leading-[1.1]">
             <a href={article.slug.startsWith('/') ? article.slug : `/articles/${article.slug}`} class="hover:text-red-400 transition-colors">
               {article.title}
             </a>
-          </h1>
+          </h2>
 
           <!-- Lead Subtitle / Excerpt -->
           <p class="text-base sm:text-lg text-neutral-300 font-sans leading-relaxed mb-6 font-normal">

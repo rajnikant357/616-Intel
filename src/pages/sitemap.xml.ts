@@ -4,6 +4,12 @@ import { DOOMSDAY_VIDEOS } from '../data/doomsdayVideos';
 
 export const prerender = true;
 
+interface ImageMetadata {
+  loc: string;
+  title?: string;
+  caption?: string;
+}
+
 interface VideoMetadata {
   thumbnailLoc: string;
   title: string;
@@ -26,6 +32,8 @@ interface SitemapEntry {
   lastmod?: string;
   changefreq?: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly';
   priority?: number;
+  image?: ImageMetadata;
+  images?: ImageMetadata[];
   video?: VideoMetadata;
   videos?: VideoMetadata[];
 }
@@ -53,7 +61,7 @@ export const GET: APIRoute = async ({ site }) => {
   const baseUrl = (site ? site.toString().replace(/\/+$/, '') : undefined)
     || import.meta.env.SITE?.replace(/\/+$/, '')
     || process.env.PUBLIC_SITE_URL?.replace(/\/+$/, '')
-    || 'https://616intel.prometrion.com';
+    || 'https://www.616intel.prometrion.com';
 
   const entryMap = new Map<string, SitemapEntry>();
   const today = new Date().toISOString().split('T')[0];
@@ -70,6 +78,11 @@ export const GET: APIRoute = async ({ site }) => {
     lastmod: today, 
     changefreq: 'daily', 
     priority: 1.0,
+    image: {
+      loc: `${baseUrl}/Final%20trailer.png`,
+      title: 'Avengers Doomsday Final Trailer Out',
+      caption: 'Avengers Doomsday Official Final Trailer starring Robert Downey Jr as Doctor Doom',
+    },
     video: {
       thumbnailLoc: `${baseUrl}/Final%20trailer.png`,
       title: 'Avengers Doomsday Final Trailer Out? New Trailer of Avengers Doomsday | Final Hindi Trailer',
@@ -103,6 +116,85 @@ export const GET: APIRoute = async ({ site }) => {
       },
     }
   });
+
+  // 1b. Key Page Section Deep-Links (Optimized for Viral Discovery, GEO Answer Engines & Direct Anchor Navigation)
+  // User requested pattern: e.g. https://www.616intel.prometrion.com/#avengers etc.
+  addEntry({
+    url: `${baseUrl}/#avengers`,
+    lastmod: today,
+    changefreq: 'daily',
+    priority: 1.0,
+    image: {
+      loc: `${baseUrl}/Final%20trailer.png`,
+      title: 'Avengers Doomsday Final Trailer Out',
+      caption: 'Avengers Doomsday Official Final Trailer starring Robert Downey Jr as Doctor Doom',
+    },
+    video: {
+      thumbnailLoc: `${baseUrl}/Final%20trailer.png`,
+      title: 'Avengers Doomsday Final Trailer Out — Official Stream',
+      description: 'Stream the official Avengers: Doomsday final trailer with full audio featuring Robert Downey Jr. as Doctor Doom and the Multiverse Avengers.',
+      contentLoc: 'https://www.youtube.com/watch?v=98dc5qNpPjw',
+      playerLoc: 'https://www.youtube-nocookie.com/embed/98dc5qNpPjw',
+      duration: 198,
+      publicationDate: '2026-10-15T09:00:00+00:00',
+      familyFriendly: 'yes',
+      tags: ['avengers', 'avengers doomsday', 'trailer', 'doctor doom', 'robert downey jr'],
+      category: 'Entertainment',
+      uploader: { name: '616 Intel', info: baseUrl },
+    },
+  });
+  addEntry({
+    url: `${baseUrl}/#trailer`,
+    lastmod: today,
+    changefreq: 'daily',
+    priority: 1.0,
+    image: {
+      loc: `${baseUrl}/final-trailer.png`,
+      title: 'Avengers Doomsday 4K Trailer Player',
+      caption: 'Brand new 4K trailer of Avengers Doomsday autoplaying at the very front of 616 Intel',
+    },
+    video: {
+      thumbnailLoc: `${baseUrl}/Final%20trailer.png`,
+      title: 'Avengers Doomsday Official 4K Final Trailer Player',
+      description: 'Watch the high-definition final trailer of Avengers Doomsday in 4K 60FPS.',
+      contentLoc: 'https://www.youtube.com/watch?v=98dc5qNpPjw',
+      playerLoc: 'https://www.youtube-nocookie.com/embed/98dc5qNpPjw',
+      duration: 198,
+      publicationDate: '2026-10-15T09:00:00+00:00',
+      familyFriendly: 'yes',
+      tags: ['trailer', 'avengers doomsday trailer', 'doctor doom', 'mcu phase 6'],
+      category: 'Entertainment',
+      uploader: { name: '616 Intel', info: baseUrl },
+    },
+  });
+  addEntry({ url: `${baseUrl}/#doomsday`, lastmod: today, changefreq: 'daily', priority: 0.95 });
+  addEntry({ url: `${baseUrl}/#clash`, lastmod: today, changefreq: 'daily', priority: 0.95 });
+  addEntry({ url: `${baseUrl}/#doctor-doom`, lastmod: today, changefreq: 'daily', priority: 0.95 });
+  addEntry({ url: `${baseUrl}/#void-vs-doom`, lastmod: today, changefreq: 'daily', priority: 0.95 });
+  addEntry({ url: `${baseUrl}/#categories`, lastmod: today, changefreq: 'daily', priority: 0.9 });
+  addEntry({ url: `${baseUrl}/#breaking`, lastmod: today, changefreq: 'daily', priority: 0.9 });
+  addEntry({ url: `${baseUrl}/#latest`, lastmod: today, changefreq: 'daily', priority: 0.9 });
+  addEntry({ url: `${baseUrl}/#search`, lastmod: today, changefreq: 'daily', priority: 0.85 });
+  addEntry({ url: `${baseUrl}/#booking`, lastmod: today, changefreq: 'daily', priority: 0.95 });
+  addEntry({ url: `${baseUrl}/#submit`, lastmod: today, changefreq: 'weekly', priority: 0.8 });
+
+  // Dedicated Avengers Doomsday Hub Anchor Sections
+  addEntry({ url: `${baseUrl}/avengers-doomsday#videos`, lastmod: today, changefreq: 'daily', priority: 0.95 });
+  addEntry({ url: `${baseUrl}/avengers-doomsday#videos-stream`, lastmod: today, changefreq: 'daily', priority: 0.9 });
+  addEntry({ url: `${baseUrl}/avengers-doomsday#final-trailer`, lastmod: today, changefreq: 'daily', priority: 0.95 });
+  addEntry({ url: `${baseUrl}/avengers-doomsday#the-return`, lastmod: today, changefreq: 'daily', priority: 0.9 });
+  addEntry({ url: `${baseUrl}/avengers-doomsday#cast-reveal`, lastmod: today, changefreq: 'daily', priority: 0.9 });
+  addEntry({ url: `${baseUrl}/avengers-doomsday#cinemacon`, lastmod: today, changefreq: 'daily', priority: 0.9 });
+  addEntry({ url: `${baseUrl}/avengers-doomsday#cast`, lastmod: today, changefreq: 'daily', priority: 0.9 });
+  addEntry({ url: `${baseUrl}/avengers-doomsday#synopsis`, lastmod: today, changefreq: 'daily', priority: 0.9 });
+  addEntry({ url: `${baseUrl}/avengers-doomsday#theaters`, lastmod: today, changefreq: 'daily', priority: 0.9 });
+  addEntry({ url: `${baseUrl}/avengers-doomsday#faq`, lastmod: today, changefreq: 'daily', priority: 0.9 });
+
+  // Advance Ticket Booking Anchor Sections
+  addEntry({ url: `${baseUrl}/booking#platforms`, lastmod: today, changefreq: 'daily', priority: 0.95 });
+  addEntry({ url: `${baseUrl}/booking#pricing`, lastmod: today, changefreq: 'daily', priority: 0.9 });
+  addEntry({ url: `${baseUrl}/booking#theaters`, lastmod: today, changefreq: 'daily', priority: 0.9 });
+  addEntry({ url: `${baseUrl}/booking#faq`, lastmod: today, changefreq: 'daily', priority: 0.9 });
   // Dedicated Avengers: Doomsday Video Intelligence Hub (with all 14 official playlist videos)
   addEntry({
     url: `${baseUrl}/avengers-doomsday`,
@@ -251,10 +343,10 @@ export const GET: APIRoute = async ({ site }) => {
   addEntry({ url: `${baseUrl}/terms`, lastmod: today, changefreq: 'monthly', priority: 0.5 });
   addEntry({ url: `${baseUrl}/copyright`, lastmod: today, changefreq: 'monthly', priority: 0.5 });
 
-  // Render XML with official Google Video Sitemap extension schema
+  // Render XML with official Google Video & Image Sitemap extension schemas
   const entries = Array.from(entryMap.values());
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${entries
   .map((e) => {
     let videoXml = '';
@@ -274,8 +366,17 @@ ${entries
     </video:video>`;
     }
 
+    let imageXml = '';
+    const imageList = e.images || (e.image ? [e.image] : []);
+    for (const img of imageList) {
+      imageXml += `
+    <image:image>
+      <image:loc>${escapeXml(img.loc)}</image:loc>${img.title ? `\n      <image:title>${escapeXml(img.title)}</image:title>` : ''}${img.caption ? `\n      <image:caption>${escapeXml(img.caption)}</image:caption>` : ''}
+    </image:image>`;
+    }
+
     return `  <url>
-    <loc>${escapeXml(e.url)}</loc>${e.lastmod ? `\n    <lastmod>${e.lastmod}</lastmod>` : ''}${e.changefreq ? `\n    <changefreq>${e.changefreq}</changefreq>` : ''}${e.priority !== undefined ? `\n    <priority>${e.priority.toFixed(1)}</priority>` : ''}${videoXml}
+    <loc>${escapeXml(e.url)}</loc>${e.lastmod ? `\n    <lastmod>${e.lastmod}</lastmod>` : ''}${e.changefreq ? `\n    <changefreq>${e.changefreq}</changefreq>` : ''}${e.priority !== undefined ? `\n    <priority>${e.priority.toFixed(1)}</priority>` : ''}${imageXml}${videoXml}
   </url>`;
   })
   .join('\n')}
